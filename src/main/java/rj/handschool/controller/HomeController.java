@@ -20,7 +20,12 @@ public class HomeController {
 	@RequestMapping(value = {"/login","/"}, method = RequestMethod.GET)
 	public String firstPage(Model model) {
 		model.addAttribute("firstPageMessage", "This is the first page");
-		return "firstpage";
+		return "login";
+	}
+	
+	@RequestMapping(value="/professor", method = RequestMethod.GET)
+	public String professorInicial(Model model) {
+		return "professor";
 	}
 	
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
