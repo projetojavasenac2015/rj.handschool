@@ -14,7 +14,7 @@
 <meta name="author" content="HandSchool">
 <meta name="keywords" content="">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Login</title>
+<title><tiles:getAsString name="title"/></title>
 <spring:url value="resources/js/libs/jquery-1.10.0.min.js" var="jquerymin" />
 <spring:url value="resources/js/libs/jquery-ui.min.js" var="jquery-ui" />
 <spring:url value="resources/js/libs/bootstrap.min.js" var="bootstrap" />
