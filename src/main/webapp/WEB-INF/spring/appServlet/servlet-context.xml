@@ -35,6 +35,10 @@
 		<beans:property name="order" value="0"/>
 	</beans:bean>
 	
-	<context:component-scan base-package="rj.handschool.controller" />
+	<!-- Para o Spring MVC procurar anotações apenas no bacotes da aplicação. -->					
+	<context:component-scan base-package="rj.handschool.controller" /> 	
+	<context:component-scan base-package="rj.handschool.dao"/>
+	<context:component-scan base-package="rj.handschool.model"/>
+	<context:component-scan base-package="rj.handschool.service"/>
 
 </beans:beans>
