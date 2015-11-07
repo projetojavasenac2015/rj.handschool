@@ -28,6 +28,26 @@ public class HomeController {
 		return "professor";
 	}
 	
+	@RequestMapping(value="/CadastramentoTurma", method = RequestMethod.GET)
+	public String turmaNova(Model model) {
+		return "turma_nova";
+	}
+	
+	@RequestMapping(value="/CadastramentoMateria", method = RequestMethod.GET)
+	public String materiaNova(Model model) {
+		return "materia_nova";
+	}
+	
+	@RequestMapping(value="/Curso", method = RequestMethod.GET)
+	public String cursoNovo(Model model) {
+		return "curso_novo";
+	}
+	
+	@RequestMapping(value="/CadastroALuno", method = RequestMethod.GET)
+	public String alunoNovo(Model model) {
+		return "aluno_novo";
+	}
+	
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
 	public String secondPage(Model model) {
 		model.addAttribute("secondPageMessage", "This is the second page");

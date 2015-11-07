@@ -5,6 +5,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title></title>
+<script>
+jQuery(document).ready(function ($) {
+
+	var daysRange = 5;
+
+    function assignCalendar(id) {
+        $('<div class="calendar" />')
+                .insertAfter($(id))
+                .multiDatesPicker({
+                    dateFormat: 'yy-mm-dd',
+                    minDate: new Date(),
+                    maxDate: '+1y',
+                    altField: id,
+                    firstDay: 1,
+                    showOtherMonths: true
+                }).prev().hide();
+    }
+
+    assignCalendar('#date_departure');
+});
+</script>
 </head>
 <body>
 	<div class="row">
@@ -131,8 +152,8 @@
                                                                 </div>
                                                                 <ul class="counters clearfix">
                                                                     <li class="first"><a href="#"><p>530</p><span>Atividades Realizadas</span></a></li>
-                                                                    <li><a href="#"><p>1450</p><span>Following</span></a></li>
-                                                                    <li class="last"><a href="#"><p>980</p><span>Followers</span></a></li>
+                                                                    <li><a href="#"><p>1450</p><span>Média</span></a></li>
+                                                                    <li class="last"><a href="#"><p>980</p><span>Faltas</span></a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>

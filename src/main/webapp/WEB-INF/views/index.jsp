@@ -28,6 +28,7 @@
 <spring:url value="resources/css/bootstrap.css" var="cssBoot" />
 <spring:url value="resources/css/cusel.css" var="cssCusel" />
 <spring:url value="resources/css/personalizado.css" var="persona" />
+<spring:url value="resources/css/chosen.css" var="cssCombo" />
 
 <script src="${jquerymin}"></script>
 <script src="${jquery-ui}"></script>
@@ -39,30 +40,9 @@
 <link href="${cssBoot}" rel="stylesheet">
 <link href="${cssCusel}" rel="stylesheet">
 <link href="${persona}" rel="stylesheet">
-<script>
-jQuery(document).ready(function ($) {
-
-	var daysRange = 5;
-
-    function assignCalendar(id) {
-        $('<div class="calendar" />')
-                .insertAfter($(id))
-                .multiDatesPicker({
-                    dateFormat: 'yy-mm-dd',
-                    minDate: new Date(),
-                    maxDate: '+1y',
-                    altField: id,
-                    firstDay: 1,
-                    showOtherMonths: true
-                }).prev().hide();
-    }
-
-    assignCalendar('#date_departure');
-});
-</script>
+<link href="${cssCombo}" rel="stylesheet">
 </head>
 <body>
-	
 	<div class="body_wrap" id="principal">
 		<div class="container" >
 			<div class="content" role="main">
@@ -98,14 +78,16 @@ jQuery(document).ready(function ($) {
                                 <li><a href="#"><span>Home</span></a></li>
                                 <li><a href="#"><span>Gerenciador</span></a>
                                     <ul>
-                                        <li><a href="#">Aluno</a></li>
+                                        <li><a href="CadastroALuno">Aluno</a></li>
+                                        <li><a href="#">Professor</a></li>
+                                        <li><a href="Curso">Curso</a></li>
                                         <li><a href="#">Turmas</a>
                                         	<ul>
 		                                        <li><a href="CadastramentoTurma">Inclusão</a></li>
 		                                        <li><a href="CadastramentoTurma">Todas as turmas</a></li>
 		                                    </ul>
                                         </li>
-                                        <li><a href="CadastramentoMateria">Matérias</a></li>
+                                        <li><a href="CadastramentoMateria">Disciplinas</a></li>
                                         <li><a href="#">Conteúdo</a>
                                             <ul>
                                                 <li><a href="#">X</a></li>
@@ -114,14 +96,17 @@ jQuery(document).ready(function ($) {
                                     </ul>
                                 </li>
                                 <li><a href="#"><span>Plano de Aula</span></a></li>
-                                <li><a href="#"><span>Frequencia</span></a></li>
-                                <li><a href="#"><span>Lançamento de Notas</span></a>
-                                    <ul>
-                                        <li><a href="#">X</a>
-                                            <ul>
-                                                <li><a href="#">X</a></li>
-                                            </ul>
-                                        </li>
+                                <li><a href="#">Frequencia</a>
+                                   	<ul>
+                                    	<li><a href="ConsultaPresenca">Consulta</a></li>
+                                    	<li><a href="LancamentoPresenca">Lançamento</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#"><span>Avaliações</span></a>
+                                	<ul>
+                                    	<li><a href="AgendarAvaliacao">Agendar Avaliação</a></li>
+                                    	<li><a href="LancamentoNotas">Lançamento de Notas</a></li>
+                                    	<li><a href="AlterarAvaliacoes">Alterar Avaliações</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -132,9 +117,9 @@ jQuery(document).ready(function ($) {
                     </div>
                 </div>
             </div>
+            <tiles:insertAttribute name="pessoa"></tiles:insertAttribute>
             <tiles:insertAttribute name="body"></tiles:insertAttribute>
 		</div>
 	</div>
-	
 </body>
 </html>

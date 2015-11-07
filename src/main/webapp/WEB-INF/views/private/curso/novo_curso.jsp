@@ -9,10 +9,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Disciplina</title>
+<title></title>
 <script>
 	jQuery(document).ready(function(){
-		jQuery('#ementa').chosen({ width: "100%" });
+		
 	})
 </script>
 </head>
@@ -20,14 +20,14 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="add-comment add-comment-velvet styled" id="addcomments">
-				<div class="add-comment-title"><h3>Nova Disciplina</h3></div>
+				<div class="add-comment-title"><h3>Novo Curso</h3></div>
 				<div class="comment-form">
 					<form action="#" method="post" id="commentForm" class="ajax_form">
 						<div class="form-inner" style="height: 352px">
 							<div class="col-sm-6">
 								<div class="field_text">
-                              		<label for="disciplina" class="label_title">Disciplina:</label>
-                               		<input type="text" name="disciplina" id="disciplina" value="" class="inputtext input_middle required" />
+                              		<label for="nome" class="label_title">Curso:</label>
+                               		<input type="text" name="nome" id="nome" value="" class="inputtext input_middle required" />
                            		</div>
                             	<div class="field_text">
                                		<label for="descricao" class="label_title">Descrição:</label>
@@ -41,7 +41,7 @@
                            </div>
 							<div class="col-sm-2">
 								<div class="field_select">
-                           			<select class="select_styled select_styled_orange">
+                           			<select name="situacao" id="situacao" class="select_styled select_styled_orange">
                                         <option value="">Situação</option>
                                         <option value="">Ativo</option>
                                         <option value="">Inativo</option>

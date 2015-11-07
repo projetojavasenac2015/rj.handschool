@@ -8,6 +8,27 @@
 		<put-attribute name="body" value="/WEB-INF/views/private/professor/professor_inicial.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="turma_nova" extends="base.definition">
+	    <put-attribute name="title" value="Turma Nova"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/private/turma/cadastro_turma.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="materia_nova" extends="base.definition">
+	    <put-attribute name="title" value="Disciplina Nova"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/private/materia/nova_materia.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="curso_novo" extends="base.definition">
+	    <put-attribute name="title" value="Curso Novo"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/private/curso/novo_curso.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="aluno_novo" extends="base.definition">
+	    <put-attribute name="title" value="Aluno Novo"></put-attribute>
+		<put-attribute name="pessoa" value="/WEB-INF/views/private/pessoa/cadastro_pessoa.jsp"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/private/aluno/cadastro_aluno.jsp"></put-attribute>
+	</definition>
+	
 	<definition name="login" template="/WEB-INF/views/public/login.jsp">
 	    <put-attribute name="title" value="Login HandSchool"></put-attribute>
 	</definition>
