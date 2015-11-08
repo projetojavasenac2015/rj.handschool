@@ -13,46 +13,63 @@
 <title></title>
 <script>
 	jQuery(document).ready(function(){
-		jQuery('#ementa').chosen({ width: "100%" });
+		
 	})
 </script>
 </head>
 <body>
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-md-12">
 			<div class="add-comment add-comment-velvet styled" id="addcomments">
 				<div class="add-comment-title"><h3>Aluno</h3></div>
 				<div class="comment-form">
 					<form action="#" method="post" id="commentForm" class="ajax_form">
-						<div class="form-inner" style="height: 352px">
-							
-							<div class="col-sm-6">
-								<div class="field_text">
-                              		<label for="matricula" class="label_title">Matricula:</label>
-                               		<input type="text" name="matricula" id="matricula" value="" class="inputtext input_middle required" />
-                           		</div>
-                            	<div class="field_text">
-                               		<label for="descricao" class="label_title">Nome:</label>
-                               		<textarea rows="20" cols="20" name="descricao" class="inputtext input_middle" id="descricao"></textarea>
-                           		</div>
-                           		<div class="field_text">
-                               		<label for="ementa" class="label_title">Ementa:</label>
-                               		<textarea rows="20" cols="20" name="ementa" class="inputtext input_middle" id="ementa"></textarea>
-                           		</div>
-                           </div>
-							<div class="col-sm-2">
-								<div class="field_select">
-                           			<select name="situacao" id="situacao" class="select_styled select_styled_orange">
-                                        <option value="">Situação</option>
-                                        <option value="">Ativo</option>
-                                        <option value="">Inativo</option>
-                                    </select>
-	                           </div>
-	                       </div>
-	                   	</div>
+						<div class="form-inner">
+							<tiles:insertTemplate template="/WEB-INF/views/private/pessoa/cadastro_pessoa.jsp"></tiles:insertTemplate>
+							<div class="row">
+								<div class="col-md-5">
+									<div class="field_text">
+	                           			<select name="turma" id="turma" class="select_styled select_styled_orange">
+	                                        <option value="">Turmas</option>
+	                                    </select>
+		                           </div>
+	                           	</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="field_text">
+	                              		<label for="matricula" class="label_title">Matricula:</label>
+	                               		<input type="text" name="matricula" id="matricula" value="" disabled="disabled" class="inputtext input_middle required" />
+	                           		</div>
+	                           	</div>
+								<div class="col-md-2">
+									<div class="field_select">
+	                           			<select name="ativo" id="ativo" class="select_styled select_styled_orange">
+	                                        <option value="">Situação</option>
+	                                        <option value="1">Ativo</option>
+	                                        <option value="0">Inativo</option>
+	                                    </select>
+		                           </div>
+		                       </div>
+		                   	</div>
+		                   	<div class="row">
+								<div class="col-md-5">
+									<div class="field_text">
+	                              		<label for="email" class="label_title">E-mail:</label>
+                              		 	<input type="text" name="email" id="email" value="" class="inputtext input_middle required" />
+                              		</div>
+	                           	</div>
+	                           	<div class="col-md-2 col-md-offset-2">
+									<div class="field_text">
+	                              		<label for="senha" class="label_title">Senha:</label>
+	                               		<input type="text" name="senha" id="senha" value="" class="inputtext input_middle required" />
+	                           		</div>
+	                           	</div>
+                           	</div>
+                   		</div>
 						<div class="clear"></div>
 						<div class="row">
-							<div class="col-sm-12">
+							<div class="col-md-12">
 								<div class="rowSubmit">
 					   			 	<span class="btn btn-small">
 					                   <input type="submit" id="confirmar" value="Confirmar" />

@@ -19,38 +19,51 @@
 </head>
 <body>
 	<div class="row">
-		<div class="col-sm-12">
-			<div class="form-inner" style="height: 352px">
-				<div class="col-md-6">
-					<div class="field_text">
-                   		<label for="cpf" class="label_title">CPF:</label>
-                   		<input type="text" name="cpf" id="cpf" value="" class="inputtext input_middle required" />
-               		</div>
-                  	<div class="field_text">
-                   		<label for="nome" class="label_title">Nome:</label>
-                   		<input type="text" name="nome" id="nome" value="" class="inputtext input_middle required" />
-               		</div>
-               		<div class="field_text">
-                   		<label for="rg" class="label_title">RG</label>
-                   		<input type="text" name="rg" id="rg" value="" class="inputtext input_middle required" />
-               		</div>
-                </div>
-				<div class="col-md-6">
-					<div class="field_text">
-                   		<label for="rg" class="label_title">Pai</label>
-                   		<input type="text" name="pai" id="pai" value="" class="inputtext input_middle required" />
-               		</div>
-               		<div class="field_text">
-                   		<label for="rg" class="label_title">Mãe</label>
-                   		<input type="text" name="pai" id="pai" value="" class="inputtext input_middle required" />
-               		</div>
-               		<div class="field_text">
-                   		<label for="data_nascimento" class="label_title">Data de Nascimento</label>
-                   		<input type="text" name="data_nascimento" id="data_nascimento" value="" class="inputtext input_middle required" />
-               		</div>
-                </div>
-           	</div>
-		</div>	
+		<div class="col-md-3">
+			<div class="field_text">
+           		<label for="cpf" class="label_title">CPF:</label>
+           		<input type="text" name="cpf" id="cpf" value="" class="inputtext input_middle required cpf" />
+       		</div>
+		</div>
+		<div class="col-md-3 col-md-offset-2">
+			<div class="field_text">
+           		<label for="rg" class="label_title">RG:</label>
+           		<input type="text" name="rg" id="rg" value="" class="inputtext input_middle required rg" />
+       		</div>
+		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="field_text">
+           		<label for="nome" class="label_title">Nome:</label>
+           		<input type="text" name="nome" id="nome" value="" class="inputtext input_middle required" />
+       		</div>
+		</div>
+		<div class="col-md-2 col-md-offset-1">
+			<div class="field_text">
+	           	<label for="data_nascimento" class="label_title">Nascimento:</label>
+	            <input type="text" name="data_nascimento" id="data_nascimento" value="" class="inputtext input_middle required data" />
+	        </div>
+	    </div>
+	    <div class="col-md-1" style="text-align: center;vertical-align: middle;">
+	    	<div class="field_text">
+	    		<span class="glyphicon glyphicon-calendar"></span>
+	    	</div>
+	    </div>
+    </div>
+	<div class="row">
+		<div class="col-md-5">
+			<div class="field_text">
+           		<label for="rg" class="label_title">Pai:</label>
+            	<input type="text" name="pai" id="pai" value="" class="inputtext input_middle required" />
+       		</div>
+       	</div>	
+       	<div class="col-md-5 col-md-offset-2">	
+            <div class="field_text">
+             	<label for="mae" class="label_title">Mãe:</label>
+                <input type="text" name="mae" id="mae" value="" class="inputtext input_middle required" />
+            </div>
+        </div>    		
+    </div>
 </body>
 </html>

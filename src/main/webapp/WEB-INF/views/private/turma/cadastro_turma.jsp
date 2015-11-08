@@ -12,7 +12,7 @@
 <title></title>
 <script>
 	jQuery(document).ready(function(){
-		jQuery('#qtd_aluno').chosen({ width: "100%" },{max_selected_options:1});
+		jQuery('#quantidadeAlunos').chosen({ width: "100%" },{max_selected_options:1});
 	})
 </script>
 </head>
@@ -23,12 +23,12 @@
 				<div class="add-comment-title"><h3>Turma</h3></div>
 				<div class="comment-form">
 					<form action="#" method="post" id="commentForm" class="ajax_form">
-						<div class="form-inner" style="height: 352px">
+						<div class="form-inner">
 							<div class="row">
 								<div class="col-md-5">
 									<div class="field_text">
-	                              		<label for="turma" class="label_title">Turma:</label>
-	                               		<input type="text" name="turma" id="turma" value="" class="inputtext input_middle required" />
+	                              		<label for="descricaoTurma" class="label_title">Turma:</label>
+	                               		<input type="text" name="descricaoTurma" id="descricaoTurma" value="" class="inputtext input_middle required" />
 	                           		</div>
 	                        	</div>
 	                        	<div class="col-md-2 col-md-offset-1">
@@ -42,19 +42,19 @@
 	                        	<div class="col-md-3">
 	                        		<label for="curso" class="label_title">Qtd:</label>
 	                           		<div class="field_select">
-	                           			<select name="qtd_aluno" id="qtd_aluno" multiple data-placeholder="Alunos">
-	                                        <option value="">1</option>
-	                                        <option value="">1</option>
-	                                        <option value="">1</option>
+	                           			<select name="quantidadeAlunos" id="quantidadeAlunos" multiple data-placeholder="Alunos">
+	                                        <c:forEach begin="1" end="40" var="val">
+	                                        	<option value="${val}"><c:out value="${val}"/></option>
+	                                        </c:forEach>
 	                                    </select>
 		                           </div>
 	                           	</div>
 	                           	<div class="col-md-2 col-md-offset-3">
 									<div class="field_select">
-	                           			<select name="situacao" id="situacao" class="select_styled select_styled_orange">
+	                           			<select name="ativo" id="ativo" class="select_styled select_styled_orange">
 	                                        <option value="">Situação</option>
-	                                        <option value="">Ativo</option>
-	                                        <option value="">Inativo</option>
+	                                        <option value="1">Ativo</option>
+	                                        <option value="0">Inativo</option>
 	                                    </select>
 		                           </div>
 		                       </div>

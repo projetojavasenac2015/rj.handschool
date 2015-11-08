@@ -1,5 +1,6 @@
 jQuery(document).ready(function(){
 	tfuse_custom_form();
+	mascaras();
 });
 
 function tfuse_custom_form(){
@@ -86,4 +87,12 @@ function tfuse_custom_form(){
 			});
 			return false;
 	});
+}
+
+function mascaras(){
+	$(".data").mask("99/99/9999");
+	$(".cpf").mask("999.999.999-99");
+	$(".rg").mask("99.999.999-9");
+	$(".cep").mask("99999-999");
+	$(".telefone").mask("(99) 99999-9999");
 }

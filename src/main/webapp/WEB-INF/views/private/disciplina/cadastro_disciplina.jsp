@@ -12,7 +12,7 @@
 <title>Disciplina</title>
 <script>
 	jQuery(document).ready(function(){
-		jQuery('#ementa').chosen({ width: "100%" });
+		
 	})
 </script>
 </head>
@@ -23,7 +23,7 @@
 				<div class="add-comment-title"><h3>Nova Disciplina</h3></div>
 				<div class="comment-form">
 					<form action="#" method="post" id="commentForm" class="ajax_form">
-						<div class="form-inner" style="height: 352px">
+						<div class="form-inner">
 							<div class="col-sm-6">
 								<div class="field_text">
                               		<label for="disciplina" class="label_title">Disciplina:</label>
@@ -43,8 +43,8 @@
 								<div class="field_select">
                            			<select class="select_styled select_styled_orange">
                                         <option value="">Situação</option>
-                                        <option value="">Ativo</option>
-                                        <option value="">Inativo</option>
+                                        <option value="1">Ativo</option>
+                                        <option value="0">Inativo</option>
                                     </select>
 	                           </div>
 	                       </div>

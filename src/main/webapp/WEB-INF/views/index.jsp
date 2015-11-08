@@ -24,6 +24,8 @@
 <spring:url value="resources/js/general.js" var="general" />
 <spring:url value="resources/js/cusel-min.js" var="cusel" />
 <spring:url value="resources/js/jquery.chosen.min.js" var="jselec" />
+<spring:url value="resources/js/jquery.maskedinput.js" var="jsmacara" />
+<spring:url value="resources/js/custom.js" var="customizado" />
 <spring:url value="resources/css/jquery-ui-1.8.20.custom.css" var="cssJquery" />
 <spring:url value="resources/css/bootstrap.css" var="cssBoot" />
 <spring:url value="resources/css/cusel.css" var="cssCusel" />
@@ -36,6 +38,8 @@
 <script src="${general}"></script>
 <script src="${cusel}"></script>
 <script src="${jselec}"></script>
+<script src="${jsmacara}"></script>
+<script src="${customizado}"></script>
 <link href="${cssJquery}" rel="stylesheet">
 <link href="${cssBoot}" rel="stylesheet">
 <link href="${cssCusel}" rel="stylesheet">
@@ -75,19 +79,34 @@
                     <div class="col-sm-10">
                         <div class="dropdown-wrap boxed-velvet" style="margin-bottom:20px;">
                              <ul class="dropdown inner clearfix">
-                                <li><a href="#"><span>Home</span></a></li>
-                                <li><a href="#"><span>Gerenciador</span></a>
+                                <li><a href="#"><span class="glyphicon glyphicon-home">&nbsp;Home</span></a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-wrench">&nbsp;Gerenciador</span></a>
                                     <ul>
-                                        <li><a href="CadastroALuno">Aluno</a></li>
-                                        <li><a href="#">Professor</a></li>
-                                        <li><a href="Curso">Curso</a></li>
-                                        <li><a href="#">Turmas</a>
+                                        <li><a href="#">Aluno</a>
                                         	<ul>
-		                                        <li><a href="CadastramentoTurma">Inclusão</a></li>
-		                                        <li><a href="CadastramentoTurma">Todas as turmas</a></li>
+                                        		<li><a href="CadastroALuno">Novo</a></li>
+                                        		<li><a href="CadastroALuno">Listar Alunos</a></li>
+                                        	</ul>
+                                        </li>
+                                        <li><a href="#">Professor</a></li>
+                                        <li><a href="#">Curso</a>
+                                        	<ul>
+		                                        <li><a href="NovoCurso">Novo</a></li>
+		                                        <li><a href="CadastramentoTurma">Listar Cursos</a></li>
 		                                    </ul>
                                         </li>
-                                        <li><a href="CadastramentoMateria">Disciplinas</a></li>
+                                        <li><a href="#">Disciplinas</a>
+                                        	<ul>
+		                                        <li><a href="NovaDisciplina">Nova</a></li>
+		                                        <li><a href="CadastramentoTurma">Listar Disciplinas</a></li>
+		                                    </ul>
+                                        </li>
+                                        <li><a href="#">Turma</a>
+                                        	<ul>
+		                                        <li><a href="NovaTurma">Nova</a></li>
+		                                        <li><a href="CadastramentoTurma">Listar as turmas</a></li>
+		                                    </ul>
+                                        </li>
                                         <li><a href="#">Conteúdo</a>
                                             <ul>
                                                 <li><a href="#">X</a></li>
@@ -95,14 +114,15 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="#"><span>Plano de Aula</span></a></li>
-                                <li><a href="#">Frequencia</a>
+                                <li><a href="#"><span class="glyphicon glyphicon-book">&nbsp;Aulas</span></a>
+                                </li>
+                                <li><a href="#"><span class="glyphicon glyphicon-calendar">&nbsp;Frequencia</span></a>
                                    	<ul>
-                                    	<li><a href="ConsultaPresenca">Consulta</a></li>
-                                    	<li><a href="LancamentoPresenca">Lançamento</a></li>
+                                    	<li><a href="RegistroFrequencia">Consulta</a></li>
+                                    	<li><a href="RegistroFrequencia">Lançamento</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#"><span>Avaliações</span></a>
+                                <li><a href="#"><span class="glyphicon glyphicon-edit">&nbsp;Avaliações</span></a>
                                 	<ul>
                                     	<li><a href="AgendarAvaliacao">Agendar Avaliação</a></li>
                                     	<li><a href="LancamentoNotas">Lançamento de Notas</a></li>
@@ -113,11 +133,11 @@
                         </div>
                     </div>
                     <div class="col-sm-2 tagcloud margin-10">
-                        <a href="#" class="tag-link-1" title="2 topics" hidefocus="true" style=""><span>Solicitacoes</span></a>
+                        <a href="#" class="tag-link-1" title="2 topics" hidefocus="true" style=""><span>Solicitações</span></a>
                     </div>
                 </div>
             </div>
-            <tiles:insertAttribute name="pessoa"></tiles:insertAttribute>
+            
             <tiles:insertAttribute name="body"></tiles:insertAttribute>
 		</div>
 	</div>
