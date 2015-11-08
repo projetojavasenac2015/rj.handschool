@@ -65,7 +65,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.version}</version>
         </dependency>
-        
+    
 		<!-- tiles -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
