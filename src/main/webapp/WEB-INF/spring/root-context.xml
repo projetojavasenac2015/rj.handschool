@@ -10,8 +10,15 @@
   http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:annotation-config/>
+	
+		<context:component-scan base-package="rj.handschool" />
+	    <context:component-scan base-package="rj.handschool.model"/>		
+		<context:component-scan base-package="rj.handschool.controller"/>
 
-	<context:component-scan base-package="rj.handschool" />
+    <!-- SpringMVC -->
+    	<import resource="servlet-context.xml"/>
 
+    <!-- SpringData -->
 	
 </beans>
