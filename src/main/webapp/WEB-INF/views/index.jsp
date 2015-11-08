@@ -26,11 +26,13 @@
 <spring:url value="resources/js/jquery.chosen.min.js" var="jselec" />
 <spring:url value="resources/js/jquery.maskedinput.js" var="jsmacara" />
 <spring:url value="resources/js/custom.js" var="customizado" />
+<spring:url value="resources/js/jquery-ui.min.js" var="jUi" />
 <spring:url value="resources/css/jquery-ui-1.8.20.custom.css" var="cssJquery" />
 <spring:url value="resources/css/bootstrap.css" var="cssBoot" />
 <spring:url value="resources/css/cusel.css" var="cssCusel" />
 <spring:url value="resources/css/personalizado.css" var="persona" />
 <spring:url value="resources/css/chosen.css" var="cssCombo" />
+<spring:url value="resources/css/jquery-ui.min.css" var="jCui" />
 
 <script src="${jquerymin}"></script>
 <script src="${jquery-ui}"></script>
@@ -40,11 +42,13 @@
 <script src="${jselec}"></script>
 <script src="${jsmacara}"></script>
 <script src="${customizado}"></script>
+<script src="${jUi}"></script>
 <link href="${cssJquery}" rel="stylesheet">
 <link href="${cssBoot}" rel="stylesheet">
 <link href="${cssCusel}" rel="stylesheet">
 <link href="${persona}" rel="stylesheet">
 <link href="${cssCombo}" rel="stylesheet">
+<link href="${jCui}" rel="stylesheet">
 </head>
 <body>
 	<div class="body_wrap" id="principal">
@@ -107,14 +111,12 @@
 		                                        <li><a href="CadastramentoTurma">Listar as turmas</a></li>
 		                                    </ul>
                                         </li>
-                                        <li><a href="#">Conteúdo</a>
-                                            <ul>
-                                                <li><a href="#">X</a></li>
-                                            </ul>
-                                        </li>
                                     </ul>
                                 </li>
                                 <li><a href="#"><span class="glyphicon glyphicon-book">&nbsp;Aulas</span></a>
+                               	 	<ul>
+                                   		<li><a href="Atividades">Agenda de Atividades</a></li>
+                                   	</ul>
                                 </li>
                                 <li><a href="#"><span class="glyphicon glyphicon-calendar">&nbsp;Frequencia</span></a>
                                    	<ul>

@@ -63,7 +63,6 @@
 									        <th>Aluno</th>
 									        <th>Presença Aula X</th>
 									        <th>Observação</th>
-									        <th>Abono</th>
 									      </tr>
 									    </thead>
 									    <tbody>
@@ -72,11 +71,7 @@
 									        <td>Doe</td>
 									        <td>john@example.com</td>
 									        <td>
-								        		<div class="custom-checkbox">
-								        			<input name="signup" checked="" type="checkbox" id="signup" value="signup" hidefocus="true" class="gradient" style="">
-								        			<label for="signup" class="checked"></label>
-							        			</div>
-									        </td>
+								            </td>
 									      </tr>
 									   	</tbody>
 									  </table>

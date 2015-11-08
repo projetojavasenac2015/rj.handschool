@@ -45,12 +45,7 @@
 	            <input type="text" name="data_nascimento" id="data_nascimento" value="" class="inputtext input_middle required data" />
 	        </div>
 	    </div>
-	    <div class="col-md-1" style="text-align: center;vertical-align: middle;">
-	    	<div class="field_text">
-	    		<span class="glyphicon glyphicon-calendar"></span>
-	    	</div>
-	    </div>
-    </div>
+	</div>
 	<div class="row">
 		<div class="col-md-5">
 			<div class="field_text">
