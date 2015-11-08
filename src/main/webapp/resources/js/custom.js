@@ -1,6 +1,7 @@
 jQuery(document).ready(function(){
 	tfuse_custom_form();
 	mascaras();
+	funcoes_ui();
 });
 
 function tfuse_custom_form(){
@@ -95,4 +96,7 @@ function mascaras(){
 	$(".rg").mask("99.999.999-9");
 	$(".cep").mask("99999-999");
 	$(".telefone").mask("(99) 99999-9999");
+}
+function funcoes_ui(){
+	$( ".data" ).datepicker();	
 }

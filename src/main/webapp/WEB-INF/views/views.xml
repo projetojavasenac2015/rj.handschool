@@ -32,6 +32,11 @@
 	    <put-attribute name="title" value="Registro de Frequencia"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/private/aula/registro_frequencia.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="atividades" extends="base.definition">
+	    <put-attribute name="title" value="Agenda de Atividades"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/private/atividades/agenda_atividades.jsp"></put-attribute>
+	</definition>
 			
 	<definition name="login" template="/WEB-INF/views/public/login.jsp">
 	    <put-attribute name="title" value="Login HandSchool"></put-attribute>
