@@ -22,21 +22,21 @@
 			<div class="add-comment add-comment-velvet styled" id="addcomments">
 				<div class="add-comment-title"><h3>Novo Curso</h3></div>
 				<div class="comment-form">
-					<form action="#" method="post" id="commentForm" class="ajax_form">
+					<form action="GravaCurso" method="post" id="commentForm" class="ajax_form">
 						<div class="form-inner">
 							<div class="col-sm-6">
 								<div class="field_text">
                               		<label for="nome" class="label_title">Curso:</label>
-                               		<input type="text" name="nome" id="nome" value="" class="inputtext input_middle required" />
+                               		<input type="text" name="nome" id="nome" value="${nome}" class="inputtext input_middle required" />
                            		</div>
                             	<div class="field_text">
                                		<label for="descricao" class="label_title">Descrição:</label>
-                               		<textarea rows="20" cols="20" name="descricao" class="inputtext input_middle" id="descricao"></textarea>
+                               		<textarea rows="20" cols="20" name="descricao" value="${descricao}" class="inputtext input_middle" id="descricao"></textarea>
                            		</div>
                            		<div class="field_text">
                                		<label for="ementa" class="label_title">Ementa:</label>
                                		<div id="editar_ementa" class="edit_buttons"></div>
-                               		<textarea rows="50" cols="20" name="ementa" class="textarea textarea_middle" id="ementa"></textarea>
+                               		<textarea rows="50" cols="20" name="ementa" value="${ementa}" class="textarea textarea_middle" id="ementa"></textarea>
                                	</div>
                            </div>
 							<div class="col-sm-2">
