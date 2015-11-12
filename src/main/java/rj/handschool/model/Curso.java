@@ -16,10 +16,10 @@ public class Curso implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idcurso;
 
-	private byte ativo;
+	//private boolean ativo;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DATA_HORA_CADASTRO")
@@ -54,13 +54,13 @@ public class Curso implements Serializable {
 		this.idcurso = idcurso;
 	}
 
-	public byte getAtivo() {
-		return this.ativo;
-	}
+	//public boolean getAtivo() {
+	//	return this.ativo;
+	//}
 
-	public void setAtivo(byte ativo) {
-		this.ativo = ativo;
-	}
+	//public void setAtivo(boolean ativo) {
+	///	this.ativo = ativo;
+	//}
 
 	public Date getDataHoraCadastro() {
 		return this.dataHoraCadastro;
