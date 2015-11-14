@@ -17,10 +17,11 @@
 </script>
 </head>
 <body>
+	<c:set var="data_atual" value="<%=new java.util.Date()%>" />
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="add-comment add-comment-velvet styled" id="addcomments">
-				<div class="add-comment-title"><h3>Registro de Frenquência</h3></div>
+				<div class="add-comment-title"><h3>Registro de Frenquência<sup class="note_lado" title="Turmas Pendentes">3</sup></h3></div>
 				<div class="comment-form">
 					<form action="#" method="post" id="commentForm" class="ajax_form">
 						<div class="form-inner">
@@ -42,13 +43,13 @@
                            		<div class="col-md-2 col-md-offset-1">
 									<div class="field_text">
 							           	<label for="dataHoraCadastro" class="label_title">Data:</label>
-							            <input type="text" name="dataHoraCadastro" id="dataHoraCadastro" value="" class="inputtext input_middle required data" />
+							            <input type="text" name="dataHoraCadastro" id="dataHoraCadastro" value='<fmt:formatDate pattern="dd/MM/yyyy"  value="${data_atual}"/>' class="inputtext input_middle required" readOnly="readonly" />
 							        </div>
 							    </div>
 							</div>
 							<div class="row">
 	                   			<div class="col-md-12">
-			                   		<table class="table table-hover">
+			                   		<table class="table table-hover" id="tabela">
 									    <thead>
 									      <tr>
 									        <th>Aluno</th>
@@ -61,8 +62,7 @@
 									        <td>John</td>
 									        <td>Doe</td>
 									        <td>john@example.com</td>
-									        <td>
-								            </td>
+									        
 									      </tr>
 									   	</tbody>
 									  </table>

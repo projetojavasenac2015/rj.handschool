@@ -32,10 +32,14 @@
 	                           		</div>
 	                        	</div>
 	                        	<div class="col-md-2 col-md-offset-1">
-	                            	<div class="field_text">
-	                               		<label for="ano" class="label_title">Ano:</label>
-	                               		<input type="text" name="ano" id="ano" value="" class="inputtext input_middle required" />
-	                           		</div>
+	                            	<div class="field_select">
+										<select name="ano" id="ano" class="select_styled">
+	                                        <option value="">Ano</option>
+	                                        <c:forEach begin="${ano_ini}" end="${ano_fim}" var="val">
+	                                        	<option value="${val}"><c:out value="${val}"/></option>
+	                                        </c:forEach>
+	                                    </select>
+		                           </div>
 	                        	</div>
                         	</div>
                         	<div class="row">
@@ -70,7 +74,164 @@
 	                                    </select>
 		                           </div>
 		                       </div>
-	                       </div>
+	                        </div>
+	                        <div class="row">
+								<div class="panel panel-primary boxed-velvet col-md-5" style="max-height:362.328px;">
+                                   	 <div class="panel-heading">
+                                         <h4 class="panel-title" style="text-align: center">
+                                         	Modulos Desse Curso
+                                         </h4>
+                                     </div>
+                                     <div class="panel-body feed" style="overflow: auto;max-height: 200px">
+                                         <div class="feed-item-body ">
+                                             teste
+                                             teste
+                                             teste
+                                             teste
+                                             tested
+                                             asdasdas
+                                             teste
+                                             teste
+                                             teste
+                                             teste
+                                             tested
+                                             asdasdas
+                                             teste
+                                             teste
+                                             teste
+                                             teste
+                                             tested
+                                             asdasdas
+                                         </div>
+                                         <div class="divider"></div>
+                                         <div class="feed-item-body">
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                         </div>
+                                         <div class="divider"></div>
+                                         <div class="feed-item-body">
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                         </div>
+	                                         <div class="divider"></div>
+                                         <div class="feed-item-body">
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                         </div>
+	                                         <div class="divider"></div>
+                                         <div class="feed-item-body">
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                         </div>
+	                                         <div class="divider"></div>
+                                         <div class="feed-item-body">
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                         </div>
+	                                         <div class="divider"></div>
+                                         <div class="feed-item-body">
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             teste
+	                                             tested
+	                                             asdasdas
+	                                         </div>
+                                   	</div>
+                      			</div>
+                       		</div>
 	                   	</div>
 						<div class="clear"></div>
 						<div class="row">

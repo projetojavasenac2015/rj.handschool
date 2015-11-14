@@ -14,9 +14,10 @@ import rj.handschool.model.Curso;
 
 @Controller
 public class CursoController {
+	
 	@RequestMapping("/NovoCurso")
 	public ModelAndView novoCurso(Curso curso){
-		 return new ModelAndView("curso_novo", "Curso", new Curso());
+		return new ModelAndView("curso_novo", "Curso", new Curso());
 	}
 	
 	@Autowired
