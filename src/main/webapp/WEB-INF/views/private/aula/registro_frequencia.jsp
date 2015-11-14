@@ -47,15 +47,6 @@
 							    </div>
 							</div>
 							<div class="row">
-								<div class="col-md-5">
-									<div class="field_select">
-										<select name="idAula" id="idAula" multiple data-placeholder="Aulas">
-	                                        <option value="">Aula</option>
-	                                    </select>
-		                           </div>
-	                           	</div>
-							</div>
-							<div class="row">
 	                   			<div class="col-md-12">
 			                   		<table class="table table-hover">
 									    <thead>

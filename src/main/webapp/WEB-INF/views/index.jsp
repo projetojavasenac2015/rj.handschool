@@ -17,7 +17,6 @@
 <title>
 	<tiles:getAsString name="title"></tiles:getAsString> HandSchool
 </title>
-
 <spring:url value="resources/js/libs/jquery-1.10.0.min.js" var="jquerymin" />
 <spring:url value="resources/js/libs/jquery-ui.min.js" var="jquery-ui" />
 <spring:url value="resources/js/libs/bootstrap.min.js" var="bootstrap" />
@@ -27,6 +26,7 @@
 <spring:url value="resources/js/jquery.maskedinput.js" var="jsmacara" />
 <spring:url value="resources/js/custom.js" var="customizado" />
 <spring:url value="resources/js/jquery-ui.min.js" var="jUi" />
+<spring:url value="resources/js/jquery-ui.multidatespicker.js" var="dataPicker" />
 <spring:url value="resources/css/jquery-ui-1.8.20.custom.css" var="cssJquery" />
 <spring:url value="resources/css/bootstrap.css" var="cssBoot" />
 <spring:url value="resources/css/cusel.css" var="cssCusel" />
@@ -43,6 +43,7 @@
 <script src="${jsmacara}"></script>
 <script src="${customizado}"></script>
 <script src="${jUi}"></script>
+<script src="${dataPicker}"></script>
 <link href="${cssJquery}" rel="stylesheet">
 <link href="${cssBoot}" rel="stylesheet">
 <link href="${cssCusel}" rel="stylesheet">
@@ -109,6 +110,11 @@
                                         	<ul>
 		                                        <li><a href="NovaTurma">Nova</a></li>
 		                                        <li><a href="CadastramentoTurma">Listar as turmas</a></li>
+		                                    </ul>
+                                        </li>
+                                        <li><a href="#">Modulo</a>
+                                        	<ul>
+		                                        <li><a href="NovoModulo">Novo Modulo</a></li>
 		                                    </ul>
                                         </li>
                                     </ul>

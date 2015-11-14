@@ -31,6 +31,9 @@
            		<input type="text" name="rg" id="rg" value="" class="inputtext input_middle required rg" />
        		</div>
 		</div>
+		<div class="col-md-2 col-md-offset-2">
+			<div class="avatar"><img src="<c:url value="../src/main/webapp/resources/images/temp/user.jpg"/>" alt="" /></div>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-6">

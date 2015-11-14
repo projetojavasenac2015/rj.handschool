@@ -31,13 +31,8 @@
                            		</div>
                             	<div class="field_text">
                                		<label for="descricao" class="label_title">Descrição:</label>
-                               		<textarea rows="20" cols="20" name="descricao" value="${descricao}" class="inputtext input_middle" id="descricao"></textarea>
+                               		<textarea rows="20" cols="60" name="descricao" value="${descricao}" class="textarea input_middle" id="descricao"></textarea>
                            		</div>
-                           		<div class="field_text">
-                               		<label for="ementa" class="label_title">Ementa:</label>
-                               		<div id="editar_ementa" class="edit_buttons"></div>
-                               		<textarea rows="50" cols="20" name="ementa" value="${ementa}" class="textarea textarea_middle" id="ementa"></textarea>
-                               	</div>
                            </div>
 							<div class="col-sm-2">
 								<div class="field_select">
