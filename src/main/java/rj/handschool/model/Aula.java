@@ -1,140 +1,159 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the aulas database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@Table(name="aulas")
-@NamedQuery(name="Aula.findAll", query="SELECT a FROM Aula a")
+@Table(name = "aulas")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Aula.findAll", query = "SELECT a FROM Aula a"),
+    @NamedQuery(name = "Aula.findByIdaulas", query = "SELECT a FROM Aula a WHERE a.idaulas = :idaulas"),
+    @NamedQuery(name = "Aula.findByData", query = "SELECT a FROM Aula a WHERE a.data = :data"),
+    @NamedQuery(name = "Aula.findByHorarioInicio", query = "SELECT a FROM Aula a WHERE a.horarioInicio = :horarioInicio"),
+    @NamedQuery(name = "Aula.findByHorarioTermino", query = "SELECT a FROM Aula a WHERE a.horarioTermino = :horarioTermino"),
+    @NamedQuery(name = "Aula.findByStatus", query = "SELECT a FROM Aula a WHERE a.status = :status"),
+    @NamedQuery(name = "Aula.findByMatricula", query = "SELECT a FROM Aula a WHERE a.matricula = :matricula")})
 public class Aula implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idaulas")
+    private Integer idaulas;
+    @Column(name = "data")
+    private String data;
+    @Column(name = "HORARIO_INICIO")
+    private String horarioInicio;
+    @Column(name = "HORARIO_TERMINO")
+    private String horarioTermino;
+    @Column(name = "status")
+    private String status;
+    @Column(name = "MATRICULA")
+    private String matricula;
+    @OneToMany(mappedBy = "idaulas")
+    private List<ListaPresenca> listaPresencaList;
+    @JoinColumn(name = "IDDISCIPLINA", referencedColumnName = "iddisciplina")
+    @ManyToOne
+    private Disciplina iddisciplina;
+    @JoinColumn(name = "IDTURMA", referencedColumnName = "idturma")
+    @ManyToOne
+    private Turma idturma;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idaulas;
+    public Aula() {
+    }
 
-	private String data;
+    public Aula(Integer idaulas) {
+        this.idaulas = idaulas;
+    }
 
-	@Column(name="HORARIO_INICIO")
-	private String horarioInicio;
+    public Integer getIdaulas() {
+        return idaulas;
+    }
 
-	@Column(name="HORARIO_TERMINO")
-	private String horarioTermino;
+    public void setIdaulas(Integer idaulas) {
+        this.idaulas = idaulas;
+    }
 
-	private String status;
+    public String getData() {
+        return data;
+    }
 
-	//bi-directional many-to-one association to Turma
-	@ManyToOne
-	@JoinColumn(name="IDTURMA")
-	private Turma turma;
+    public void setData(String data) {
+        this.data = data;
+    }
 
-	//bi-directional many-to-one association to Disciplina
-	@ManyToOne
-	@JoinColumn(name="IDDISCIPLINA")
-	private Disciplina disciplina;
+    public String getHorarioInicio() {
+        return horarioInicio;
+    }
 
-	//bi-directional many-to-one association to Instrutor
-	@ManyToOne
-	@JoinColumn(name="MATRICULA")
-	private Instrutor instrutor;
+    public void setHorarioInicio(String horarioInicio) {
+        this.horarioInicio = horarioInicio;
+    }
 
-	//bi-directional many-to-one association to ListaPresenca
-	@OneToMany(mappedBy="aula")
-	private List<ListaPresenca> listaPresencas;
+    public String getHorarioTermino() {
+        return horarioTermino;
+    }
 
-	public Aula() {
-	}
+    public void setHorarioTermino(String horarioTermino) {
+        this.horarioTermino = horarioTermino;
+    }
 
-	public int getIdaulas() {
-		return this.idaulas;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setIdaulas(int idaulas) {
-		this.idaulas = idaulas;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getData() {
-		return this.data;
-	}
+    public String getMatricula() {
+        return matricula;
+    }
 
-	public void setData(String data) {
-		this.data = data;
-	}
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
-	public String getHorarioInicio() {
-		return this.horarioInicio;
-	}
+    @XmlTransient
+    public List<ListaPresenca> getListaPresencaList() {
+        return listaPresencaList;
+    }
 
-	public void setHorarioInicio(String horarioInicio) {
-		this.horarioInicio = horarioInicio;
-	}
+    public void setListaPresencaList(List<ListaPresenca> listaPresencaList) {
+        this.listaPresencaList = listaPresencaList;
+    }
 
-	public String getHorarioTermino() {
-		return this.horarioTermino;
-	}
+    public Disciplina getIddisciplina() {
+        return iddisciplina;
+    }
 
-	public void setHorarioTermino(String horarioTermino) {
-		this.horarioTermino = horarioTermino;
-	}
+    public void setIddisciplina(Disciplina iddisciplina) {
+        this.iddisciplina = iddisciplina;
+    }
 
-	public String getStatus() {
-		return this.status;
-	}
+    public Turma getIdturma() {
+        return idturma;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setIdturma(Turma idturma) {
+        this.idturma = idturma;
+    }
 
-	public Turma getTurma() {
-		return this.turma;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idaulas != null ? idaulas.hashCode() : 0);
+        return hash;
+    }
 
-	public void setTurma(Turma turma) {
-		this.turma = turma;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Aula)) {
+            return false;
+        }
+        Aula other = (Aula) object;
+        if ((this.idaulas == null && other.idaulas != null) || (this.idaulas != null && !this.idaulas.equals(other.idaulas))) {
+            return false;
+        }
+        return true;
+    }
 
-	public Disciplina getDisciplina() {
-		return this.disciplina;
-	}
-
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
-	}
-
-	public Instrutor getInstrutor() {
-		return this.instrutor;
-	}
-
-	public void setInstrutor(Instrutor instrutor) {
-		this.instrutor = instrutor;
-	}
-
-	public List<ListaPresenca> getListaPresencas() {
-		return this.listaPresencas;
-	}
-
-	public void setListaPresencas(List<ListaPresenca> listaPresencas) {
-		this.listaPresencas = listaPresencas;
-	}
-
-	public ListaPresenca addListaPresenca(ListaPresenca listaPresenca) {
-		getListaPresencas().add(listaPresenca);
-		listaPresenca.setAula(this);
-
-		return listaPresenca;
-	}
-
-	public ListaPresenca removeListaPresenca(ListaPresenca listaPresenca) {
-		getListaPresencas().remove(listaPresenca);
-		listaPresenca.setAula(null);
-
-		return listaPresenca;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.Aula[ idaulas=" + idaulas + " ]";
+    }
+    
 }

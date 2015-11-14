@@ -1,175 +1,190 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the login database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@NamedQuery(name="Login.findAll", query="SELECT l FROM Login l")
+@Table(name = "login")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
+    @NamedQuery(name = "Login.findByIdlogin", query = "SELECT l FROM Login l WHERE l.idlogin = :idlogin"),
+    @NamedQuery(name = "Login.findByAtivo", query = "SELECT l FROM Login l WHERE l.ativo = :ativo"),
+    @NamedQuery(name = "Login.findByDataHoraCadastro", query = "SELECT l FROM Login l WHERE l.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "Login.findByDataUltAtualizacao", query = "SELECT l FROM Login l WHERE l.dataUltAtualizacao = :dataUltAtualizacao"),
+    @NamedQuery(name = "Login.findByEmail", query = "SELECT l FROM Login l WHERE l.email = :email"),
+    @NamedQuery(name = "Login.findByMatricula", query = "SELECT l FROM Login l WHERE l.matricula = :matricula"),
+    @NamedQuery(name = "Login.findBySenha", query = "SELECT l FROM Login l WHERE l.senha = :senha")})
 public class Login implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idlogin")
+    private Integer idlogin;
+    @Basic(optional = false)
+    @Column(name = "ativo")
+    private short ativo;
+    @Column(name = "DATA_HORA_CADASTRO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraCadastro;
+    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltAtualizacao;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "matricula")
+    private String matricula;
+    @Column(name = "senha")
+    private String senha;
+    @OneToMany(mappedBy = "idlogin")
+    private List<Forum> forumList;
+    @OneToMany(mappedBy = "idlogin")
+    private List<ForumComentario> forumComentarioList;
+    @JoinColumn(name = "IDPERFIL", referencedColumnName = "idperfil")
+    @ManyToOne
+    private Perfil idperfil;
+    @JoinColumn(name = "IDPESSOA", referencedColumnName = "idpessoa")
+    @ManyToOne
+    private Pessoa idpessoa;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idlogin;
+    public Login() {
+    }
 
-	private byte ativo;
+    public Login(Integer idlogin) {
+        this.idlogin = idlogin;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_HORA_CADASTRO")
-	private Date dataHoraCadastro;
+    public Login(Integer idlogin, short ativo) {
+        this.idlogin = idlogin;
+        this.ativo = ativo;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_ULT_ATUALIZACAO")
-	private Date dataUltAtualizacao;
+    public Integer getIdlogin() {
+        return idlogin;
+    }
 
-	private String email;
+    public void setIdlogin(Integer idlogin) {
+        this.idlogin = idlogin;
+    }
 
-	private String matricula;
+    public short getAtivo() {
+        return ativo;
+    }
 
-	private String senha;
+    public void setAtivo(short ativo) {
+        this.ativo = ativo;
+    }
 
-	//bi-directional many-to-one association to Forum
-	@OneToMany(mappedBy="login")
-	private List<Forum> forums;
+    public Date getDataHoraCadastro() {
+        return dataHoraCadastro;
+    }
 
-	//bi-directional many-to-one association to ForumComentario
-	@OneToMany(mappedBy="login")
-	private List<ForumComentario> forumComentarios;
+    public void setDataHoraCadastro(Date dataHoraCadastro) {
+        this.dataHoraCadastro = dataHoraCadastro;
+    }
 
-	//bi-directional many-to-one association to Pessoa
-	@ManyToOne
-	@JoinColumn(name="IDPESSOA")
-	private Pessoa pessoa;
+    public Date getDataUltAtualizacao() {
+        return dataUltAtualizacao;
+    }
 
-	//bi-directional many-to-one association to Perfil
-	@ManyToOne
-	@JoinColumn(name="IDPERFIL")
-	private Perfil perfil;
+    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
+        this.dataUltAtualizacao = dataUltAtualizacao;
+    }
 
-	public Login() {
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public int getIdlogin() {
-		return this.idlogin;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setIdlogin(int idlogin) {
-		this.idlogin = idlogin;
-	}
+    public String getMatricula() {
+        return matricula;
+    }
 
-	public byte getAtivo() {
-		return this.ativo;
-	}
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
-	public void setAtivo(byte ativo) {
-		this.ativo = ativo;
-	}
+    public String getSenha() {
+        return senha;
+    }
 
-	public Date getDataHoraCadastro() {
-		return this.dataHoraCadastro;
-	}
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
-	public void setDataHoraCadastro(Date dataHoraCadastro) {
-		this.dataHoraCadastro = dataHoraCadastro;
-	}
+    @XmlTransient
+    public List<Forum> getForumList() {
+        return forumList;
+    }
 
-	public Date getDataUltAtualizacao() {
-		return this.dataUltAtualizacao;
-	}
+    public void setForumList(List<Forum> forumList) {
+        this.forumList = forumList;
+    }
 
-	public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-		this.dataUltAtualizacao = dataUltAtualizacao;
-	}
+    @XmlTransient
+    public List<ForumComentario> getForumComentarioList() {
+        return forumComentarioList;
+    }
 
-	public String getEmail() {
-		return this.email;
-	}
+    public void setForumComentarioList(List<ForumComentario> forumComentarioList) {
+        this.forumComentarioList = forumComentarioList;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public Perfil getIdperfil() {
+        return idperfil;
+    }
 
-	public String getMatricula() {
-		return this.matricula;
-	}
+    public void setIdperfil(Perfil idperfil) {
+        this.idperfil = idperfil;
+    }
 
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
+    public Pessoa getIdpessoa() {
+        return idpessoa;
+    }
 
-	public String getSenha() {
-		return this.senha;
-	}
+    public void setIdpessoa(Pessoa idpessoa) {
+        this.idpessoa = idpessoa;
+    }
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idlogin != null ? idlogin.hashCode() : 0);
+        return hash;
+    }
 
-	public List<Forum> getForums() {
-		return this.forums;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Login)) {
+            return false;
+        }
+        Login other = (Login) object;
+        if ((this.idlogin == null && other.idlogin != null) || (this.idlogin != null && !this.idlogin.equals(other.idlogin))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setForums(List<Forum> forums) {
-		this.forums = forums;
-	}
-
-	public Forum addForum(Forum forum) {
-		getForums().add(forum);
-		forum.setLogin(this);
-
-		return forum;
-	}
-
-	public Forum removeForum(Forum forum) {
-		getForums().remove(forum);
-		forum.setLogin(null);
-
-		return forum;
-	}
-
-	public List<ForumComentario> getForumComentarios() {
-		return this.forumComentarios;
-	}
-
-	public void setForumComentarios(List<ForumComentario> forumComentarios) {
-		this.forumComentarios = forumComentarios;
-	}
-
-	public ForumComentario addForumComentario(ForumComentario forumComentario) {
-		getForumComentarios().add(forumComentario);
-		forumComentario.setLogin(this);
-
-		return forumComentario;
-	}
-
-	public ForumComentario removeForumComentario(ForumComentario forumComentario) {
-		getForumComentarios().remove(forumComentario);
-		forumComentario.setLogin(null);
-
-		return forumComentario;
-	}
-
-	public Pessoa getPessoa() {
-		return this.pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
-	public Perfil getPerfil() {
-		return this.perfil;
-	}
-
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.Login[ idlogin=" + idlogin + " ]";
+    }
+    
 }

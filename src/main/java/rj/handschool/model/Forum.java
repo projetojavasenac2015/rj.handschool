@@ -1,126 +1,151 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the forum database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@NamedQuery(name="Forum.findAll", query="SELECT f FROM Forum f")
+@Table(name = "forum")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Forum.findAll", query = "SELECT f FROM Forum f"),
+    @NamedQuery(name = "Forum.findByIdforum", query = "SELECT f FROM Forum f WHERE f.idforum = :idforum"),
+    @NamedQuery(name = "Forum.findByAssunto", query = "SELECT f FROM Forum f WHERE f.assunto = :assunto"),
+    @NamedQuery(name = "Forum.findByDataHoraCadastro", query = "SELECT f FROM Forum f WHERE f.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "Forum.findByDataUltAtualizacao", query = "SELECT f FROM Forum f WHERE f.dataUltAtualizacao = :dataUltAtualizacao"),
+    @NamedQuery(name = "Forum.findByDescricao", query = "SELECT f FROM Forum f WHERE f.descricao = :descricao"),
+    @NamedQuery(name = "Forum.findByIdcurso", query = "SELECT f FROM Forum f WHERE f.idcurso = :idcurso")})
 public class Forum implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idforum")
+    private Integer idforum;
+    @Column(name = "assunto")
+    private String assunto;
+    @Column(name = "DATA_HORA_CADASTRO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraCadastro;
+    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltAtualizacao;
+    @Column(name = "descricao")
+    private String descricao;
+    @Column(name = "idcurso")
+    private String idcurso;
+    @JoinColumn(name = "IDLOGIN", referencedColumnName = "idlogin")
+    @ManyToOne
+    private Login idlogin;
+    @OneToMany(mappedBy = "idforum")
+    private List<ForumComentario> forumComentarioList;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idforum;
+    public Forum() {
+    }
 
-	private String assunto;
+    public Forum(Integer idforum) {
+        this.idforum = idforum;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_HORA_CADASTRO")
-	private Date dataHoraCadastro;
+    public Integer getIdforum() {
+        return idforum;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_ULT_ATUALIZACAO")
-	private Date dataUltAtualizacao;
+    public void setIdforum(Integer idforum) {
+        this.idforum = idforum;
+    }
 
-	private String descricao;
+    public String getAssunto() {
+        return assunto;
+    }
 
-	private String idcurso;
+    public void setAssunto(String assunto) {
+        this.assunto = assunto;
+    }
 
-	//bi-directional many-to-one association to Login
-	@ManyToOne
-	@JoinColumn(name="IDLOGIN")
-	private Login login;
+    public Date getDataHoraCadastro() {
+        return dataHoraCadastro;
+    }
 
-	//bi-directional many-to-one association to ForumComentario
-	@OneToMany(mappedBy="forum")
-	private List<ForumComentario> forumComentarios;
+    public void setDataHoraCadastro(Date dataHoraCadastro) {
+        this.dataHoraCadastro = dataHoraCadastro;
+    }
 
-	public Forum() {
-	}
+    public Date getDataUltAtualizacao() {
+        return dataUltAtualizacao;
+    }
 
-	public int getIdforum() {
-		return this.idforum;
-	}
+    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
+        this.dataUltAtualizacao = dataUltAtualizacao;
+    }
 
-	public void setIdforum(int idforum) {
-		this.idforum = idforum;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
 
-	public String getAssunto() {
-		return this.assunto;
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-	public void setAssunto(String assunto) {
-		this.assunto = assunto;
-	}
+    public String getIdcurso() {
+        return idcurso;
+    }
 
-	public Date getDataHoraCadastro() {
-		return this.dataHoraCadastro;
-	}
+    public void setIdcurso(String idcurso) {
+        this.idcurso = idcurso;
+    }
 
-	public void setDataHoraCadastro(Date dataHoraCadastro) {
-		this.dataHoraCadastro = dataHoraCadastro;
-	}
+    public Login getIdlogin() {
+        return idlogin;
+    }
 
-	public Date getDataUltAtualizacao() {
-		return this.dataUltAtualizacao;
-	}
+    public void setIdlogin(Login idlogin) {
+        this.idlogin = idlogin;
+    }
 
-	public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-		this.dataUltAtualizacao = dataUltAtualizacao;
-	}
+    @XmlTransient
+    public List<ForumComentario> getForumComentarioList() {
+        return forumComentarioList;
+    }
 
-	public String getDescricao() {
-		return this.descricao;
-	}
+    public void setForumComentarioList(List<ForumComentario> forumComentarioList) {
+        this.forumComentarioList = forumComentarioList;
+    }
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idforum != null ? idforum.hashCode() : 0);
+        return hash;
+    }
 
-	public String getIdcurso() {
-		return this.idcurso;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Forum)) {
+            return false;
+        }
+        Forum other = (Forum) object;
+        if ((this.idforum == null && other.idforum != null) || (this.idforum != null && !this.idforum.equals(other.idforum))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setIdcurso(String idcurso) {
-		this.idcurso = idcurso;
-	}
-
-	public Login getLogin() {
-		return this.login;
-	}
-
-	public void setLogin(Login login) {
-		this.login = login;
-	}
-
-	public List<ForumComentario> getForumComentarios() {
-		return this.forumComentarios;
-	}
-
-	public void setForumComentarios(List<ForumComentario> forumComentarios) {
-		this.forumComentarios = forumComentarios;
-	}
-
-	public ForumComentario addForumComentario(ForumComentario forumComentario) {
-		getForumComentarios().add(forumComentario);
-		forumComentario.setForum(this);
-
-		return forumComentario;
-	}
-
-	public ForumComentario removeForumComentario(ForumComentario forumComentario) {
-		getForumComentarios().remove(forumComentario);
-		forumComentario.setForum(null);
-
-		return forumComentario;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.Forum[ idforum=" + idforum + " ]";
+    }
+    
 }

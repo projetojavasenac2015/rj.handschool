@@ -1,190 +1,181 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the turma database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@NamedQuery(name="Turma.findAll", query="SELECT t FROM Turma t")
+@Table(name = "turma")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t"),
+    @NamedQuery(name = "Turma.findByIdturma", query = "SELECT t FROM Turma t WHERE t.idturma = :idturma"),
+    @NamedQuery(name = "Turma.findByAno", query = "SELECT t FROM Turma t WHERE t.ano = :ano"),
+    @NamedQuery(name = "Turma.findByAtivo", query = "SELECT t FROM Turma t WHERE t.ativo = :ativo"),
+    @NamedQuery(name = "Turma.findByDataHoraCadastro", query = "SELECT t FROM Turma t WHERE t.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "Turma.findByDataUltAtualizacao", query = "SELECT t FROM Turma t WHERE t.dataUltAtualizacao = :dataUltAtualizacao"),
+    @NamedQuery(name = "Turma.findByDescricaoTurma", query = "SELECT t FROM Turma t WHERE t.descricaoTurma = :descricaoTurma"),
+    @NamedQuery(name = "Turma.findByQuantidadeAlunos", query = "SELECT t FROM Turma t WHERE t.quantidadeAlunos = :quantidadeAlunos")})
 public class Turma implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idturma")
+    private Integer idturma;
+    @Basic(optional = false)
+    @Column(name = "ano")
+    private int ano;
+    @Basic(optional = false)
+    @Column(name = "ativo")
+    private short ativo;
+    @Column(name = "DATA_HORA_CADASTRO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraCadastro;
+    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltAtualizacao;
+    @Column(name = "DESCRICAO_TURMA")
+    private String descricaoTurma;
+    @Column(name = "QUANTIDADE_ALUNOS")
+    private Integer quantidadeAlunos;
+    @OneToMany(mappedBy = "idturma")
+    private List<Aula> aulaList;
+    @JoinColumn(name = "IDCURSO", referencedColumnName = "idcurso")
+    @ManyToOne
+    private Curso idcurso;
+    @OneToMany(mappedBy = "idturma")
+    private List<Notas> notasList;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idturma;
+    public Turma() {
+    }
 
-	private int ano;
+    public Turma(Integer idturma) {
+        this.idturma = idturma;
+    }
 
-	private byte ativo;
+    public Turma(Integer idturma, int ano, short ativo) {
+        this.idturma = idturma;
+        this.ano = ano;
+        this.ativo = ativo;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_HORA_CADASTRO")
-	private Date dataHoraCadastro;
+    public Integer getIdturma() {
+        return idturma;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_ULT_ATUALIZACAO")
-	private Date dataUltAtualizacao;
+    public void setIdturma(Integer idturma) {
+        this.idturma = idturma;
+    }
 
-	@Column(name="DESCRICAO_TURMA")
-	private String descricaoTurma;
+    public int getAno() {
+        return ano;
+    }
 
-	@Column(name="QUANTIDADE_ALUNOS")
-	private int quantidadeAlunos;
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
 
-	//bi-directional many-to-one association to Aluno
-	@OneToMany(mappedBy="turma")
-	private List<Aluno> alunos;
+    public short getAtivo() {
+        return ativo;
+    }
 
-	//bi-directional many-to-one association to Aula
-	@OneToMany(mappedBy="turma")
-	private List<Aula> aulas;
+    public void setAtivo(short ativo) {
+        this.ativo = ativo;
+    }
 
-	//bi-directional many-to-one association to Nota
-	@OneToMany(mappedBy="turma")
-	private List<Nota> notas;
+    public Date getDataHoraCadastro() {
+        return dataHoraCadastro;
+    }
 
-	//bi-directional many-to-one association to Curso
-	@ManyToOne
-	@JoinColumn(name="IDCURSO")
-	private Curso curso;
+    public void setDataHoraCadastro(Date dataHoraCadastro) {
+        this.dataHoraCadastro = dataHoraCadastro;
+    }
 
-	public Turma() {
-	}
+    public Date getDataUltAtualizacao() {
+        return dataUltAtualizacao;
+    }
 
-	public int getIdturma() {
-		return this.idturma;
-	}
+    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
+        this.dataUltAtualizacao = dataUltAtualizacao;
+    }
 
-	public void setIdturma(int idturma) {
-		this.idturma = idturma;
-	}
+    public String getDescricaoTurma() {
+        return descricaoTurma;
+    }
 
-	public int getAno() {
-		return this.ano;
-	}
+    public void setDescricaoTurma(String descricaoTurma) {
+        this.descricaoTurma = descricaoTurma;
+    }
 
-	public void setAno(int ano) {
-		this.ano = ano;
-	}
+    public Integer getQuantidadeAlunos() {
+        return quantidadeAlunos;
+    }
 
-	public byte getAtivo() {
-		return this.ativo;
-	}
+    public void setQuantidadeAlunos(Integer quantidadeAlunos) {
+        this.quantidadeAlunos = quantidadeAlunos;
+    }
 
-	public void setAtivo(byte ativo) {
-		this.ativo = ativo;
-	}
+    @XmlTransient
+    public List<Aula> getAulaList() {
+        return aulaList;
+    }
 
-	public Date getDataHoraCadastro() {
-		return this.dataHoraCadastro;
-	}
+    public void setAulaList(List<Aula> aulaList) {
+        this.aulaList = aulaList;
+    }
 
-	public void setDataHoraCadastro(Date dataHoraCadastro) {
-		this.dataHoraCadastro = dataHoraCadastro;
-	}
+    public Curso getIdcurso() {
+        return idcurso;
+    }
 
-	public Date getDataUltAtualizacao() {
-		return this.dataUltAtualizacao;
-	}
+    public void setIdcurso(Curso idcurso) {
+        this.idcurso = idcurso;
+    }
 
-	public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-		this.dataUltAtualizacao = dataUltAtualizacao;
-	}
+    @XmlTransient
+    public List<Notas> getNotasList() {
+        return notasList;
+    }
 
-	public String getDescricaoTurma() {
-		return this.descricaoTurma;
-	}
+    public void setNotasList(List<Notas> notasList) {
+        this.notasList = notasList;
+    }
 
-	public void setDescricaoTurma(String descricaoTurma) {
-		this.descricaoTurma = descricaoTurma;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idturma != null ? idturma.hashCode() : 0);
+        return hash;
+    }
 
-	public int getQuantidadeAlunos() {
-		return this.quantidadeAlunos;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Turma)) {
+            return false;
+        }
+        Turma other = (Turma) object;
+        if ((this.idturma == null && other.idturma != null) || (this.idturma != null && !this.idturma.equals(other.idturma))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setQuantidadeAlunos(int quantidadeAlunos) {
-		this.quantidadeAlunos = quantidadeAlunos;
-	}
-
-	public List<Aluno> getAlunos() {
-		return this.alunos;
-	}
-
-	public void setAlunos(List<Aluno> alunos) {
-		this.alunos = alunos;
-	}
-
-	public Aluno addAluno(Aluno aluno) {
-		getAlunos().add(aluno);
-		aluno.setTurma(this);
-
-		return aluno;
-	}
-
-	public Aluno removeAluno(Aluno aluno) {
-		getAlunos().remove(aluno);
-		aluno.setTurma(null);
-
-		return aluno;
-	}
-
-	public List<Aula> getAulas() {
-		return this.aulas;
-	}
-
-	public void setAulas(List<Aula> aulas) {
-		this.aulas = aulas;
-	}
-
-	public Aula addAula(Aula aula) {
-		getAulas().add(aula);
-		aula.setTurma(this);
-
-		return aula;
-	}
-
-	public Aula removeAula(Aula aula) {
-		getAulas().remove(aula);
-		aula.setTurma(null);
-
-		return aula;
-	}
-
-	public List<Nota> getNotas() {
-		return this.notas;
-	}
-
-	public void setNotas(List<Nota> notas) {
-		this.notas = notas;
-	}
-
-	public Nota addNota(Nota nota) {
-		getNotas().add(nota);
-		nota.setTurma(this);
-
-		return nota;
-	}
-
-	public Nota removeNota(Nota nota) {
-		getNotas().remove(nota);
-		nota.setTurma(null);
-
-		return nota;
-	}
-
-	public Curso getCurso() {
-		return this.curso;
-	}
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.Turma[ idturma=" + idturma + " ]";
+    }
+    
 }

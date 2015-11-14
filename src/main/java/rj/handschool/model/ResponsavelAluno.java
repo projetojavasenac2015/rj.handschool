@@ -1,65 +1,102 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * The persistent class for the responsavel_aluno database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@Table(name="responsavel_aluno")
-@NamedQuery(name="ResponsavelAluno.findAll", query="SELECT r FROM ResponsavelAluno r")
+@Table(name = "responsavel_aluno")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "ResponsavelAluno.findAll", query = "SELECT r FROM ResponsavelAluno r"),
+    @NamedQuery(name = "ResponsavelAluno.findByIdrespaluno", query = "SELECT r FROM ResponsavelAluno r WHERE r.idrespaluno = :idrespaluno"),
+    @NamedQuery(name = "ResponsavelAluno.findByNome", query = "SELECT r FROM ResponsavelAluno r WHERE r.nome = :nome"),
+    @NamedQuery(name = "ResponsavelAluno.findByParentesco", query = "SELECT r FROM ResponsavelAluno r WHERE r.parentesco = :parentesco"),
+    @NamedQuery(name = "ResponsavelAluno.findByMatricula", query = "SELECT r FROM ResponsavelAluno r WHERE r.matricula = :matricula")})
 public class ResponsavelAluno implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idrespaluno")
+    private Integer idrespaluno;
+    @Column(name = "nome")
+    private String nome;
+    @Column(name = "parentesco")
+    private String parentesco;
+    @Column(name = "MATRICULA")
+    private String matricula;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idrespaluno;
+    public ResponsavelAluno() {
+    }
 
-	private String nome;
+    public ResponsavelAluno(Integer idrespaluno) {
+        this.idrespaluno = idrespaluno;
+    }
 
-	private String parentesco;
+    public Integer getIdrespaluno() {
+        return idrespaluno;
+    }
 
-	//bi-directional many-to-one association to Aluno
-	@ManyToOne
-	@JoinColumn(name="MATRICULA")
-	private Aluno aluno;
+    public void setIdrespaluno(Integer idrespaluno) {
+        this.idrespaluno = idrespaluno;
+    }
 
-	public ResponsavelAluno() {
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public int getIdrespaluno() {
-		return this.idrespaluno;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setIdrespaluno(int idrespaluno) {
-		this.idrespaluno = idrespaluno;
-	}
+    public String getParentesco() {
+        return parentesco;
+    }
 
-	public String getNome() {
-		return this.nome;
-	}
+    public void setParentesco(String parentesco) {
+        this.parentesco = parentesco;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public String getMatricula() {
+        return matricula;
+    }
 
-	public String getParentesco() {
-		return this.parentesco;
-	}
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
-	public void setParentesco(String parentesco) {
-		this.parentesco = parentesco;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idrespaluno != null ? idrespaluno.hashCode() : 0);
+        return hash;
+    }
 
-	public Aluno getAluno() {
-		return this.aluno;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof ResponsavelAluno)) {
+            return false;
+        }
+        ResponsavelAluno other = (ResponsavelAluno) object;
+        if ((this.idrespaluno == null && other.idrespaluno != null) || (this.idrespaluno != null && !this.idrespaluno.equals(other.idrespaluno))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.ResponsavelAluno[ idrespaluno=" + idrespaluno + " ]";
+    }
+    
 }
