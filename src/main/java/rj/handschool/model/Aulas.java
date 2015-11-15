@@ -46,7 +46,7 @@ public class Aulas implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aulas")
     private List<AtividadeAula> atividadeAulaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aulas")
-    private List<Listapresenca> listapresencaList;
+    private List<ListaPresenca> listapresencaList;
 
     public Aulas() {
     }
@@ -105,11 +105,11 @@ public class Aulas implements Serializable {
     }
 
     @XmlTransient
-    public List<Listapresenca> getListapresencaList() {
+    public List<ListaPresenca> getListapresencaList() {
         return listapresencaList;
     }
 
-    public void setListapresencaList(List<Listapresenca> listapresencaList) {
+    public void setListapresencaList(List<ListaPresenca> listapresencaList) {
         this.listapresencaList = listapresencaList;
     }
 

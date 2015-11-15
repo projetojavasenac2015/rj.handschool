@@ -43,7 +43,7 @@ public class Turma implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma")
     private List<QuadroAvisos> quadroAvisosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma")
-    private List<Listapresenca> listapresencaList;
+    private List<ListaPresenca> listapresencaList;
     @JoinColumn(name = "id_curso", referencedColumnName = "idcurso", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Curso curso;
@@ -109,11 +109,11 @@ public class Turma implements Serializable {
     }
 
     @XmlTransient
-    public List<Listapresenca> getListapresencaList() {
+    public List<ListaPresenca> getListapresencaList() {
         return listapresencaList;
     }
 
-    public void setListapresencaList(List<Listapresenca> listapresencaList) {
+    public void setListapresencaList(List<ListaPresenca> listapresencaList) {
         this.listapresencaList = listapresencaList;
     }
 
