@@ -1,139 +1,157 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the perfil database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@NamedQuery(name="Perfil.findAll", query="SELECT p FROM Perfil p")
+@Table(name = "perfil")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p"),
+    @NamedQuery(name = "Perfil.findByIdperfil", query = "SELECT p FROM Perfil p WHERE p.idperfil = :idperfil"),
+    @NamedQuery(name = "Perfil.findByAtivo", query = "SELECT p FROM Perfil p WHERE p.ativo = :ativo"),
+    @NamedQuery(name = "Perfil.findByDataHoraCadastro", query = "SELECT p FROM Perfil p WHERE p.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "Perfil.findByDataUltAtualizacao", query = "SELECT p FROM Perfil p WHERE p.dataUltAtualizacao = :dataUltAtualizacao"),
+    @NamedQuery(name = "Perfil.findByDescricao", query = "SELECT p FROM Perfil p WHERE p.descricao = :descricao"),
+    @NamedQuery(name = "Perfil.findByNome", query = "SELECT p FROM Perfil p WHERE p.nome = :nome")})
 public class Perfil implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idperfil")
+    private Integer idperfil;
+    @Basic(optional = false)
+    @Column(name = "ativo")
+    private short ativo;
+    @Column(name = "DATA_HORA_CADASTRO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraCadastro;
+    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltAtualizacao;
+    @Column(name = "descricao")
+    private String descricao;
+    @Column(name = "nome")
+    private String nome;
+    @OneToMany(mappedBy = "idperfil")
+    private List<Acesso> acessoList;
+    @OneToMany(mappedBy = "idperfil")
+    private List<Login> loginList;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idperfil;
+    public Perfil() {
+    }
 
-	private byte ativo;
+    public Perfil(Integer idperfil) {
+        this.idperfil = idperfil;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_HORA_CADASTRO")
-	private Date dataHoraCadastro;
+    public Perfil(Integer idperfil, short ativo) {
+        this.idperfil = idperfil;
+        this.ativo = ativo;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_ULT_ATUALIZACAO")
-	private Date dataUltAtualizacao;
+    public Integer getIdperfil() {
+        return idperfil;
+    }
 
-	private String descricao;
+    public void setIdperfil(Integer idperfil) {
+        this.idperfil = idperfil;
+    }
 
-	private String nome;
+    public short getAtivo() {
+        return ativo;
+    }
 
-	//bi-directional many-to-one association to Acesso
-	@OneToMany(mappedBy="perfil")
-	private List<Acesso> acessos;
+    public void setAtivo(short ativo) {
+        this.ativo = ativo;
+    }
 
-	//bi-directional many-to-one association to Login
-	@OneToMany(mappedBy="perfil")
-	private List<Login> logins;
+    public Date getDataHoraCadastro() {
+        return dataHoraCadastro;
+    }
 
-	public Perfil() {
-	}
+    public void setDataHoraCadastro(Date dataHoraCadastro) {
+        this.dataHoraCadastro = dataHoraCadastro;
+    }
 
-	public int getIdperfil() {
-		return this.idperfil;
-	}
+    public Date getDataUltAtualizacao() {
+        return dataUltAtualizacao;
+    }
 
-	public void setIdperfil(int idperfil) {
-		this.idperfil = idperfil;
-	}
+    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
+        this.dataUltAtualizacao = dataUltAtualizacao;
+    }
 
-	public byte getAtivo() {
-		return this.ativo;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
 
-	public void setAtivo(byte ativo) {
-		this.ativo = ativo;
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-	public Date getDataHoraCadastro() {
-		return this.dataHoraCadastro;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setDataHoraCadastro(Date dataHoraCadastro) {
-		this.dataHoraCadastro = dataHoraCadastro;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public Date getDataUltAtualizacao() {
-		return this.dataUltAtualizacao;
-	}
+    @XmlTransient
+    public List<Acesso> getAcessoList() {
+        return acessoList;
+    }
 
-	public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-		this.dataUltAtualizacao = dataUltAtualizacao;
-	}
+    public void setAcessoList(List<Acesso> acessoList) {
+        this.acessoList = acessoList;
+    }
 
-	public String getDescricao() {
-		return this.descricao;
-	}
+    @XmlTransient
+    public List<Login> getLoginList() {
+        return loginList;
+    }
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    public void setLoginList(List<Login> loginList) {
+        this.loginList = loginList;
+    }
 
-	public String getNome() {
-		return this.nome;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idperfil != null ? idperfil.hashCode() : 0);
+        return hash;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Perfil)) {
+            return false;
+        }
+        Perfil other = (Perfil) object;
+        if ((this.idperfil == null && other.idperfil != null) || (this.idperfil != null && !this.idperfil.equals(other.idperfil))) {
+            return false;
+        }
+        return true;
+    }
 
-	public List<Acesso> getAcessos() {
-		return this.acessos;
-	}
-
-	public void setAcessos(List<Acesso> acessos) {
-		this.acessos = acessos;
-	}
-
-	public Acesso addAcesso(Acesso acesso) {
-		getAcessos().add(acesso);
-		acesso.setPerfil(this);
-
-		return acesso;
-	}
-
-	public Acesso removeAcesso(Acesso acesso) {
-		getAcessos().remove(acesso);
-		acesso.setPerfil(null);
-
-		return acesso;
-	}
-
-	public List<Login> getLogins() {
-		return this.logins;
-	}
-
-	public void setLogins(List<Login> logins) {
-		this.logins = logins;
-	}
-
-	public Login addLogin(Login login) {
-		getLogins().add(login);
-		login.setPerfil(this);
-
-		return login;
-	}
-
-	public Login removeLogin(Login login) {
-		getLogins().remove(login);
-		login.setPerfil(null);
-
-		return login;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.Perfil[ idperfil=" + idperfil + " ]";
+    }
+    
 }

@@ -1,67 +1,93 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * The persistent class for the disciplina_aluno database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@Table(name="disciplina_aluno")
-@NamedQuery(name="DisciplinaAluno.findAll", query="SELECT d FROM DisciplinaAluno d")
+@Table(name = "disciplina_aluno")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "DisciplinaAluno.findAll", query = "SELECT d FROM DisciplinaAluno d"),
+    @NamedQuery(name = "DisciplinaAluno.findByIddisciplina", query = "SELECT d FROM DisciplinaAluno d WHERE d.disciplinaAlunoPK.iddisciplina = :iddisciplina"),
+    @NamedQuery(name = "DisciplinaAluno.findByMatricula", query = "SELECT d FROM DisciplinaAluno d WHERE d.disciplinaAlunoPK.matricula = :matricula"),
+    @NamedQuery(name = "DisciplinaAluno.findByStatus", query = "SELECT d FROM DisciplinaAluno d WHERE d.status = :status")})
 public class DisciplinaAluno implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected DisciplinaAlunoPK disciplinaAlunoPK;
+    @Column(name = "status")
+    private String status;
+    @JoinColumn(name = "iddisciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Disciplina disciplina;
 
-	@EmbeddedId
-	private DisciplinaAlunoPK id;
+    public DisciplinaAluno() {
+    }
 
-	private String status;
+    public DisciplinaAluno(DisciplinaAlunoPK disciplinaAlunoPK) {
+        this.disciplinaAlunoPK = disciplinaAlunoPK;
+    }
 
-	//bi-directional many-to-one association to Aluno
-	@ManyToOne
-	@JoinColumn(name="MATRICULA")
-	private Aluno aluno;
+    public DisciplinaAluno(int iddisciplina, String matricula) {
+        this.disciplinaAlunoPK = new DisciplinaAlunoPK(iddisciplina, matricula);
+    }
 
-	//bi-directional many-to-one association to Disciplina
-	@ManyToOne
-	@JoinColumn(name="IDDISCIPLINA")
-	private Disciplina disciplina;
+    public DisciplinaAlunoPK getDisciplinaAlunoPK() {
+        return disciplinaAlunoPK;
+    }
 
-	public DisciplinaAluno() {
-	}
+    public void setDisciplinaAlunoPK(DisciplinaAlunoPK disciplinaAlunoPK) {
+        this.disciplinaAlunoPK = disciplinaAlunoPK;
+    }
 
-	public DisciplinaAlunoPK getId() {
-		return this.id;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setId(DisciplinaAlunoPK id) {
-		this.id = id;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getStatus() {
-		return this.status;
-	}
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
 
-	public Aluno getAluno() {
-		return this.aluno;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (disciplinaAlunoPK != null ? disciplinaAlunoPK.hashCode() : 0);
+        return hash;
+    }
 
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof DisciplinaAluno)) {
+            return false;
+        }
+        DisciplinaAluno other = (DisciplinaAluno) object;
+        if ((this.disciplinaAlunoPK == null && other.disciplinaAlunoPK != null) || (this.disciplinaAlunoPK != null && !this.disciplinaAlunoPK.equals(other.disciplinaAlunoPK))) {
+            return false;
+        }
+        return true;
+    }
 
-	public Disciplina getDisciplina() {
-		return this.disciplina;
-	}
-
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.DisciplinaAluno[ disciplinaAlunoPK=" + disciplinaAlunoPK + " ]";
+    }
+    
 }

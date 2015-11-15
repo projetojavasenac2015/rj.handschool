@@ -1,92 +1,135 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * The persistent class for the disciplina_curso database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@Table(name="disciplina_curso")
-@NamedQuery(name="DisciplinaCurso.findAll", query="SELECT d FROM DisciplinaCurso d")
+@Table(name = "disciplina_curso")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "DisciplinaCurso.findAll", query = "SELECT d FROM DisciplinaCurso d"),
+    @NamedQuery(name = "DisciplinaCurso.findByIdcurso", query = "SELECT d FROM DisciplinaCurso d WHERE d.disciplinaCursoPK.idcurso = :idcurso"),
+    @NamedQuery(name = "DisciplinaCurso.findByIddisciplina", query = "SELECT d FROM DisciplinaCurso d WHERE d.disciplinaCursoPK.iddisciplina = :iddisciplina"),
+    @NamedQuery(name = "DisciplinaCurso.findByAtivo", query = "SELECT d FROM DisciplinaCurso d WHERE d.ativo = :ativo"),
+    @NamedQuery(name = "DisciplinaCurso.findByDataHoraCadastro", query = "SELECT d FROM DisciplinaCurso d WHERE d.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "DisciplinaCurso.findByDataUltAtualizacao", query = "SELECT d FROM DisciplinaCurso d WHERE d.dataUltAtualizacao = :dataUltAtualizacao")})
 public class DisciplinaCurso implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected DisciplinaCursoPK disciplinaCursoPK;
+    @Basic(optional = false)
+    @Column(name = "ativo")
+    private short ativo;
+    @Column(name = "DATA_HORA_CADASTRO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraCadastro;
+    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltAtualizacao;
+    @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Curso curso;
+    @JoinColumn(name = "iddisciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Disciplina disciplina;
 
-	@EmbeddedId
-	private DisciplinaCursoPK id;
+    public DisciplinaCurso() {
+    }
 
-	private byte ativo;
+    public DisciplinaCurso(DisciplinaCursoPK disciplinaCursoPK) {
+        this.disciplinaCursoPK = disciplinaCursoPK;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_HORA_CADASTRO")
-	private Date dataHoraCadastro;
+    public DisciplinaCurso(DisciplinaCursoPK disciplinaCursoPK, short ativo) {
+        this.disciplinaCursoPK = disciplinaCursoPK;
+        this.ativo = ativo;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_ULT_ATUALIZACAO")
-	private Date dataUltAtualizacao;
+    public DisciplinaCurso(int idcurso, int iddisciplina) {
+        this.disciplinaCursoPK = new DisciplinaCursoPK(idcurso, iddisciplina);
+    }
 
-	//bi-directional many-to-one association to Curso
-	@ManyToOne
-	@JoinColumn(name="IDCURSO")
-	private Curso curso;
+    public DisciplinaCursoPK getDisciplinaCursoPK() {
+        return disciplinaCursoPK;
+    }
 
-	//bi-directional many-to-one association to Disciplina
-	@ManyToOne
-	@JoinColumn(name="IDDISCIPLINA")
-	private Disciplina disciplina;
+    public void setDisciplinaCursoPK(DisciplinaCursoPK disciplinaCursoPK) {
+        this.disciplinaCursoPK = disciplinaCursoPK;
+    }
 
-	public DisciplinaCurso() {
-	}
+    public short getAtivo() {
+        return ativo;
+    }
 
-	public DisciplinaCursoPK getId() {
-		return this.id;
-	}
+    public void setAtivo(short ativo) {
+        this.ativo = ativo;
+    }
 
-	public void setId(DisciplinaCursoPK id) {
-		this.id = id;
-	}
+    public Date getDataHoraCadastro() {
+        return dataHoraCadastro;
+    }
 
-	public byte getAtivo() {
-		return this.ativo;
-	}
+    public void setDataHoraCadastro(Date dataHoraCadastro) {
+        this.dataHoraCadastro = dataHoraCadastro;
+    }
 
-	public void setAtivo(byte ativo) {
-		this.ativo = ativo;
-	}
+    public Date getDataUltAtualizacao() {
+        return dataUltAtualizacao;
+    }
 
-	public Date getDataHoraCadastro() {
-		return this.dataHoraCadastro;
-	}
+    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
+        this.dataUltAtualizacao = dataUltAtualizacao;
+    }
 
-	public void setDataHoraCadastro(Date dataHoraCadastro) {
-		this.dataHoraCadastro = dataHoraCadastro;
-	}
+    public Curso getCurso() {
+        return curso;
+    }
 
-	public Date getDataUltAtualizacao() {
-		return this.dataUltAtualizacao;
-	}
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
 
-	public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-		this.dataUltAtualizacao = dataUltAtualizacao;
-	}
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
 
-	public Curso getCurso() {
-		return this.curso;
-	}
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
 
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (disciplinaCursoPK != null ? disciplinaCursoPK.hashCode() : 0);
+        return hash;
+    }
 
-	public Disciplina getDisciplina() {
-		return this.disciplina;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof DisciplinaCurso)) {
+            return false;
+        }
+        DisciplinaCurso other = (DisciplinaCurso) object;
+        if ((this.disciplinaCursoPK == null && other.disciplinaCursoPK != null) || (this.disciplinaCursoPK != null && !this.disciplinaCursoPK.equals(other.disciplinaCursoPK))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.DisciplinaCurso[ disciplinaCursoPK=" + disciplinaCursoPK + " ]";
+    }
+    
 }

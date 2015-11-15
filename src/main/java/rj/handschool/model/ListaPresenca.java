@@ -1,97 +1,127 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * The persistent class for the lista_presenca database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@Table(name="lista_presenca")
-@NamedQuery(name="ListaPresenca.findAll", query="SELECT l FROM ListaPresenca l")
+@Table(name = "lista_presenca")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "ListaPresenca.findAll", query = "SELECT l FROM ListaPresenca l"),
+    @NamedQuery(name = "ListaPresenca.findByIdlistaPresenca", query = "SELECT l FROM ListaPresenca l WHERE l.idlistaPresenca = :idlistaPresenca"),
+    @NamedQuery(name = "ListaPresenca.findByDataHoraCadastro", query = "SELECT l FROM ListaPresenca l WHERE l.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "ListaPresenca.findByDataUltAtualizacao", query = "SELECT l FROM ListaPresenca l WHERE l.dataUltAtualizacao = :dataUltAtualizacao"),
+    @NamedQuery(name = "ListaPresenca.findByMatricula", query = "SELECT l FROM ListaPresenca l WHERE l.matricula = :matricula")})
 public class ListaPresenca implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "IDLISTA_PRESENCA")
+    private Integer idlistaPresenca;
+    @Column(name = "DATA_HORA_CADASTRO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraCadastro;
+    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltAtualizacao;
+    @Column(name = "MATRICULA")
+    private String matricula;
+    @JoinColumn(name = "IDAULAS", referencedColumnName = "idaulas")
+    @ManyToOne
+    private Aula idaulas;
+    @JoinColumn(name = "IDTIPO_REGISTRO", referencedColumnName = "IDTIPO_REGISTRO")
+    @ManyToOne
+    private TipoRegistro idtipoRegistro;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="IDLISTA_PRESENCA")
-	private int idlistaPresenca;
+    public ListaPresenca() {
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_HORA_CADASTRO")
-	private Date dataHoraCadastro;
+    public ListaPresenca(Integer idlistaPresenca) {
+        this.idlistaPresenca = idlistaPresenca;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_ULT_ATUALIZACAO")
-	private Date dataUltAtualizacao;
+    public Integer getIdlistaPresenca() {
+        return idlistaPresenca;
+    }
 
-	//bi-directional many-to-one association to Aluno
-	@ManyToOne
-	@JoinColumn(name="MATRICULA")
-	private Aluno aluno;
+    public void setIdlistaPresenca(Integer idlistaPresenca) {
+        this.idlistaPresenca = idlistaPresenca;
+    }
 
-	//bi-directional many-to-one association to TipoRegistro
-	@ManyToOne
-	@JoinColumn(name="IDTIPO_REGISTRO")
-	private TipoRegistro tipoRegistro;
+    public Date getDataHoraCadastro() {
+        return dataHoraCadastro;
+    }
 
-	//bi-directional many-to-one association to Aula
-	@ManyToOne
-	@JoinColumn(name="IDAULAS")
-	private Aula aula;
+    public void setDataHoraCadastro(Date dataHoraCadastro) {
+        this.dataHoraCadastro = dataHoraCadastro;
+    }
 
-	public ListaPresenca() {
-	}
+    public Date getDataUltAtualizacao() {
+        return dataUltAtualizacao;
+    }
 
-	public int getIdlistaPresenca() {
-		return this.idlistaPresenca;
-	}
+    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
+        this.dataUltAtualizacao = dataUltAtualizacao;
+    }
 
-	public void setIdlistaPresenca(int idlistaPresenca) {
-		this.idlistaPresenca = idlistaPresenca;
-	}
+    public String getMatricula() {
+        return matricula;
+    }
 
-	public Date getDataHoraCadastro() {
-		return this.dataHoraCadastro;
-	}
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
-	public void setDataHoraCadastro(Date dataHoraCadastro) {
-		this.dataHoraCadastro = dataHoraCadastro;
-	}
+    public Aula getIdaulas() {
+        return idaulas;
+    }
 
-	public Date getDataUltAtualizacao() {
-		return this.dataUltAtualizacao;
-	}
+    public void setIdaulas(Aula idaulas) {
+        this.idaulas = idaulas;
+    }
 
-	public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-		this.dataUltAtualizacao = dataUltAtualizacao;
-	}
+    public TipoRegistro getIdtipoRegistro() {
+        return idtipoRegistro;
+    }
 
-	public Aluno getAluno() {
-		return this.aluno;
-	}
+    public void setIdtipoRegistro(TipoRegistro idtipoRegistro) {
+        this.idtipoRegistro = idtipoRegistro;
+    }
 
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idlistaPresenca != null ? idlistaPresenca.hashCode() : 0);
+        return hash;
+    }
 
-	public TipoRegistro getTipoRegistro() {
-		return this.tipoRegistro;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof ListaPresenca)) {
+            return false;
+        }
+        ListaPresenca other = (ListaPresenca) object;
+        if ((this.idlistaPresenca == null && other.idlistaPresenca != null) || (this.idlistaPresenca != null && !this.idlistaPresenca.equals(other.idlistaPresenca))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setTipoRegistro(TipoRegistro tipoRegistro) {
-		this.tipoRegistro = tipoRegistro;
-	}
-
-	public Aula getAula() {
-		return this.aula;
-	}
-
-	public void setAula(Aula aula) {
-		this.aula = aula;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.ListaPresenca[ idlistaPresenca=" + idlistaPresenca + " ]";
+    }
+    
 }

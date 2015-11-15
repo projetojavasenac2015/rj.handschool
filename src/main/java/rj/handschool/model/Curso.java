@@ -1,149 +1,162 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the curso database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@NamedQuery(name="Curso.findAll", query="SELECT c FROM Curso c")
+@Table(name = "curso")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"),
+    @NamedQuery(name = "Curso.findByIdcurso", query = "SELECT c FROM Curso c WHERE c.idcurso = :idcurso"),
+    @NamedQuery(name = "Curso.findByDataHoraCadastro", query = "SELECT c FROM Curso c WHERE c.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "Curso.findByDataUltAtualizacao", query = "SELECT c FROM Curso c WHERE c.dataUltAtualizacao = :dataUltAtualizacao"),
+    @NamedQuery(name = "Curso.findByDescricao", query = "SELECT c FROM Curso c WHERE c.descricao = :descricao"),
+    @NamedQuery(name = "Curso.findByEmenta", query = "SELECT c FROM Curso c WHERE c.ementa = :ementa"),
+    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome = :nome")})
 public class Curso implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idcurso")
+    private Integer idcurso;
+    @Column(name = "DATA_HORA_CADASTRO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraCadastro;
+    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltAtualizacao;
+    @Column(name = "descricao")
+    private String descricao;
+    @Column(name = "ementa")
+    private String ementa;
+    @Column(name = "nome")
+    private String nome;
+    @OneToMany(mappedBy = "idcurso")
+    private List<Turma> turmaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+    private List<DisciplinaCurso> disciplinaCursoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+    private List<Modulo> moduloList;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idcurso;
+    public Curso() {
+    }
 
-	//private boolean ativo;
+    public Curso(Integer idcurso) {
+        this.idcurso = idcurso;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_HORA_CADASTRO")
-	private Date dataHoraCadastro;
+    public Integer getIdcurso() {
+        return idcurso;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_ULT_ATUALIZACAO")
-	private Date dataUltAtualizacao;
+    public void setIdcurso(Integer idcurso) {
+        this.idcurso = idcurso;
+    }
 
-	private String descricao;
+    public Date getDataHoraCadastro() {
+        return dataHoraCadastro;
+    }
 
-	private String ementa;
+    public void setDataHoraCadastro(Date dataHoraCadastro) {
+        this.dataHoraCadastro = dataHoraCadastro;
+    }
 
-	private String nome;
+    public Date getDataUltAtualizacao() {
+        return dataUltAtualizacao;
+    }
 
-	//bi-directional many-to-one association to DisciplinaCurso
-	@OneToMany(mappedBy="curso")
-	private List<DisciplinaCurso> disciplinaCursos;
+    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
+        this.dataUltAtualizacao = dataUltAtualizacao;
+    }
 
-	//bi-directional many-to-one association to Turma
-	@OneToMany(mappedBy="curso")
-	private List<Turma> turmas;
+    public String getDescricao() {
+        return descricao;
+    }
 
-	public Curso() {
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-	public int getIdcurso() {
-		return this.idcurso;
-	}
+    public String getEmenta() {
+        return ementa;
+    }
 
-	public void setIdcurso(int idcurso) {
-		this.idcurso = idcurso;
-	}
+    public void setEmenta(String ementa) {
+        this.ementa = ementa;
+    }
 
-	//public boolean getAtivo() {
-	//	return this.ativo;
-	//}
+    public String getNome() {
+        return nome;
+    }
 
-	//public void setAtivo(boolean ativo) {
-	///	this.ativo = ativo;
-	//}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public Date getDataHoraCadastro() {
-		return this.dataHoraCadastro;
-	}
+    @XmlTransient
+    public List<Turma> getTurmaList() {
+        return turmaList;
+    }
 
-	public void setDataHoraCadastro(Date dataHoraCadastro) {
-		this.dataHoraCadastro = dataHoraCadastro;
-	}
+    public void setTurmaList(List<Turma> turmaList) {
+        this.turmaList = turmaList;
+    }
 
-	public Date getDataUltAtualizacao() {
-		return this.dataUltAtualizacao;
-	}
+    @XmlTransient
+    public List<DisciplinaCurso> getDisciplinaCursoList() {
+        return disciplinaCursoList;
+    }
 
-	public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-		this.dataUltAtualizacao = dataUltAtualizacao;
-	}
+    public void setDisciplinaCursoList(List<DisciplinaCurso> disciplinaCursoList) {
+        this.disciplinaCursoList = disciplinaCursoList;
+    }
 
-	public String getDescricao() {
-		return this.descricao;
-	}
+    @XmlTransient
+    public List<Modulo> getModuloList() {
+        return moduloList;
+    }
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    public void setModuloList(List<Modulo> moduloList) {
+        this.moduloList = moduloList;
+    }
 
-	public String getEmenta() {
-		return this.ementa;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idcurso != null ? idcurso.hashCode() : 0);
+        return hash;
+    }
 
-	public void setEmenta(String ementa) {
-		this.ementa = ementa;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Curso)) {
+            return false;
+        }
+        Curso other = (Curso) object;
+        if ((this.idcurso == null && other.idcurso != null) || (this.idcurso != null && !this.idcurso.equals(other.idcurso))) {
+            return false;
+        }
+        return true;
+    }
 
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public List<DisciplinaCurso> getDisciplinaCursos() {
-		return this.disciplinaCursos;
-	}
-
-	public void setDisciplinaCursos(List<DisciplinaCurso> disciplinaCursos) {
-		this.disciplinaCursos = disciplinaCursos;
-	}
-
-	public DisciplinaCurso addDisciplinaCurso(DisciplinaCurso disciplinaCurso) {
-		getDisciplinaCursos().add(disciplinaCurso);
-		disciplinaCurso.setCurso(this);
-
-		return disciplinaCurso;
-	}
-
-	public DisciplinaCurso removeDisciplinaCurso(DisciplinaCurso disciplinaCurso) {
-		getDisciplinaCursos().remove(disciplinaCurso);
-		disciplinaCurso.setCurso(null);
-
-		return disciplinaCurso;
-	}
-
-	public List<Turma> getTurmas() {
-		return this.turmas;
-	}
-
-	public void setTurmas(List<Turma> turmas) {
-		this.turmas = turmas;
-	}
-
-	public Turma addTurma(Turma turma) {
-		getTurmas().add(turma);
-		turma.setCurso(this);
-
-		return turma;
-	}
-
-	public Turma removeTurma(Turma turma) {
-		getTurmas().remove(turma);
-		turma.setCurso(null);
-
-		return turma;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.Curso[ idcurso=" + idcurso + " ]";
+    }
+    
 }

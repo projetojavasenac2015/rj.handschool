@@ -1,104 +1,144 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * The persistent class for the forum_comentario database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@Table(name="forum_comentario")
-@NamedQuery(name="ForumComentario.findAll", query="SELECT f FROM ForumComentario f")
+@Table(name = "forum_comentario")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "ForumComentario.findAll", query = "SELECT f FROM ForumComentario f"),
+    @NamedQuery(name = "ForumComentario.findByIdforumComentario", query = "SELECT f FROM ForumComentario f WHERE f.idforumComentario = :idforumComentario"),
+    @NamedQuery(name = "ForumComentario.findByAtivo", query = "SELECT f FROM ForumComentario f WHERE f.ativo = :ativo"),
+    @NamedQuery(name = "ForumComentario.findByComentario", query = "SELECT f FROM ForumComentario f WHERE f.comentario = :comentario"),
+    @NamedQuery(name = "ForumComentario.findByDataHoraCadastro", query = "SELECT f FROM ForumComentario f WHERE f.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "ForumComentario.findByDataUltAtualizacao", query = "SELECT f FROM ForumComentario f WHERE f.dataUltAtualizacao = :dataUltAtualizacao")})
 public class ForumComentario implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "IDFORUM_COMENTARIO")
+    private Integer idforumComentario;
+    @Basic(optional = false)
+    @Column(name = "ativo")
+    private short ativo;
+    @Column(name = "comentario")
+    private String comentario;
+    @Column(name = "DATA_HORA_CADASTRO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraCadastro;
+    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltAtualizacao;
+    @JoinColumn(name = "IDFORUM", referencedColumnName = "idforum")
+    @ManyToOne
+    private Forum idforum;
+    @JoinColumn(name = "IDLOGIN", referencedColumnName = "idlogin")
+    @ManyToOne
+    private Login idlogin;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="IDFORUM_COMENTARIO")
-	private int idforumComentario;
+    public ForumComentario() {
+    }
 
-	private byte ativo;
+    public ForumComentario(Integer idforumComentario) {
+        this.idforumComentario = idforumComentario;
+    }
 
-	private String comentario;
+    public ForumComentario(Integer idforumComentario, short ativo) {
+        this.idforumComentario = idforumComentario;
+        this.ativo = ativo;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_HORA_CADASTRO")
-	private Date dataHoraCadastro;
+    public Integer getIdforumComentario() {
+        return idforumComentario;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_ULT_ATUALIZACAO")
-	private Date dataUltAtualizacao;
+    public void setIdforumComentario(Integer idforumComentario) {
+        this.idforumComentario = idforumComentario;
+    }
 
-	//bi-directional many-to-one association to Login
-	@ManyToOne
-	@JoinColumn(name="IDLOGIN")
-	private Login login;
+    public short getAtivo() {
+        return ativo;
+    }
 
-	//bi-directional many-to-one association to Forum
-	@ManyToOne
-	@JoinColumn(name="IDFORUM")
-	private Forum forum;
+    public void setAtivo(short ativo) {
+        this.ativo = ativo;
+    }
 
-	public ForumComentario() {
-	}
+    public String getComentario() {
+        return comentario;
+    }
 
-	public int getIdforumComentario() {
-		return this.idforumComentario;
-	}
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
 
-	public void setIdforumComentario(int idforumComentario) {
-		this.idforumComentario = idforumComentario;
-	}
+    public Date getDataHoraCadastro() {
+        return dataHoraCadastro;
+    }
 
-	public byte getAtivo() {
-		return this.ativo;
-	}
+    public void setDataHoraCadastro(Date dataHoraCadastro) {
+        this.dataHoraCadastro = dataHoraCadastro;
+    }
 
-	public void setAtivo(byte ativo) {
-		this.ativo = ativo;
-	}
+    public Date getDataUltAtualizacao() {
+        return dataUltAtualizacao;
+    }
 
-	public String getComentario() {
-		return this.comentario;
-	}
+    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
+        this.dataUltAtualizacao = dataUltAtualizacao;
+    }
 
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
+    public Forum getIdforum() {
+        return idforum;
+    }
 
-	public Date getDataHoraCadastro() {
-		return this.dataHoraCadastro;
-	}
+    public void setIdforum(Forum idforum) {
+        this.idforum = idforum;
+    }
 
-	public void setDataHoraCadastro(Date dataHoraCadastro) {
-		this.dataHoraCadastro = dataHoraCadastro;
-	}
+    public Login getIdlogin() {
+        return idlogin;
+    }
 
-	public Date getDataUltAtualizacao() {
-		return this.dataUltAtualizacao;
-	}
+    public void setIdlogin(Login idlogin) {
+        this.idlogin = idlogin;
+    }
 
-	public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-		this.dataUltAtualizacao = dataUltAtualizacao;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idforumComentario != null ? idforumComentario.hashCode() : 0);
+        return hash;
+    }
 
-	public Login getLogin() {
-		return this.login;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof ForumComentario)) {
+            return false;
+        }
+        ForumComentario other = (ForumComentario) object;
+        if ((this.idforumComentario == null && other.idforumComentario != null) || (this.idforumComentario != null && !this.idforumComentario.equals(other.idforumComentario))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setLogin(Login login) {
-		this.login = login;
-	}
-
-	public Forum getForum() {
-		return this.forum;
-	}
-
-	public void setForum(Forum forum) {
-		this.forum = forum;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.ForumComentario[ idforumComentario=" + idforumComentario + " ]";
+    }
+    
 }

@@ -1,57 +1,79 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
- * The primary key class for the disciplina_aluno database table.
- * 
+ *
+ * @author Renan
  */
 @Embeddable
 public class DisciplinaAlunoPK implements Serializable {
-	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
+    @Basic(optional = false)
+    @Column(name = "iddisciplina")
+    private int iddisciplina;
+    @Basic(optional = false)
+    @Column(name = "matricula")
+    private String matricula;
 
-	@Column(insertable=false, updatable=false)
-	private String matricula;
+    public DisciplinaAlunoPK() {
+    }
 
-	@Column(insertable=false, updatable=false)
-	private int iddisciplina;
+    public DisciplinaAlunoPK(int iddisciplina, String matricula) {
+        this.iddisciplina = iddisciplina;
+        this.matricula = matricula;
+    }
 
-	public DisciplinaAlunoPK() {
-	}
-	public String getMatricula() {
-		return this.matricula;
-	}
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
-	public int getIddisciplina() {
-		return this.iddisciplina;
-	}
-	public void setIddisciplina(int iddisciplina) {
-		this.iddisciplina = iddisciplina;
-	}
+    public int getIddisciplina() {
+        return iddisciplina;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof DisciplinaAlunoPK)) {
-			return false;
-		}
-		DisciplinaAlunoPK castOther = (DisciplinaAlunoPK)other;
-		return 
-			this.matricula.equals(castOther.matricula)
-			&& (this.iddisciplina == castOther.iddisciplina);
-	}
+    public void setIddisciplina(int iddisciplina) {
+        this.iddisciplina = iddisciplina;
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.matricula.hashCode();
-		hash = hash * prime + this.iddisciplina;
-		
-		return hash;
-	}
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (int) iddisciplina;
+        hash += (matricula != null ? matricula.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof DisciplinaAlunoPK)) {
+            return false;
+        }
+        DisciplinaAlunoPK other = (DisciplinaAlunoPK) object;
+        if (this.iddisciplina != other.iddisciplina) {
+            return false;
+        }
+        if ((this.matricula == null && other.matricula != null) || (this.matricula != null && !this.matricula.equals(other.matricula))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "bd.DisciplinaAlunoPK[ iddisciplina=" + iddisciplina + ", matricula=" + matricula + " ]";
+    }
+    
 }

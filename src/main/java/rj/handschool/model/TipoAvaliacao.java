@@ -1,105 +1,135 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rj.handschool.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the tipo_avaliacao database table.
- * 
+ *
+ * @author Renan
  */
 @Entity
-@Table(name="tipo_avaliacao")
-@NamedQuery(name="TipoAvaliacao.findAll", query="SELECT t FROM TipoAvaliacao t")
+@Table(name = "tipo_avaliacao")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "TipoAvaliacao.findAll", query = "SELECT t FROM TipoAvaliacao t"),
+    @NamedQuery(name = "TipoAvaliacao.findByIdtipoAvaliacao", query = "SELECT t FROM TipoAvaliacao t WHERE t.idtipoAvaliacao = :idtipoAvaliacao"),
+    @NamedQuery(name = "TipoAvaliacao.findByAtivo", query = "SELECT t FROM TipoAvaliacao t WHERE t.ativo = :ativo"),
+    @NamedQuery(name = "TipoAvaliacao.findByDataHoraCadastro", query = "SELECT t FROM TipoAvaliacao t WHERE t.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "TipoAvaliacao.findByDataUltAtualizacao", query = "SELECT t FROM TipoAvaliacao t WHERE t.dataUltAtualizacao = :dataUltAtualizacao"),
+    @NamedQuery(name = "TipoAvaliacao.findByNome", query = "SELECT t FROM TipoAvaliacao t WHERE t.nome = :nome")})
 public class TipoAvaliacao implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "IDTIPO_AVALIACAO")
+    private Integer idtipoAvaliacao;
+    @Basic(optional = false)
+    @Column(name = "ativo")
+    private short ativo;
+    @Column(name = "DATA_HORA_CADASTRO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraCadastro;
+    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltAtualizacao;
+    @Column(name = "nome")
+    private String nome;
+    @OneToMany(mappedBy = "idtipoAvaliacao")
+    private List<Notas> notasList;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="IDTIPO_AVALIACAO")
-	private int idtipoAvaliacao;
+    public TipoAvaliacao() {
+    }
 
-	private byte ativo;
+    public TipoAvaliacao(Integer idtipoAvaliacao) {
+        this.idtipoAvaliacao = idtipoAvaliacao;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_HORA_CADASTRO")
-	private Date dataHoraCadastro;
+    public TipoAvaliacao(Integer idtipoAvaliacao, short ativo) {
+        this.idtipoAvaliacao = idtipoAvaliacao;
+        this.ativo = ativo;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATA_ULT_ATUALIZACAO")
-	private Date dataUltAtualizacao;
+    public Integer getIdtipoAvaliacao() {
+        return idtipoAvaliacao;
+    }
 
-	private String nome;
+    public void setIdtipoAvaliacao(Integer idtipoAvaliacao) {
+        this.idtipoAvaliacao = idtipoAvaliacao;
+    }
 
-	//bi-directional many-to-one association to Nota
-	@OneToMany(mappedBy="tipoAvaliacao")
-	private List<Nota> notas;
+    public short getAtivo() {
+        return ativo;
+    }
 
-	public TipoAvaliacao() {
-	}
+    public void setAtivo(short ativo) {
+        this.ativo = ativo;
+    }
 
-	public int getIdtipoAvaliacao() {
-		return this.idtipoAvaliacao;
-	}
+    public Date getDataHoraCadastro() {
+        return dataHoraCadastro;
+    }
 
-	public void setIdtipoAvaliacao(int idtipoAvaliacao) {
-		this.idtipoAvaliacao = idtipoAvaliacao;
-	}
+    public void setDataHoraCadastro(Date dataHoraCadastro) {
+        this.dataHoraCadastro = dataHoraCadastro;
+    }
 
-	public byte getAtivo() {
-		return this.ativo;
-	}
+    public Date getDataUltAtualizacao() {
+        return dataUltAtualizacao;
+    }
 
-	public void setAtivo(byte ativo) {
-		this.ativo = ativo;
-	}
+    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
+        this.dataUltAtualizacao = dataUltAtualizacao;
+    }
 
-	public Date getDataHoraCadastro() {
-		return this.dataHoraCadastro;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setDataHoraCadastro(Date dataHoraCadastro) {
-		this.dataHoraCadastro = dataHoraCadastro;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public Date getDataUltAtualizacao() {
-		return this.dataUltAtualizacao;
-	}
+    @XmlTransient
+    public List<Notas> getNotasList() {
+        return notasList;
+    }
 
-	public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-		this.dataUltAtualizacao = dataUltAtualizacao;
-	}
+    public void setNotasList(List<Notas> notasList) {
+        this.notasList = notasList;
+    }
 
-	public String getNome() {
-		return this.nome;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idtipoAvaliacao != null ? idtipoAvaliacao.hashCode() : 0);
+        return hash;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof TipoAvaliacao)) {
+            return false;
+        }
+        TipoAvaliacao other = (TipoAvaliacao) object;
+        if ((this.idtipoAvaliacao == null && other.idtipoAvaliacao != null) || (this.idtipoAvaliacao != null && !this.idtipoAvaliacao.equals(other.idtipoAvaliacao))) {
+            return false;
+        }
+        return true;
+    }
 
-	public List<Nota> getNotas() {
-		return this.notas;
-	}
-
-	public void setNotas(List<Nota> notas) {
-		this.notas = notas;
-	}
-
-	public Nota addNota(Nota nota) {
-		getNotas().add(nota);
-		nota.setTipoAvaliacao(this);
-
-		return nota;
-	}
-
-	public Nota removeNota(Nota nota) {
-		getNotas().remove(nota);
-		nota.setTipoAvaliacao(null);
-
-		return nota;
-	}
-
+    @Override
+    public String toString() {
+        return "bd.TipoAvaliacao[ idtipoAvaliacao=" + idtipoAvaliacao + " ]";
+    }
+    
 }
