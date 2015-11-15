@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Listapresenca.findByIdDisciplina", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idDisciplina = :idDisciplina"),
     @NamedQuery(name = "Listapresenca.findByIdAulas", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idAulas = :idAulas"),
     @NamedQuery(name = "Listapresenca.findByIdAluno", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idAluno = :idAluno")})
-public class Listapresenca implements Serializable {
+public class ListaPresenca implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ListapresencaPK listapresencaPK;
@@ -51,14 +51,14 @@ public class Listapresenca implements Serializable {
     @ManyToOne(optional = false)
     private Turma turma;
 
-    public Listapresenca() {
+    public ListaPresenca() {
     }
 
-    public Listapresenca(ListapresencaPK listapresencaPK) {
+    public ListaPresenca(ListapresencaPK listapresencaPK) {
         this.listapresencaPK = listapresencaPK;
     }
 
-    public Listapresenca(int idlistapresenca, int idTurma, int idCurso, int idDisciplina, int idAulas, int idAluno) {
+    public ListaPresenca(int idlistapresenca, int idTurma, int idCurso, int idDisciplina, int idAulas, int idAluno) {
         this.listapresencaPK = new ListapresencaPK(idlistapresenca, idTurma, idCurso, idDisciplina, idAulas, idAluno);
     }
 
@@ -128,10 +128,10 @@ public class Listapresenca implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Listapresenca)) {
+        if (!(object instanceof ListaPresenca)) {
             return false;
         }
-        Listapresenca other = (Listapresenca) object;
+        ListaPresenca other = (ListaPresenca) object;
         if ((this.listapresencaPK == null && other.listapresencaPK != null) || (this.listapresencaPK != null && !this.listapresencaPK.equals(other.listapresencaPK))) {
             return false;
         }

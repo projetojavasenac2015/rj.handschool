@@ -38,7 +38,7 @@ public class Aluno implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
     private List<AvaliacaoAluno> avaliacaoAlunoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
-    private List<Listapresenca> listapresencaList;
+    private List<ListaPresenca> listapresencaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
     private List<Responsaveis> responsaveisList;
     @JoinColumns({
@@ -94,11 +94,11 @@ public class Aluno implements Serializable {
     }
 
     @XmlTransient
-    public List<Listapresenca> getListapresencaList() {
+    public List<ListaPresenca> getListapresencaList() {
         return listapresencaList;
     }
 
-    public void setListapresencaList(List<Listapresenca> listapresencaList) {
+    public void setListapresencaList(List<ListaPresenca> listapresencaList) {
         this.listapresencaList = listapresencaList;
     }
 
