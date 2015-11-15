@@ -20,86 +20,66 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Pessoa.findAll", query = "SELECT p FROM Pessoa p"),
-    @NamedQuery(name = "Pessoa.findByIdpessoa", query = "SELECT p FROM Pessoa p WHERE p.idpessoa = :idpessoa"),
-    @NamedQuery(name = "Pessoa.findByCpf", query = "SELECT p FROM Pessoa p WHERE p.cpf = :cpf"),
+    @NamedQuery(name = "Pessoa.findByIdpessoa", query = "SELECT p FROM Pessoa p WHERE p.pessoaPK.idpessoa = :idpessoa"),
+    @NamedQuery(name = "Pessoa.findByCpf", query = "SELECT p FROM Pessoa p WHERE p.pessoaPK.cpf = :cpf"),
     @NamedQuery(name = "Pessoa.findByDataHoraCadastro", query = "SELECT p FROM Pessoa p WHERE p.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "Pessoa.findByDataUltAlteracao", query = "SELECT p FROM Pessoa p WHERE p.dataUltAlteracao = :dataUltAlteracao"),
     @NamedQuery(name = "Pessoa.findByDataNascimento", query = "SELECT p FROM Pessoa p WHERE p.dataNascimento = :dataNascimento"),
-    @NamedQuery(name = "Pessoa.findByDataUltAtualizacao", query = "SELECT p FROM Pessoa p WHERE p.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "Pessoa.findByEmail", query = "SELECT p FROM Pessoa p WHERE p.email = :email"),
-    @NamedQuery(name = "Pessoa.findByMatricula", query = "SELECT p FROM Pessoa p WHERE p.matricula = :matricula"),
-    @NamedQuery(name = "Pessoa.findByMunicipioNascimento", query = "SELECT p FROM Pessoa p WHERE p.municipioNascimento = :municipioNascimento"),
     @NamedQuery(name = "Pessoa.findByNome", query = "SELECT p FROM Pessoa p WHERE p.nome = :nome"),
-    @NamedQuery(name = "Pessoa.findByPaisNascimento", query = "SELECT p FROM Pessoa p WHERE p.paisNascimento = :paisNascimento"),
     @NamedQuery(name = "Pessoa.findByRg", query = "SELECT p FROM Pessoa p WHERE p.rg = :rg"),
-    @NamedQuery(name = "Pessoa.findByRgDocumento", query = "SELECT p FROM Pessoa p WHERE p.rgDocumento = :rgDocumento"),
-    @NamedQuery(name = "Pessoa.findBySenha", query = "SELECT p FROM Pessoa p WHERE p.senha = :senha")})
+    @NamedQuery(name = "Pessoa.findByEmail", query = "SELECT p FROM Pessoa p WHERE p.email = :email"),
+    @NamedQuery(name = "Pessoa.findBySenha", query = "SELECT p FROM Pessoa p WHERE p.senha = :senha"),
+    @NamedQuery(name = "Pessoa.findByIdTipoPessoa", query = "SELECT p FROM Pessoa p WHERE p.pessoaPK.idTipoPessoa = :idTipoPessoa")})
 public class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idpessoa")
-    private Integer idpessoa;
-    @Column(name = "cpf")
-    private String cpf;
-    @Column(name = "DATA_HORA_CADASTRO")
+    @EmbeddedId
+    protected PessoaPK pessoaPK;
+    @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
-    @Column(name = "DATA_NASCIMENTO")
+    @Column(name = "data_ult_alteracao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltAlteracao;
+    @Column(name = "data_nascimento")
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
-    @Column(name = "DATA_ULT_ATUALIZACAO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataUltAtualizacao;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "matricula")
-    private String matricula;
-    @Column(name = "MUNICIPIO_NASCIMENTO")
-    private String municipioNascimento;
     @Column(name = "nome")
     private String nome;
-    @Column(name = "PAIS_NASCIMENTO")
-    private String paisNascimento;
     @Column(name = "rg")
     private String rg;
-    @Column(name = "RG_DOCUMENTO")
-    private String rgDocumento;
+    @Column(name = "email")
+    private String email;
     @Column(name = "senha")
     private String senha;
-    @JoinColumn(name = "IDTIPO_PESSOA", referencedColumnName = "IDTIPO_PESSOA")
-    @ManyToOne
-    private TipoPessoa idtipoPessoa;
+    @JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "idtipo_pessoa", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private TipoPessoa tipoPessoa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Aluno> alunoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Owner> ownerList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Professor> professorList;
-    @OneToMany(mappedBy = "idpessoa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Login> loginList;
 
     public Pessoa() {
     }
 
-    public Pessoa(Integer idpessoa) {
-        this.idpessoa = idpessoa;
+    public Pessoa(PessoaPK pessoaPK) {
+        this.pessoaPK = pessoaPK;
     }
 
-    public Integer getIdpessoa() {
-        return idpessoa;
+    public Pessoa(int idpessoa, int cpf, int idTipoPessoa) {
+        this.pessoaPK = new PessoaPK(idpessoa, cpf, idTipoPessoa);
     }
 
-    public void setIdpessoa(Integer idpessoa) {
-        this.idpessoa = idpessoa;
+    public PessoaPK getPessoaPK() {
+        return pessoaPK;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setPessoaPK(PessoaPK pessoaPK) {
+        this.pessoaPK = pessoaPK;
     }
 
     public Date getDataHoraCadastro() {
@@ -110,44 +90,20 @@ public class Pessoa implements Serializable {
         this.dataHoraCadastro = dataHoraCadastro;
     }
 
+    public Date getDataUltAlteracao() {
+        return dataUltAlteracao;
+    }
+
+    public void setDataUltAlteracao(Date dataUltAlteracao) {
+        this.dataUltAlteracao = dataUltAlteracao;
+    }
+
     public Date getDataNascimento() {
         return dataNascimento;
     }
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
-    }
-
-    public Date getDataUltAtualizacao() {
-        return dataUltAtualizacao;
-    }
-
-    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-        this.dataUltAtualizacao = dataUltAtualizacao;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
-    public String getMunicipioNascimento() {
-        return municipioNascimento;
-    }
-
-    public void setMunicipioNascimento(String municipioNascimento) {
-        this.municipioNascimento = municipioNascimento;
     }
 
     public String getNome() {
@@ -158,14 +114,6 @@ public class Pessoa implements Serializable {
         this.nome = nome;
     }
 
-    public String getPaisNascimento() {
-        return paisNascimento;
-    }
-
-    public void setPaisNascimento(String paisNascimento) {
-        this.paisNascimento = paisNascimento;
-    }
-
     public String getRg() {
         return rg;
     }
@@ -174,12 +122,12 @@ public class Pessoa implements Serializable {
         this.rg = rg;
     }
 
-    public String getRgDocumento() {
-        return rgDocumento;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRgDocumento(String rgDocumento) {
-        this.rgDocumento = rgDocumento;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {
@@ -190,12 +138,12 @@ public class Pessoa implements Serializable {
         this.senha = senha;
     }
 
-    public TipoPessoa getIdtipoPessoa() {
-        return idtipoPessoa;
+    public TipoPessoa getTipoPessoa() {
+        return tipoPessoa;
     }
 
-    public void setIdtipoPessoa(TipoPessoa idtipoPessoa) {
-        this.idtipoPessoa = idtipoPessoa;
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
     }
 
     @XmlTransient
@@ -237,7 +185,7 @@ public class Pessoa implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idpessoa != null ? idpessoa.hashCode() : 0);
+        hash += (pessoaPK != null ? pessoaPK.hashCode() : 0);
         return hash;
     }
 
@@ -248,7 +196,7 @@ public class Pessoa implements Serializable {
             return false;
         }
         Pessoa other = (Pessoa) object;
-        if ((this.idpessoa == null && other.idpessoa != null) || (this.idpessoa != null && !this.idpessoa.equals(other.idpessoa))) {
+        if ((this.pessoaPK == null && other.pessoaPK != null) || (this.pessoaPK != null && !this.pessoaPK.equals(other.pessoaPK))) {
             return false;
         }
         return true;
@@ -256,7 +204,7 @@ public class Pessoa implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Pessoa[ idpessoa=" + idpessoa + " ]";
+        return "rj.handschool.modelo.Pessoa[ pessoaPK=" + pessoaPK + " ]";
     }
     
 }

@@ -73,7 +73,7 @@ public class OwnerPK implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.OwnerPK[ idowner=" + idowner + ", idPessoa=" + idPessoa + " ]";
+        return "rj.handschool.modelo.OwnerPK[ idowner=" + idowner + ", idPessoa=" + idPessoa + " ]";
     }
     
 }

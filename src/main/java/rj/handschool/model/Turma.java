@@ -20,78 +20,58 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t"),
-    @NamedQuery(name = "Turma.findByIdturma", query = "SELECT t FROM Turma t WHERE t.idturma = :idturma"),
-    @NamedQuery(name = "Turma.findByAno", query = "SELECT t FROM Turma t WHERE t.ano = :ano"),
+    @NamedQuery(name = "Turma.findByIdturma", query = "SELECT t FROM Turma t WHERE t.turmaPK.idturma = :idturma"),
     @NamedQuery(name = "Turma.findByAtivo", query = "SELECT t FROM Turma t WHERE t.ativo = :ativo"),
     @NamedQuery(name = "Turma.findByDataHoraCadastro", query = "SELECT t FROM Turma t WHERE t.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Turma.findByDataUltAtualizacao", query = "SELECT t FROM Turma t WHERE t.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "Turma.findByDescricaoTurma", query = "SELECT t FROM Turma t WHERE t.descricaoTurma = :descricaoTurma"),
-    @NamedQuery(name = "Turma.findByQuantidadeAlunos", query = "SELECT t FROM Turma t WHERE t.quantidadeAlunos = :quantidadeAlunos")})
+    @NamedQuery(name = "Turma.findByQuantidadeAlunos", query = "SELECT t FROM Turma t WHERE t.quantidadeAlunos = :quantidadeAlunos"),
+    @NamedQuery(name = "Turma.findByIdCurso", query = "SELECT t FROM Turma t WHERE t.turmaPK.idCurso = :idCurso")})
 public class Turma implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idturma")
-    private Integer idturma;
-    @Basic(optional = false)
-    @Column(name = "ano")
-    private int ano;
-    @Basic(optional = false)
+    @EmbeddedId
+    protected TurmaPK turmaPK;
     @Column(name = "ativo")
-    private short ativo;
-    @Column(name = "DATA_HORA_CADASTRO")
+    private Character ativo;
+    @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
-    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
-    @Column(name = "DESCRICAO_TURMA")
-    private String descricaoTurma;
-    @Column(name = "QUANTIDADE_ALUNOS")
+    @Column(name = "quantidade_alunos")
     private Integer quantidadeAlunos;
-    @OneToMany(mappedBy = "idturma")
-    private List<Aula> aulaList;
-    @JoinColumn(name = "IDCURSO", referencedColumnName = "idcurso")
-    @ManyToOne
-    private Curso idcurso;
-    @OneToMany(mappedBy = "idturma")
-    private List<Notas> notasList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma")
+    private List<QuadroAvisos> quadroAvisosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma")
+    private List<Listapresenca> listapresencaList;
+    @JoinColumn(name = "id_curso", referencedColumnName = "idcurso", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Curso curso;
 
     public Turma() {
     }
 
-    public Turma(Integer idturma) {
-        this.idturma = idturma;
+    public Turma(TurmaPK turmaPK) {
+        this.turmaPK = turmaPK;
     }
 
-    public Turma(Integer idturma, int ano, short ativo) {
-        this.idturma = idturma;
-        this.ano = ano;
-        this.ativo = ativo;
+    public Turma(int idturma, int idCurso) {
+        this.turmaPK = new TurmaPK(idturma, idCurso);
     }
 
-    public Integer getIdturma() {
-        return idturma;
+    public TurmaPK getTurmaPK() {
+        return turmaPK;
     }
 
-    public void setIdturma(Integer idturma) {
-        this.idturma = idturma;
+    public void setTurmaPK(TurmaPK turmaPK) {
+        this.turmaPK = turmaPK;
     }
 
-    public int getAno() {
-        return ano;
-    }
-
-    public void setAno(int ano) {
-        this.ano = ano;
-    }
-
-    public short getAtivo() {
+    public Character getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(short ativo) {
+    public void setAtivo(Character ativo) {
         this.ativo = ativo;
     }
 
@@ -111,14 +91,6 @@ public class Turma implements Serializable {
         this.dataUltAtualizacao = dataUltAtualizacao;
     }
 
-    public String getDescricaoTurma() {
-        return descricaoTurma;
-    }
-
-    public void setDescricaoTurma(String descricaoTurma) {
-        this.descricaoTurma = descricaoTurma;
-    }
-
     public Integer getQuantidadeAlunos() {
         return quantidadeAlunos;
     }
@@ -128,35 +100,35 @@ public class Turma implements Serializable {
     }
 
     @XmlTransient
-    public List<Aula> getAulaList() {
-        return aulaList;
+    public List<QuadroAvisos> getQuadroAvisosList() {
+        return quadroAvisosList;
     }
 
-    public void setAulaList(List<Aula> aulaList) {
-        this.aulaList = aulaList;
-    }
-
-    public Curso getIdcurso() {
-        return idcurso;
-    }
-
-    public void setIdcurso(Curso idcurso) {
-        this.idcurso = idcurso;
+    public void setQuadroAvisosList(List<QuadroAvisos> quadroAvisosList) {
+        this.quadroAvisosList = quadroAvisosList;
     }
 
     @XmlTransient
-    public List<Notas> getNotasList() {
-        return notasList;
+    public List<Listapresenca> getListapresencaList() {
+        return listapresencaList;
     }
 
-    public void setNotasList(List<Notas> notasList) {
-        this.notasList = notasList;
+    public void setListapresencaList(List<Listapresenca> listapresencaList) {
+        this.listapresencaList = listapresencaList;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idturma != null ? idturma.hashCode() : 0);
+        hash += (turmaPK != null ? turmaPK.hashCode() : 0);
         return hash;
     }
 
@@ -167,7 +139,7 @@ public class Turma implements Serializable {
             return false;
         }
         Turma other = (Turma) object;
-        if ((this.idturma == null && other.idturma != null) || (this.idturma != null && !this.idturma.equals(other.idturma))) {
+        if ((this.turmaPK == null && other.turmaPK != null) || (this.turmaPK != null && !this.turmaPK.equals(other.turmaPK))) {
             return false;
         }
         return true;
@@ -175,7 +147,7 @@ public class Turma implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Turma[ idturma=" + idturma + " ]";
+        return "rj.handschool.modelo.Turma[ turmaPK=" + turmaPK + " ]";
     }
     
 }

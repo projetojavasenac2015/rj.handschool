@@ -32,10 +32,7 @@ public class Alocacao implements Serializable {
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Disciplina disciplina;
-    @JoinColumns({@JoinColumn(name = "id_professor", referencedColumnName = "idprofessor", insertable = false, updatable = false),
-    	@JoinColumn(name = "matricula", referencedColumnName = "matricula"),
-    	@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
-	})
+    @JoinColumn(name = "id_professor", referencedColumnName = "idprofessor", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Professor professor;
 
@@ -104,7 +101,7 @@ public class Alocacao implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Alocacao[ alocacaoPK=" + alocacaoPK + " ]";
+        return "rj.handschool.modelo.Alocacao[ alocacaoPK=" + alocacaoPK + " ]";
     }
     
 }

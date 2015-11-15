@@ -21,11 +21,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"),
     @NamedQuery(name = "Curso.findByIdcurso", query = "SELECT c FROM Curso c WHERE c.idcurso = :idcurso"),
+    @NamedQuery(name = "Curso.findByAtivo", query = "SELECT c FROM Curso c WHERE c.ativo = :ativo"),
     @NamedQuery(name = "Curso.findByDataHoraCadastro", query = "SELECT c FROM Curso c WHERE c.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Curso.findByDataUltAtualizacao", query = "SELECT c FROM Curso c WHERE c.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "Curso.findByDescricao", query = "SELECT c FROM Curso c WHERE c.descricao = :descricao"),
-    @NamedQuery(name = "Curso.findByEmenta", query = "SELECT c FROM Curso c WHERE c.ementa = :ementa"),
-    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome = :nome")})
+    @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome = :nome"),
+    @NamedQuery(name = "Curso.findByDescricao", query = "SELECT c FROM Curso c WHERE c.descricao = :descricao")})
 public class Curso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,22 +33,20 @@ public class Curso implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcurso")
     private Integer idcurso;
-    @Column(name = "DATA_HORA_CADASTRO")
+    @Column(name = "ativo")
+    private Character ativo;
+    @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
-    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
-    @Column(name = "descricao")
-    private String descricao;
-    @Column(name = "ementa")
-    private String ementa;
     @Column(name = "nome")
     private String nome;
-    @OneToMany(mappedBy = "idcurso")
-    private List<Turma> turmaList;
+    @Column(name = "descricao")
+    private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
-    private List<DisciplinaCurso> disciplinaCursoList;
+    private List<Turma> turmaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     private List<Modulo> moduloList;
 
@@ -67,6 +65,14 @@ public class Curso implements Serializable {
         this.idcurso = idcurso;
     }
 
+    public Character getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Character ativo) {
+        this.ativo = ativo;
+    }
+
     public Date getDataHoraCadastro() {
         return dataHoraCadastro;
     }
@@ -83,28 +89,20 @@ public class Curso implements Serializable {
         this.dataUltAtualizacao = dataUltAtualizacao;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getEmenta() {
-        return ementa;
-    }
-
-    public void setEmenta(String ementa) {
-        this.ementa = ementa;
-    }
-
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     @XmlTransient
@@ -114,15 +112,6 @@ public class Curso implements Serializable {
 
     public void setTurmaList(List<Turma> turmaList) {
         this.turmaList = turmaList;
-    }
-
-    @XmlTransient
-    public List<DisciplinaCurso> getDisciplinaCursoList() {
-        return disciplinaCursoList;
-    }
-
-    public void setDisciplinaCursoList(List<DisciplinaCurso> disciplinaCursoList) {
-        this.disciplinaCursoList = disciplinaCursoList;
     }
 
     @XmlTransient
@@ -156,7 +145,7 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Curso[ idcurso=" + idcurso + " ]";
+        return "rj.handschool.modelo.Curso[ idcurso=" + idcurso + " ]";
     }
     
 }

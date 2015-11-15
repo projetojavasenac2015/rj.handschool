@@ -24,38 +24,34 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoAvaliacao.findByAtivo", query = "SELECT t FROM TipoAvaliacao t WHERE t.ativo = :ativo"),
     @NamedQuery(name = "TipoAvaliacao.findByDataHoraCadastro", query = "SELECT t FROM TipoAvaliacao t WHERE t.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "TipoAvaliacao.findByDataUltAtualizacao", query = "SELECT t FROM TipoAvaliacao t WHERE t.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "TipoAvaliacao.findByNome", query = "SELECT t FROM TipoAvaliacao t WHERE t.nome = :nome")})
+    @NamedQuery(name = "TipoAvaliacao.findByDescricao", query = "SELECT t FROM TipoAvaliacao t WHERE t.descricao = :descricao")})
 public class TipoAvaliacao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "IDTIPO_AVALIACAO")
+    @Column(name = "idtipo_avaliacao")
     private Integer idtipoAvaliacao;
-    @Basic(optional = false)
     @Column(name = "ativo")
-    private short ativo;
-    @Column(name = "DATA_HORA_CADASTRO")
+    private Character ativo;
+    @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
-    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
-    @Column(name = "nome")
-    private String nome;
-    @OneToMany(mappedBy = "idtipoAvaliacao")
-    private List<Notas> notasList;
+    @Column(name = "descricao")
+    private String descricao;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAvaliacao")
+    private List<Avaliacao> avaliacaoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAvaliacao")
+    private List<TipoAtividade> tipoAtividadeList;
 
     public TipoAvaliacao() {
     }
 
     public TipoAvaliacao(Integer idtipoAvaliacao) {
         this.idtipoAvaliacao = idtipoAvaliacao;
-    }
-
-    public TipoAvaliacao(Integer idtipoAvaliacao, short ativo) {
-        this.idtipoAvaliacao = idtipoAvaliacao;
-        this.ativo = ativo;
     }
 
     public Integer getIdtipoAvaliacao() {
@@ -66,11 +62,11 @@ public class TipoAvaliacao implements Serializable {
         this.idtipoAvaliacao = idtipoAvaliacao;
     }
 
-    public short getAtivo() {
+    public Character getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(short ativo) {
+    public void setAtivo(Character ativo) {
         this.ativo = ativo;
     }
 
@@ -90,21 +86,30 @@ public class TipoAvaliacao implements Serializable {
         this.dataUltAtualizacao = dataUltAtualizacao;
     }
 
-    public String getNome() {
-        return nome;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     @XmlTransient
-    public List<Notas> getNotasList() {
-        return notasList;
+    public List<Avaliacao> getAvaliacaoList() {
+        return avaliacaoList;
     }
 
-    public void setNotasList(List<Notas> notasList) {
-        this.notasList = notasList;
+    public void setAvaliacaoList(List<Avaliacao> avaliacaoList) {
+        this.avaliacaoList = avaliacaoList;
+    }
+
+    @XmlTransient
+    public List<TipoAtividade> getTipoAtividadeList() {
+        return tipoAtividadeList;
+    }
+
+    public void setTipoAtividadeList(List<TipoAtividade> tipoAtividadeList) {
+        this.tipoAtividadeList = tipoAtividadeList;
     }
 
     @Override
@@ -129,7 +134,7 @@ public class TipoAvaliacao implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.TipoAvaliacao[ idtipoAvaliacao=" + idtipoAvaliacao + " ]";
+        return "rj.handschool.modelo.TipoAvaliacao[ idtipoAvaliacao=" + idtipoAvaliacao + " ]";
     }
     
 }

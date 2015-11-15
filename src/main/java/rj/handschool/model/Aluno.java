@@ -6,8 +6,10 @@ package rj.handschool.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +34,12 @@ public class Aluno implements Serializable {
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
+    private List<AvaliacaoAluno> avaliacaoAlunoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
+    private List<Listapresenca> listapresencaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
+    private List<Responsaveis> responsaveisList;
     @JoinColumn(name = "id_pessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Pessoa pessoa;
@@ -71,6 +79,33 @@ public class Aluno implements Serializable {
         this.dataHoraCadastro = dataHoraCadastro;
     }
 
+    @XmlTransient
+    public List<AvaliacaoAluno> getAvaliacaoAlunoList() {
+        return avaliacaoAlunoList;
+    }
+
+    public void setAvaliacaoAlunoList(List<AvaliacaoAluno> avaliacaoAlunoList) {
+        this.avaliacaoAlunoList = avaliacaoAlunoList;
+    }
+
+    @XmlTransient
+    public List<Listapresenca> getListapresencaList() {
+        return listapresencaList;
+    }
+
+    public void setListapresencaList(List<Listapresenca> listapresencaList) {
+        this.listapresencaList = listapresencaList;
+    }
+
+    @XmlTransient
+    public List<Responsaveis> getResponsaveisList() {
+        return responsaveisList;
+    }
+
+    public void setResponsaveisList(List<Responsaveis> responsaveisList) {
+        this.responsaveisList = responsaveisList;
+    }
+
     public Pessoa getPessoa() {
         return pessoa;
     }
@@ -101,7 +136,7 @@ public class Aluno implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Aluno[ alunoPK=" + alunoPK + " ]";
+        return "rj.handschool.modelo.Aluno[ alunoPK=" + alunoPK + " ]";
     }
     
 }

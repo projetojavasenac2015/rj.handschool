@@ -24,9 +24,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Disciplina.findByAtivo", query = "SELECT d FROM Disciplina d WHERE d.ativo = :ativo"),
     @NamedQuery(name = "Disciplina.findByDataHoraCadastro", query = "SELECT d FROM Disciplina d WHERE d.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Disciplina.findByDataUltAtualizacao", query = "SELECT d FROM Disciplina d WHERE d.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "Disciplina.findByDescricao", query = "SELECT d FROM Disciplina d WHERE d.descricao = :descricao"),
-    @NamedQuery(name = "Disciplina.findByEmenta", query = "SELECT d FROM Disciplina d WHERE d.ementa = :ementa"),
-    @NamedQuery(name = "Disciplina.findByNome", query = "SELECT d FROM Disciplina d WHERE d.nome = :nome")})
+    @NamedQuery(name = "Disciplina.findByNome", query = "SELECT d FROM Disciplina d WHERE d.nome = :nome"),
+    @NamedQuery(name = "Disciplina.findByEmenta", query = "SELECT d FROM Disciplina d WHERE d.ementa = :ementa")})
 public class Disciplina implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,44 +33,34 @@ public class Disciplina implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddisciplina")
     private Integer iddisciplina;
-    @Basic(optional = false)
     @Column(name = "ativo")
-    private short ativo;
-    @Column(name = "DATA_HORA_CADASTRO")
+    private Character ativo;
+    @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
-    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
-    @Column(name = "descricao")
-    private String descricao;
-    @Column(name = "ementa")
-    private String ementa;
     @Column(name = "nome")
     private String nome;
-    @OneToMany(mappedBy = "iddisciplina")
-    private List<Aula> aulaList;
-    @OneToMany(mappedBy = "iddisciplina")
-    private List<Notas> notasList;
+    @Column(name = "ementa")
+    private String ementa;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
+    private List<QuadroAvisos> quadroAvisosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
+    private List<AvaliacaoAluno> avaliacaoAlunoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
+    private List<Listapresenca> listapresencaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
     private List<Alocacao> alocacaoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
-    private List<DisciplinaCurso> disciplinaCursoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
     private List<Modulo> moduloList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
-    private List<DisciplinaAluno> disciplinaAlunoList;
 
     public Disciplina() {
     }
 
     public Disciplina(Integer iddisciplina) {
         this.iddisciplina = iddisciplina;
-    }
-
-    public Disciplina(Integer iddisciplina, short ativo) {
-        this.iddisciplina = iddisciplina;
-        this.ativo = ativo;
     }
 
     public Integer getIddisciplina() {
@@ -82,11 +71,11 @@ public class Disciplina implements Serializable {
         this.iddisciplina = iddisciplina;
     }
 
-    public short getAtivo() {
+    public Character getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(short ativo) {
+    public void setAtivo(Character ativo) {
         this.ativo = ativo;
     }
 
@@ -106,12 +95,12 @@ public class Disciplina implements Serializable {
         this.dataUltAtualizacao = dataUltAtualizacao;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmenta() {
@@ -122,30 +111,31 @@ public class Disciplina implements Serializable {
         this.ementa = ementa;
     }
 
-    public String getNome() {
-        return nome;
+    @XmlTransient
+    public List<QuadroAvisos> getQuadroAvisosList() {
+        return quadroAvisosList;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setQuadroAvisosList(List<QuadroAvisos> quadroAvisosList) {
+        this.quadroAvisosList = quadroAvisosList;
     }
 
     @XmlTransient
-    public List<Aula> getAulaList() {
-        return aulaList;
+    public List<AvaliacaoAluno> getAvaliacaoAlunoList() {
+        return avaliacaoAlunoList;
     }
 
-    public void setAulaList(List<Aula> aulaList) {
-        this.aulaList = aulaList;
+    public void setAvaliacaoAlunoList(List<AvaliacaoAluno> avaliacaoAlunoList) {
+        this.avaliacaoAlunoList = avaliacaoAlunoList;
     }
 
     @XmlTransient
-    public List<Notas> getNotasList() {
-        return notasList;
+    public List<Listapresenca> getListapresencaList() {
+        return listapresencaList;
     }
 
-    public void setNotasList(List<Notas> notasList) {
-        this.notasList = notasList;
+    public void setListapresencaList(List<Listapresenca> listapresencaList) {
+        this.listapresencaList = listapresencaList;
     }
 
     @XmlTransient
@@ -158,30 +148,12 @@ public class Disciplina implements Serializable {
     }
 
     @XmlTransient
-    public List<DisciplinaCurso> getDisciplinaCursoList() {
-        return disciplinaCursoList;
-    }
-
-    public void setDisciplinaCursoList(List<DisciplinaCurso> disciplinaCursoList) {
-        this.disciplinaCursoList = disciplinaCursoList;
-    }
-
-    @XmlTransient
     public List<Modulo> getModuloList() {
         return moduloList;
     }
 
     public void setModuloList(List<Modulo> moduloList) {
         this.moduloList = moduloList;
-    }
-
-    @XmlTransient
-    public List<DisciplinaAluno> getDisciplinaAlunoList() {
-        return disciplinaAlunoList;
-    }
-
-    public void setDisciplinaAlunoList(List<DisciplinaAluno> disciplinaAlunoList) {
-        this.disciplinaAlunoList = disciplinaAlunoList;
     }
 
     @Override
@@ -206,7 +178,7 @@ public class Disciplina implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Disciplina[ iddisciplina=" + iddisciplina + " ]";
+        return "rj.handschool.modelo.Disciplina[ iddisciplina=" + iddisciplina + " ]";
     }
     
 }

@@ -39,6 +39,8 @@ public class Professor implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
+    private List<QuadroAvisos> quadroAvisosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
     private List<Alocacao> alocacaoList;
     @JoinColumn(name = "id_pessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
@@ -88,6 +90,15 @@ public class Professor implements Serializable {
     }
 
     @XmlTransient
+    public List<QuadroAvisos> getQuadroAvisosList() {
+        return quadroAvisosList;
+    }
+
+    public void setQuadroAvisosList(List<QuadroAvisos> quadroAvisosList) {
+        this.quadroAvisosList = quadroAvisosList;
+    }
+
+    @XmlTransient
     public List<Alocacao> getAlocacaoList() {
         return alocacaoList;
     }
@@ -126,7 +137,7 @@ public class Professor implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Professor[ professorPK=" + professorPK + " ]";
+        return "rj.handschool.modelo.Professor[ professorPK=" + professorPK + " ]";
     }
     
 }

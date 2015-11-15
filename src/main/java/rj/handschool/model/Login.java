@@ -5,11 +5,8 @@
 package rj.handschool.model;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -20,152 +17,70 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
-    @NamedQuery(name = "Login.findByIdlogin", query = "SELECT l FROM Login l WHERE l.idlogin = :idlogin"),
+    @NamedQuery(name = "Login.findByIdlogin", query = "SELECT l FROM Login l WHERE l.loginPK.idlogin = :idlogin"),
     @NamedQuery(name = "Login.findByAtivo", query = "SELECT l FROM Login l WHERE l.ativo = :ativo"),
-    @NamedQuery(name = "Login.findByDataHoraCadastro", query = "SELECT l FROM Login l WHERE l.dataHoraCadastro = :dataHoraCadastro"),
-    @NamedQuery(name = "Login.findByDataUltAtualizacao", query = "SELECT l FROM Login l WHERE l.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "Login.findByEmail", query = "SELECT l FROM Login l WHERE l.email = :email"),
-    @NamedQuery(name = "Login.findByMatricula", query = "SELECT l FROM Login l WHERE l.matricula = :matricula"),
-    @NamedQuery(name = "Login.findBySenha", query = "SELECT l FROM Login l WHERE l.senha = :senha")})
+    @NamedQuery(name = "Login.findByIdPerfil", query = "SELECT l FROM Login l WHERE l.loginPK.idPerfil = :idPerfil"),
+    @NamedQuery(name = "Login.findByIdPessoa", query = "SELECT l FROM Login l WHERE l.loginPK.idPessoa = :idPessoa")})
 public class Login implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idlogin")
-    private Integer idlogin;
-    @Basic(optional = false)
+    @EmbeddedId
+    protected LoginPK loginPK;
     @Column(name = "ativo")
-    private short ativo;
-    @Column(name = "DATA_HORA_CADASTRO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataHoraCadastro;
-    @Column(name = "DATA_ULT_ATUALIZACAO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataUltAtualizacao;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "matricula")
-    private String matricula;
-    @Column(name = "senha")
-    private String senha;
-    @OneToMany(mappedBy = "idlogin")
-    private List<Forum> forumList;
-    @OneToMany(mappedBy = "idlogin")
-    private List<ForumComentario> forumComentarioList;
-    @JoinColumn(name = "IDPERFIL", referencedColumnName = "idperfil")
-    @ManyToOne
-    private Perfil idperfil;
-    @JoinColumn(name = "IDPESSOA", referencedColumnName = "idpessoa")
-    @ManyToOne
-    private Pessoa idpessoa;
+    private Character ativo;
+    @JoinColumn(name = "id_pessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Pessoa pessoa;
+    @JoinColumn(name = "id_perfil", referencedColumnName = "idperfil", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Perfil perfil;
 
     public Login() {
     }
 
-    public Login(Integer idlogin) {
-        this.idlogin = idlogin;
+    public Login(LoginPK loginPK) {
+        this.loginPK = loginPK;
     }
 
-    public Login(Integer idlogin, short ativo) {
-        this.idlogin = idlogin;
-        this.ativo = ativo;
+    public Login(int idlogin, int idPerfil, int idPessoa) {
+        this.loginPK = new LoginPK(idlogin, idPerfil, idPessoa);
     }
 
-    public Integer getIdlogin() {
-        return idlogin;
+    public LoginPK getLoginPK() {
+        return loginPK;
     }
 
-    public void setIdlogin(Integer idlogin) {
-        this.idlogin = idlogin;
+    public void setLoginPK(LoginPK loginPK) {
+        this.loginPK = loginPK;
     }
 
-    public short getAtivo() {
+    public Character getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(short ativo) {
+    public void setAtivo(Character ativo) {
         this.ativo = ativo;
     }
 
-    public Date getDataHoraCadastro() {
-        return dataHoraCadastro;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setDataHoraCadastro(Date dataHoraCadastro) {
-        this.dataHoraCadastro = dataHoraCadastro;
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
-    public Date getDataUltAtualizacao() {
-        return dataUltAtualizacao;
+    public Perfil getPerfil() {
+        return perfil;
     }
 
-    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-        this.dataUltAtualizacao = dataUltAtualizacao;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    @XmlTransient
-    public List<Forum> getForumList() {
-        return forumList;
-    }
-
-    public void setForumList(List<Forum> forumList) {
-        this.forumList = forumList;
-    }
-
-    @XmlTransient
-    public List<ForumComentario> getForumComentarioList() {
-        return forumComentarioList;
-    }
-
-    public void setForumComentarioList(List<ForumComentario> forumComentarioList) {
-        this.forumComentarioList = forumComentarioList;
-    }
-
-    public Perfil getIdperfil() {
-        return idperfil;
-    }
-
-    public void setIdperfil(Perfil idperfil) {
-        this.idperfil = idperfil;
-    }
-
-    public Pessoa getIdpessoa() {
-        return idpessoa;
-    }
-
-    public void setIdpessoa(Pessoa idpessoa) {
-        this.idpessoa = idpessoa;
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idlogin != null ? idlogin.hashCode() : 0);
+        hash += (loginPK != null ? loginPK.hashCode() : 0);
         return hash;
     }
 
@@ -176,7 +91,7 @@ public class Login implements Serializable {
             return false;
         }
         Login other = (Login) object;
-        if ((this.idlogin == null && other.idlogin != null) || (this.idlogin != null && !this.idlogin.equals(other.idlogin))) {
+        if ((this.loginPK == null && other.loginPK != null) || (this.loginPK != null && !this.loginPK.equals(other.loginPK))) {
             return false;
         }
         return true;
@@ -184,7 +99,7 @@ public class Login implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Login[ idlogin=" + idlogin + " ]";
+        return "rj.handschool.modelo.Login[ loginPK=" + loginPK + " ]";
     }
     
 }

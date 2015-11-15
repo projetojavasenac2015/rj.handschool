@@ -23,9 +23,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Perfil.findByIdperfil", query = "SELECT p FROM Perfil p WHERE p.idperfil = :idperfil"),
     @NamedQuery(name = "Perfil.findByAtivo", query = "SELECT p FROM Perfil p WHERE p.ativo = :ativo"),
     @NamedQuery(name = "Perfil.findByDataHoraCadastro", query = "SELECT p FROM Perfil p WHERE p.dataHoraCadastro = :dataHoraCadastro"),
-    @NamedQuery(name = "Perfil.findByDataUltAtualizacao", query = "SELECT p FROM Perfil p WHERE p.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "Perfil.findByDescricao", query = "SELECT p FROM Perfil p WHERE p.descricao = :descricao"),
-    @NamedQuery(name = "Perfil.findByNome", query = "SELECT p FROM Perfil p WHERE p.nome = :nome")})
+    @NamedQuery(name = "Perfil.findByDataUltAlteracao", query = "SELECT p FROM Perfil p WHERE p.dataUltAlteracao = :dataUltAlteracao"),
+    @NamedQuery(name = "Perfil.findByDescricao", query = "SELECT p FROM Perfil p WHERE p.descricao = :descricao")})
 public class Perfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,22 +32,17 @@ public class Perfil implements Serializable {
     @Basic(optional = false)
     @Column(name = "idperfil")
     private Integer idperfil;
-    @Basic(optional = false)
     @Column(name = "ativo")
-    private short ativo;
-    @Column(name = "DATA_HORA_CADASTRO")
+    private Character ativo;
+    @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
-    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Column(name = "data_ult_alteracao")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataUltAtualizacao;
+    private Date dataUltAlteracao;
     @Column(name = "descricao")
     private String descricao;
-    @Column(name = "nome")
-    private String nome;
-    @OneToMany(mappedBy = "idperfil")
-    private List<Acesso> acessoList;
-    @OneToMany(mappedBy = "idperfil")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "perfil")
     private List<Login> loginList;
 
     public Perfil() {
@@ -56,11 +50,6 @@ public class Perfil implements Serializable {
 
     public Perfil(Integer idperfil) {
         this.idperfil = idperfil;
-    }
-
-    public Perfil(Integer idperfil, short ativo) {
-        this.idperfil = idperfil;
-        this.ativo = ativo;
     }
 
     public Integer getIdperfil() {
@@ -71,11 +60,11 @@ public class Perfil implements Serializable {
         this.idperfil = idperfil;
     }
 
-    public short getAtivo() {
+    public Character getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(short ativo) {
+    public void setAtivo(Character ativo) {
         this.ativo = ativo;
     }
 
@@ -87,12 +76,12 @@ public class Perfil implements Serializable {
         this.dataHoraCadastro = dataHoraCadastro;
     }
 
-    public Date getDataUltAtualizacao() {
-        return dataUltAtualizacao;
+    public Date getDataUltAlteracao() {
+        return dataUltAlteracao;
     }
 
-    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-        this.dataUltAtualizacao = dataUltAtualizacao;
+    public void setDataUltAlteracao(Date dataUltAlteracao) {
+        this.dataUltAlteracao = dataUltAlteracao;
     }
 
     public String getDescricao() {
@@ -101,23 +90,6 @@ public class Perfil implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    @XmlTransient
-    public List<Acesso> getAcessoList() {
-        return acessoList;
-    }
-
-    public void setAcessoList(List<Acesso> acessoList) {
-        this.acessoList = acessoList;
     }
 
     @XmlTransient
@@ -151,7 +123,7 @@ public class Perfil implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Perfil[ idperfil=" + idperfil + " ]";
+        return "rj.handschool.modelo.Perfil[ idperfil=" + idperfil + " ]";
     }
     
 }

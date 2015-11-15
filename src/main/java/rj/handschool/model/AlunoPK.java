@@ -89,7 +89,7 @@ public class AlunoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.AlunoPK[ idaluno=" + idaluno + ", matricula=" + matricula + ", idPessoa=" + idPessoa + " ]";
+        return "rj.handschool.modelo.AlunoPK[ idaluno=" + idaluno + ", matricula=" + matricula + ", idPessoa=" + idPessoa + " ]";
     }
     
 }

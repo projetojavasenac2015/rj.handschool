@@ -15,11 +15,8 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class ProfessorPK implements Serializable {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	@Basic(optional = false)
+    @Basic(optional = false)
     @Column(name = "idprofessor")
     private int idprofessor;
     @Basic(optional = false)
@@ -92,7 +89,7 @@ public class ProfessorPK implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.ProfessorPK[ idprofessor=" + idprofessor + ", matricula=" + matricula + ", idPessoa=" + idPessoa + " ]";
+        return "rj.handschool.modelo.ProfessorPK[ idprofessor=" + idprofessor + ", matricula=" + matricula + ", idPessoa=" + idPessoa + " ]";
     }
     
 }

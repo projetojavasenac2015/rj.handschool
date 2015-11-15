@@ -98,7 +98,7 @@ public class Owner implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Owner[ ownerPK=" + ownerPK + " ]";
+        return "rj.handschool.modelo.Owner[ ownerPK=" + ownerPK + " ]";
     }
     
 }

@@ -135,7 +135,7 @@ public class Modulo implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.Modulo[ moduloPK=" + moduloPK + " ]";
+        return "rj.handschool.modelo.Modulo[ moduloPK=" + moduloPK + " ]";
     }
     
 }

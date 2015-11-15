@@ -14,49 +14,60 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Renan
  */
 @Entity
-@Table(name = "lista_presenca")
+@Table(name = "listapresenca")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ListaPresenca.findAll", query = "SELECT l FROM ListaPresenca l"),
-    @NamedQuery(name = "ListaPresenca.findByIdlistaPresenca", query = "SELECT l FROM ListaPresenca l WHERE l.idlistaPresenca = :idlistaPresenca"),
-    @NamedQuery(name = "ListaPresenca.findByDataHoraCadastro", query = "SELECT l FROM ListaPresenca l WHERE l.dataHoraCadastro = :dataHoraCadastro"),
-    @NamedQuery(name = "ListaPresenca.findByDataUltAtualizacao", query = "SELECT l FROM ListaPresenca l WHERE l.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "ListaPresenca.findByMatricula", query = "SELECT l FROM ListaPresenca l WHERE l.matricula = :matricula")})
-public class ListaPresenca implements Serializable {
+    @NamedQuery(name = "Listapresenca.findAll", query = "SELECT l FROM Listapresenca l"),
+    @NamedQuery(name = "Listapresenca.findByIdlistapresenca", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idlistapresenca = :idlistapresenca"),
+    @NamedQuery(name = "Listapresenca.findByDataHoraCadastro", query = "SELECT l FROM Listapresenca l WHERE l.dataHoraCadastro = :dataHoraCadastro"),
+    @NamedQuery(name = "Listapresenca.findByDataUltAtualizacao", query = "SELECT l FROM Listapresenca l WHERE l.dataUltAtualizacao = :dataUltAtualizacao"),
+    @NamedQuery(name = "Listapresenca.findByIdTurma", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idTurma = :idTurma"),
+    @NamedQuery(name = "Listapresenca.findByIdCurso", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idCurso = :idCurso"),
+    @NamedQuery(name = "Listapresenca.findByIdDisciplina", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idDisciplina = :idDisciplina"),
+    @NamedQuery(name = "Listapresenca.findByIdAulas", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idAulas = :idAulas"),
+    @NamedQuery(name = "Listapresenca.findByIdAluno", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idAluno = :idAluno")})
+public class Listapresenca implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "IDLISTA_PRESENCA")
-    private Integer idlistaPresenca;
-    @Column(name = "DATA_HORA_CADASTRO")
+    @EmbeddedId
+    protected ListapresencaPK listapresencaPK;
+    @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
-    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
-    @Column(name = "MATRICULA")
-    private String matricula;
-    @JoinColumn(name = "IDAULAS", referencedColumnName = "idaulas")
-    @ManyToOne
-    private Aula idaulas;
-    @JoinColumn(name = "IDTIPO_REGISTRO", referencedColumnName = "IDTIPO_REGISTRO")
-    @ManyToOne
-    private TipoRegistro idtipoRegistro;
+    @JoinColumn(name = "id_aluno", referencedColumnName = "idaluno", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Aluno aluno;
+    @JoinColumn(name = "id_aulas", referencedColumnName = "idaulas", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Aulas aulas;
+    @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Disciplina disciplina;
+    @JoinColumns({
+        @JoinColumn(name = "id_turma", referencedColumnName = "idturma", insertable = false, updatable = false),
+        @JoinColumn(name = "id_curso", referencedColumnName = "id_curso", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Turma turma;
 
-    public ListaPresenca() {
+    public Listapresenca() {
     }
 
-    public ListaPresenca(Integer idlistaPresenca) {
-        this.idlistaPresenca = idlistaPresenca;
+    public Listapresenca(ListapresencaPK listapresencaPK) {
+        this.listapresencaPK = listapresencaPK;
     }
 
-    public Integer getIdlistaPresenca() {
-        return idlistaPresenca;
+    public Listapresenca(int idlistapresenca, int idTurma, int idCurso, int idDisciplina, int idAulas, int idAluno) {
+        this.listapresencaPK = new ListapresencaPK(idlistapresenca, idTurma, idCurso, idDisciplina, idAulas, idAluno);
     }
 
-    public void setIdlistaPresenca(Integer idlistaPresenca) {
-        this.idlistaPresenca = idlistaPresenca;
+    public ListapresencaPK getListapresencaPK() {
+        return listapresencaPK;
+    }
+
+    public void setListapresencaPK(ListapresencaPK listapresencaPK) {
+        this.listapresencaPK = listapresencaPK;
     }
 
     public Date getDataHoraCadastro() {
@@ -75,45 +86,53 @@ public class ListaPresenca implements Serializable {
         this.dataUltAtualizacao = dataUltAtualizacao;
     }
 
-    public String getMatricula() {
-        return matricula;
+    public Aluno getAluno() {
+        return aluno;
     }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
     }
 
-    public Aula getIdaulas() {
-        return idaulas;
+    public Aulas getAulas() {
+        return aulas;
     }
 
-    public void setIdaulas(Aula idaulas) {
-        this.idaulas = idaulas;
+    public void setAulas(Aulas aulas) {
+        this.aulas = aulas;
     }
 
-    public TipoRegistro getIdtipoRegistro() {
-        return idtipoRegistro;
+    public Disciplina getDisciplina() {
+        return disciplina;
     }
 
-    public void setIdtipoRegistro(TipoRegistro idtipoRegistro) {
-        this.idtipoRegistro = idtipoRegistro;
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idlistaPresenca != null ? idlistaPresenca.hashCode() : 0);
+        hash += (listapresencaPK != null ? listapresencaPK.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ListaPresenca)) {
+        if (!(object instanceof Listapresenca)) {
             return false;
         }
-        ListaPresenca other = (ListaPresenca) object;
-        if ((this.idlistaPresenca == null && other.idlistaPresenca != null) || (this.idlistaPresenca != null && !this.idlistaPresenca.equals(other.idlistaPresenca))) {
+        Listapresenca other = (Listapresenca) object;
+        if ((this.listapresencaPK == null && other.listapresencaPK != null) || (this.listapresencaPK != null && !this.listapresencaPK.equals(other.listapresencaPK))) {
             return false;
         }
         return true;
@@ -121,7 +140,7 @@ public class ListaPresenca implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.ListaPresenca[ idlistaPresenca=" + idlistaPresenca + " ]";
+        return "rj.handschool.modelo.Listapresenca[ listapresencaPK=" + listapresencaPK + " ]";
     }
     
 }

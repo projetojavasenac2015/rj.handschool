@@ -15,8 +15,11 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class AlocacaoPK implements Serializable {
+    /**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-    @Basic(optional = false)
+	@Basic(optional = false)
     @Column(name = "idalocacao")
     private int idalocacao;
     @Basic(optional = false)
@@ -89,7 +92,7 @@ public class AlocacaoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.AlocacaoPK[ idalocacao=" + idalocacao + ", idProfessor=" + idProfessor + ", idDisciplina=" + idDisciplina + " ]";
+        return "rj.handschool.modelo.AlocacaoPK[ idalocacao=" + idalocacao + ", idProfessor=" + idProfessor + ", idDisciplina=" + idDisciplina + " ]";
     }
     
 }

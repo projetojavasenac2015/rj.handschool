@@ -89,7 +89,7 @@ public class ModuloPK implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.ModuloPK[ idmodulo=" + idmodulo + ", idDisciplina=" + idDisciplina + ", idCurso=" + idCurso + " ]";
+        return "rj.handschool.modelo.ModuloPK[ idmodulo=" + idmodulo + ", idDisciplina=" + idDisciplina + ", idCurso=" + idCurso + " ]";
     }
     
 }

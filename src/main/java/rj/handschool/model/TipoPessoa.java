@@ -30,20 +30,19 @@ public class TipoPessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "IDTIPO_PESSOA")
+    @Column(name = "idtipo_pessoa")
     private Integer idtipoPessoa;
-    @Basic(optional = false)
     @Column(name = "ativo")
-    private short ativo;
-    @Column(name = "DATA_HORA_CADASTRO")
+    private Character ativo;
+    @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
-    @Column(name = "DATA_ULT_ATUALIZACAO")
+    @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
     @Column(name = "descricao")
     private String descricao;
-    @OneToMany(mappedBy = "idtipoPessoa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoPessoa")
     private List<Pessoa> pessoaList;
 
     public TipoPessoa() {
@@ -51,11 +50,6 @@ public class TipoPessoa implements Serializable {
 
     public TipoPessoa(Integer idtipoPessoa) {
         this.idtipoPessoa = idtipoPessoa;
-    }
-
-    public TipoPessoa(Integer idtipoPessoa, short ativo) {
-        this.idtipoPessoa = idtipoPessoa;
-        this.ativo = ativo;
     }
 
     public Integer getIdtipoPessoa() {
@@ -66,11 +60,11 @@ public class TipoPessoa implements Serializable {
         this.idtipoPessoa = idtipoPessoa;
     }
 
-    public short getAtivo() {
+    public Character getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(short ativo) {
+    public void setAtivo(Character ativo) {
         this.ativo = ativo;
     }
 
@@ -129,7 +123,7 @@ public class TipoPessoa implements Serializable {
 
     @Override
     public String toString() {
-        return "bd.TipoPessoa[ idtipoPessoa=" + idtipoPessoa + " ]";
+        return "rj.handschool.modelo.TipoPessoa[ idtipoPessoa=" + idtipoPessoa + " ]";
     }
     
 }
