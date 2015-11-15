@@ -33,7 +33,11 @@ public class Responsaveis implements Serializable {
         @JoinColumn(name = "grauparentesco", referencedColumnName = "grauparentesco", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Grauparentesco grauparentesco1;
-    @JoinColumn(name = "aluno_idaluno", referencedColumnName = "idaluno", insertable = false, updatable = false)
+    @JoinColumns({
+    	@JoinColumn(name = "aluno_idaluno", referencedColumnName = "idaluno", insertable = false, updatable = false)
+    	,@JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
+    	,@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa", insertable = false, updatable = false)
+    })
     @ManyToOne(optional = false)
     private Aluno aluno;
 

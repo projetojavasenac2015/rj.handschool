@@ -37,10 +37,17 @@ public class AvaliacaoAluno implements Serializable {
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Disciplina disciplina;
-    @JoinColumn(name = "id_avaliacao", referencedColumnName = "idavaliacao", insertable = false, updatable = false)
+    @JoinColumns({
+    	@JoinColumn(name = "id_avaliacao", referencedColumnName = "idavaliacao", insertable = false, updatable = false)
+    	,@JoinColumn(name = "id_tipo_avaliacao", referencedColumnName = "id_tipo_avaliacao", insertable = false, updatable = false)
+    })
     @ManyToOne(optional = false)
     private Avaliacao avaliacao;
-    @JoinColumn(name = "id_aluno", referencedColumnName = "idaluno", insertable = false, updatable = false)
+    @JoinColumns({
+    	@JoinColumn(name = "id_aluno", referencedColumnName = "idaluno", insertable = false, updatable = false)
+    	,@JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
+    	,@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa", insertable = false, updatable = false)
+    })
     @ManyToOne(optional = false)
     private Aluno aluno;
 

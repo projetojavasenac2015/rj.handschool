@@ -24,7 +24,10 @@ public class AtividadeAula implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AtividadeAulaPK atividadeAulaPK;
-    @JoinColumn(name = "id_atividade", referencedColumnName = "idatividade", insertable = false, updatable = false)
+    @JoinColumns({
+    	@JoinColumn(name = "id_atividade", referencedColumnName = "idatividade", insertable = false, updatable = false)
+    	,@JoinColumn(name = "id_tipo_atividade", referencedColumnName = "id_tipo_atividade", insertable = false, updatable = false)
+    })
     @ManyToOne(optional = false)
     private Atividade atividade;
     @JoinColumn(name = "aulas_idaulas", referencedColumnName = "idaulas", insertable = false, updatable = false)

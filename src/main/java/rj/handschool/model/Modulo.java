@@ -39,7 +39,7 @@ public class Modulo implements Serializable {
     private Date dataUltAtualizacao;
     @Column(name = "descricao")
     private String descricao;
-    @JoinColumn(name = "id_curso", referencedColumnName = "idcurso", insertable = false, updatable = false)
+    @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Curso curso;
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)

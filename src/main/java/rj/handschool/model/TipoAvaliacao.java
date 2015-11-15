@@ -44,9 +44,7 @@ public class TipoAvaliacao implements Serializable {
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAvaliacao")
     private List<Avaliacao> avaliacaoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAvaliacao")
-    private List<TipoAtividade> tipoAtividadeList;
-
+    
     public TipoAvaliacao() {
     }
 
@@ -101,15 +99,6 @@ public class TipoAvaliacao implements Serializable {
 
     public void setAvaliacaoList(List<Avaliacao> avaliacaoList) {
         this.avaliacaoList = avaliacaoList;
-    }
-
-    @XmlTransient
-    public List<TipoAtividade> getTipoAtividadeList() {
-        return tipoAtividadeList;
-    }
-
-    public void setTipoAtividadeList(List<TipoAtividade> tipoAtividadeList) {
-        this.tipoAtividadeList = tipoAtividadeList;
     }
 
     @Override

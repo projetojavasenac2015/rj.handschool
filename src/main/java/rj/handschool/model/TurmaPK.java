@@ -20,7 +20,7 @@ public class TurmaPK implements Serializable {
     @Column(name = "idturma")
     private int idturma;
     @Basic(optional = false)
-    @Column(name = "id_curso")
+    @Column(name = "idcurso")
     private int idCurso;
 
     public TurmaPK() {

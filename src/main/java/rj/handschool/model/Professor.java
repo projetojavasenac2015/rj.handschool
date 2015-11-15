@@ -7,6 +7,7 @@ package rj.handschool.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -42,7 +43,11 @@ public class Professor implements Serializable {
     private List<QuadroAvisos> quadroAvisosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
     private List<Alocacao> alocacaoList;
-    @JoinColumn(name = "id_pessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
+    @JoinColumns({
+    	@JoinColumn(name = "id_pessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
+    	,@JoinColumn(name = "cpf", referencedColumnName = "cpf", insertable = false, updatable = false)
+    	,@JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "id_tipo_pessoa", insertable = false, updatable = false)
+    })
     @ManyToOne(optional = false)
     private Pessoa pessoa;
 

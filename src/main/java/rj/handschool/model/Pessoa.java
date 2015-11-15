@@ -51,7 +51,7 @@ public class Pessoa implements Serializable {
     private String email;
     @Column(name = "senha")
     private String senha;
-    e mano hoje fpi@JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "idtipo_pessoa", insertable = false, updatable = false)
+    @JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "idtipo_pessoa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private TipoPessoa tipoPessoa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")

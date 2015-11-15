@@ -26,7 +26,7 @@ public class QuadroAvisosPK implements Serializable {
     @Column(name = "id_turma")
     private int idTurma;
     @Basic(optional = false)
-    @Column(name = "id_curso")
+    @Column(name = "idcurso")
     private int idCurso;
     @Basic(optional = false)
     @Column(name = "id_disciplina")

@@ -43,7 +43,7 @@ public class Aluno implements Serializable {
     private List<Responsaveis> responsaveisList;
     @JoinColumns({
     	@JoinColumn(name = "id_pessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
-    	,@JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "idTipoPessoa", insertable = false, updatable = false)
+    	,@JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "id_tipo_pessoa", insertable = false, updatable = false)
     	,@JoinColumn(name = "cpf", referencedColumnName = "cpf", insertable = false, updatable = false)
     })
     @ManyToOne(optional = false)

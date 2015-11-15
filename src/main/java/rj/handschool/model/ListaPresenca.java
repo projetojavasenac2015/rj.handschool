@@ -14,18 +14,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Renan
  */
 @Entity
-@Table(name = "listapresenca")
+@Table(name = "Listapresenca")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Listapresenca.findAll", query = "SELECT l FROM Listapresenca l"),
-    @NamedQuery(name = "Listapresenca.findByIdlistapresenca", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idlistapresenca = :idlistapresenca"),
-    @NamedQuery(name = "Listapresenca.findByDataHoraCadastro", query = "SELECT l FROM Listapresenca l WHERE l.dataHoraCadastro = :dataHoraCadastro"),
-    @NamedQuery(name = "Listapresenca.findByDataUltAtualizacao", query = "SELECT l FROM Listapresenca l WHERE l.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "Listapresenca.findByIdTurma", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idTurma = :idTurma"),
-    @NamedQuery(name = "Listapresenca.findByIdCurso", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idCurso = :idCurso"),
-    @NamedQuery(name = "Listapresenca.findByIdDisciplina", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idDisciplina = :idDisciplina"),
-    @NamedQuery(name = "Listapresenca.findByIdAulas", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idAulas = :idAulas"),
-    @NamedQuery(name = "Listapresenca.findByIdAluno", query = "SELECT l FROM Listapresenca l WHERE l.listapresencaPK.idAluno = :idAluno")})
 public class ListaPresenca implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -36,7 +26,11 @@ public class ListaPresenca implements Serializable {
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
-    @JoinColumn(name = "id_aluno", referencedColumnName = "idaluno", insertable = false, updatable = false)
+    @JoinColumns({
+    	@JoinColumn(name = "id_aluno", referencedColumnName = "idaluno", insertable = false, updatable = false)
+    	,@JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
+    	,@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa", insertable = false, updatable = false)
+    })
     @ManyToOne(optional = false)
     private Aluno aluno;
     @JoinColumn(name = "id_aulas", referencedColumnName = "idaulas", insertable = false, updatable = false)
@@ -47,7 +41,7 @@ public class ListaPresenca implements Serializable {
     private Disciplina disciplina;
     @JoinColumns({
         @JoinColumn(name = "id_turma", referencedColumnName = "idturma", insertable = false, updatable = false),
-        @JoinColumn(name = "id_curso", referencedColumnName = "id_curso", insertable = false, updatable = false)})
+        @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Turma turma;
 

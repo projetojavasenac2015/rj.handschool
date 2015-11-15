@@ -44,7 +44,7 @@ public class Turma implements Serializable {
     private List<QuadroAvisos> quadroAvisosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma")
     private List<ListaPresenca> listapresencaList;
-    @JoinColumn(name = "id_curso", referencedColumnName = "idcurso", insertable = false, updatable = false)
+    @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Curso curso;
 

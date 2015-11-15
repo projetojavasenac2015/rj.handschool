@@ -23,7 +23,7 @@ public class ModuloPK implements Serializable {
     @Column(name = "id_disciplina")
     private int idDisciplina;
     @Basic(optional = false)
-    @Column(name = "id_curso")
+    @Column(name = "idcurso")
     private int idCurso;
 
     public ModuloPK() {
