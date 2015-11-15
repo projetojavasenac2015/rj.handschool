@@ -32,7 +32,11 @@ public class Alocacao implements Serializable {
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Disciplina disciplina;
-    @JoinColumn(name = "id_professor", referencedColumnName = "idprofessor", insertable = false, updatable = false)
+    @JoinColumns({
+    	@JoinColumn(name = "id_professor", referencedColumnName = "idprofessor", insertable = false, updatable = false)
+    	,@JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
+    	,@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa", insertable = false, updatable = false)
+    })
     @ManyToOne(optional = false)
     private Professor professor;
 
