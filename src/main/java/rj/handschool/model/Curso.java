@@ -7,9 +7,15 @@ package rj.handschool.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -25,7 +31,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Curso.findByDataHoraCadastro", query = "SELECT c FROM Curso c WHERE c.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Curso.findByDataUltAtualizacao", query = "SELECT c FROM Curso c WHERE c.dataUltAtualizacao = :dataUltAtualizacao"),
     @NamedQuery(name = "Curso.findByNome", query = "SELECT c FROM Curso c WHERE c.nome = :nome"),
-    @NamedQuery(name = "Curso.findByDescricao", query = "SELECT c FROM Curso c WHERE c.descricao = :descricao")})
+    @NamedQuery(name = "Curso.findByDescricao", query = "SELECT c FROM Curso c WHERE c.descricao = :descricao"),
+    @NamedQuery(name = "Curso.findUltimosCadastrados", query = "SELECT c FROM Curso c order by c.dataHoraCadastro desc "),
+    @NamedQuery(name = "Curso.DeleteForID", query = "DELETE FROM Curso c WHERE c.idcurso = :id ")
+})
 public class Curso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,12 +46,15 @@ public class Curso implements Serializable {
     private Character ativo;
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataHoraCadastro;
+    private Date dataHoraCadastro = new java.sql.Date(System.currentTimeMillis());
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
+    @NotNull @NotEmpty(message="Informe o Curso")
+    @Size(min=8, message="Nome Muito Pequeno")
     @Column(name = "nome")
     private String nome;
+    @NotNull @NotEmpty(message="Descreva os dados do Curso")
     @Column(name = "descricao")
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")

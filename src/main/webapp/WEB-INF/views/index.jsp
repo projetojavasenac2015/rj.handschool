@@ -17,22 +17,22 @@
 <title>
 	<tiles:getAsString name="title"></tiles:getAsString> HandSchool
 </title>
-<spring:url value="resources/js/libs/jquery-1.10.0.min.js" var="jquerymin" />
-<spring:url value="resources/js/libs/jquery-ui.min.js" var="jquery-ui" />
-<spring:url value="resources/js/libs/bootstrap.min.js" var="bootstrap" />
-<spring:url value="resources/js/general.js" var="general" />
-<spring:url value="resources/js/cusel-min.js" var="cusel" />
-<spring:url value="resources/js/jquery.chosen.min.js" var="jselec" />
-<spring:url value="resources/js/jquery.maskedinput.js" var="jsmacara" />
-<spring:url value="resources/js/custom.js" var="customizado" />
-<spring:url value="resources/js/jquery-ui.min.js" var="jUi" />
-<spring:url value="resources/js/jquery-ui.multidatespicker.js" var="dataPicker" />
-<spring:url value="resources/css/jquery-ui-1.8.20.custom.css" var="cssJquery" />
-<spring:url value="resources/css/bootstrap.css" var="cssBoot" />
-<spring:url value="resources/css/cusel.css" var="cssCusel" />
-<spring:url value="resources/css/personalizado.css" var="persona" />
-<spring:url value="resources/css/chosen.css" var="cssCombo" />
-<spring:url value="resources/css/jquery-ui.min.css" var="jCui" />
+<spring:url value="/resources/js/libs/jquery-1.10.0.min.js" var="jquerymin" />
+<spring:url value="/resources/js/libs/jquery-ui.min.js" var="jquery-ui" />
+<spring:url value="/resources/js/libs/bootstrap.min.js" var="bootstrap" />
+<spring:url value="/resources/js/general.js" var="general" />
+<spring:url value="/resources/js/cusel-min.js" var="cusel" />
+<spring:url value="/resources/js/jquery.chosen.min.js" var="jselec" />
+<spring:url value="/resources/js/jquery.maskedinput.js" var="jsmacara" />
+<spring:url value="/resources/js/custom.js" var="customizado" />
+<spring:url value="/resources/js/jquery-ui.min.js" var="jUi" />
+<spring:url value="/resources/js/jquery-ui.multidatespicker.js" var="dataPicker" />
+<spring:url value="/resources/css/jquery-ui-1.8.20.custom.css" var="cssJquery" />
+<spring:url value="/resources/css/bootstrap.css" var="cssBoot" />
+<spring:url value="/resources/css/cusel.css" var="cssCusel" />
+<spring:url value="/resources/css/personalizado.css" var="persona" />
+<spring:url value="/resources/css/chosen.css" var="cssCombo" />
+<spring:url value="/resources/css/jquery-ui.min.css" var="jCui" />
 
 <script src="${jquerymin}"></script>
 <script src="${jquery-ui}"></script>
@@ -89,32 +89,32 @@
                                     <ul>
                                         <li><a href="#">Aluno</a>
                                         	<ul>
-                                        		<li><a href="CadastroALuno">Novo</a></li>
+                                        		<li><a href="${pageContext.request.contextPath}/CadastroALuno">Novo</a></li>
                                         		<li><a href="CadastroALuno">Listar Alunos</a></li>
                                         	</ul>
                                         </li>
                                         <li><a href="#">Professor</a></li>
                                         <li><a href="#">Curso</a>
                                         	<ul>
-		                                        <li><a href="NovoCurso">Novo</a></li>
+		                                        <li><a href="${pageContext.request.contextPath}/NovoCurso">Novo</a></li>
 		                                        <li><a href="CadastramentoTurma">Listar Cursos</a></li>
 		                                    </ul>
                                         </li>
                                         <li><a href="#">Disciplinas</a>
                                         	<ul>
-		                                        <li><a href="NovaDisciplina">Nova</a></li>
+		                                        <li><a href="${pageContext.request.contextPath}/NovaDisciplina">Nova</a></li>
 		                                        <li><a href="CadastramentoTurma">Listar Disciplinas</a></li>
 		                                    </ul>
                                         </li>
                                         <li><a href="#">Turma</a>
                                         	<ul>
-		                                        <li><a href="NovaTurma">Nova</a></li>
-		                                        <li><a href="CadastramentoTurma">Listar as turmas</a></li>
+		                                        <li><a href="${pageContext.request.contextPath}/NovaTurma">Nova</a></li>
+		                                        <li><a href="${pageContext.request.contextPath}/CadastramentoTurma">Listar as turmas</a></li>
 		                                    </ul>
                                         </li>
                                         <li><a href="#">Modulo</a>
                                         	<ul>
-		                                        <li><a href="NovoModulo">Novo Modulo</a></li>
+		                                        <li><a href="${pageContext.request.contextPath}/NovoModulo">Novo Modulo</a></li>
 		                                    </ul>
                                         </li>
                                     </ul>
@@ -126,15 +126,15 @@
                                 </li>
                                 <li><a href="#"><span class="glyphicon glyphicon-calendar">&nbsp;Frequencia</span></a>
                                    	<ul>
-                                    	<li><a href="RegistroFrequencia">Consulta</a></li>
-                                    	<li><a href="RegistroFrequencia">Lançamento</a></li>
+                                    	<li><a href="${pageContext.request.contextPath}/RegistroFrequencia">Consulta</a></li>
+                                    	<li><a href="${pageContext.request.contextPath}/RegistroFrequencia">Lançamento</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#"><span class="glyphicon glyphicon-edit">&nbsp;Avaliações</span></a>
                                 	<ul>
-                                    	<li><a href="AgendarAvaliacao">Agendar Avaliação</a></li>
-                                    	<li><a href="LancamentoNotas">Lançamento de Notas</a></li>
-                                    	<li><a href="AlterarAvaliacoes">Alterar Avaliações</a></li>
+                                    	<li><a href="${pageContext.request.contextPath}/AgendarAvaliacao">Agendar Avaliação</a></li>
+                                    	<li><a href="${pageContext.request.contextPath}/LancamentoNotas">Lançamento de Notas</a></li>
+                                    	<li><a href="${pageContext.request.contextPath}/AlterarAvaliacoes">Alterar Avaliações</a></li>
                                     </ul>
                                 </li>
                             </ul>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,6 @@ public class CursoDAO {
 		
 		@Transactional
 		public void insert(Curso curso) throws Exception{
-			
 			try {
 			   getSession().save(curso);
 			} catch (Exception e) {
@@ -46,7 +46,15 @@ public class CursoDAO {
 				} catch (Exception e) {
 		    		throw new Exception("Erro ao Atualizar Curso: " + e.getMessage());
 				}
-			
+		}
+		
+		public void remove(int id) throws Exception {
+			try {
+					Query q = getSession().getNamedQuery("Curso.DeleteForID");
+					q.setParameter("id", id).executeUpdate();
+				} catch (Exception e) {
+		    		throw new Exception("Erro ao Deletar o Curso: " + e.getMessage());
+				}
 		}
 		
 		public Curso findById(int id){
@@ -56,6 +64,14 @@ public class CursoDAO {
 		@SuppressWarnings("unchecked")
 		public List<Curso> findAll(){
 			return getSession().createCriteria(Curso.class).list();
+		}
+		
+		@SuppressWarnings("unchecked")
+		public List<Curso> findUltimosCadastrados(int qtd){
+			Query q = getSession().getNamedQuery("Curso.findUltimosCadastrados");
+			q.setMaxResults(qtd);
+			List<Curso> lista_curso = (List<Curso>)q.list();
+			return lista_curso;
 		}
 	
 }
