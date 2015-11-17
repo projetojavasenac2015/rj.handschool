@@ -16,7 +16,6 @@
 						<th>Descrição</th>
 						<th class="text-nowrap">Registro</th>
 						<th>Editar</th>
-						<th>Excluir</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -26,7 +25,6 @@
 							<td>${cursos.descricao}</td>
 							<td>${cursos.dataHoraCadastro}</td>
 							<td><a class="glyphicon glyphicon-edit" href="${pageContext.request.contextPath}/DadosCurso/${cursos.idcurso}"></a></td>
-							<td><a class="glyphicon glyphicon-trash" href="${pageContext.request.contextPath}/DeletarCurso/${cursos.idcurso}"></a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
