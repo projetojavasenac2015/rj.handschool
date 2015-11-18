@@ -7,9 +7,14 @@ package rj.handschool.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -33,16 +38,20 @@ public class Disciplina implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddisciplina")
     private Integer iddisciplina;
+    @NotNull(message="Indique a situação")
     @Column(name = "ativo")
     private Character ativo;
-    @Column(name = "data_hora_cadastro")
+    @Column(name = "data_hora_cadastro", updatable=false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
+    @NotEmpty(message="Informe o nome")
+    @Size(min=8,message="Nome Muito Pequeno. Min* 8 caracteres")
     @Column(name = "nome")
     private String nome;
+    @NotEmpty(message="Informe a ementa")
     @Column(name = "ementa")
     private String ementa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")

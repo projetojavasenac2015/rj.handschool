@@ -40,13 +40,8 @@
 	                       		</div>
 	                          	<div class="col-sm-2">
 									<div class="field_select">
-	                           			<form:select path="ativo" name="ativo" id="ativo" class="select_styled select_styled_orange">
-	                                        <form:option  value="" label="Situação"/>
-	                                        <form:option value="1" label="Ativo"/>
-	                                    	<form:option value="0" label="Inativo"/>
-	                                    </form:select>
-	                                    <form:errors path="ativo"></form:errors>
-		                           </div>
+	                           			<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_situacao.jsp"></tiles:insertTemplate>
+	                           		</div>
 		                       </div>
 	                       		<tiles:insertTemplate template="/WEB-INF/views/private/curso/ultimos_cursos_cadastrados.jsp"></tiles:insertTemplate>
 	                       </div>
@@ -55,10 +50,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="rowSubmit">
-									<div class="col-sm-6">
-										<a href="NovoCurso" class=""><span class="btn btn-small">Voltar</span></a>
-									</div>
-									<div class="col-sm-6">
+									<div class="col-md-12">
 						   			 	<span class="btn btn-small">
 						                   <input type="submit" id="confirmar" value="Confirmar" />
 						           		</span>

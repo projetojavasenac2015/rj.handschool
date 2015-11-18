@@ -29,29 +29,48 @@ public class CursoController {
 		modelView.addObject("rotulo",rotulo);
 	}
 	
-	@RequestMapping("NovoCurso")
-	public ModelAndView novoCurso(@ModelAttribute("curso") Curso curso){
-		ModelAndView modelView = new ModelAndView("curso_novo");
+	public ModelAndView modeloCurso(ModelAndView modelView){
 		modelView.addObject("curso",new Curso());
 		modelView.addObject("listaUltimosCursosCastrados",cursoDAO.findUltimosCadastrados(5));
 		rotuloPagina(modelView,"Novo");
 		return modelView;
 	}
 	
+	@RequestMapping("NovoCurso")
+	public ModelAndView novoCurso(@ModelAttribute("curso") Curso curso){
+		ModelAndView modelView = new ModelAndView("curso_novo");
+		modeloCurso(modelView);
+		return modelView;
+	}
+	
 	@RequestMapping(value = "GravaCurso", method = RequestMethod.POST)
-	public String gravaCurso(@Valid @ModelAttribute("curso")Curso curso, BindingResult bind) throws Exception{
+	public ModelAndView gravaCurso(@Valid @ModelAttribute("curso")Curso curso, BindingResult bind) throws Exception{
+		ModelAndView modelView;
+		
+		String msg = "";
+		
 		if(!bind.hasErrors()){
-			if(curso.getIdcurso() == null){
-				cursoDAO.insert(curso);
+			try{
+				if(curso.getIdcurso() == null){
+					cursoDAO.insert(curso);
+				}
+				else{
+					cursoDAO.update(curso);
+				}
+				
+				msg = "Registro Gravado com Sucesso";
 			}
-			else{
-				cursoDAO.update(curso);
+			catch(Exception e){
+				msg = e.getMessage();
 			}
+			modelView = new ModelAndView("curso_novo");
+			modelView.addObject("menssagem",msg);
 		}
 		else{
-			return "curso_novo";
+			modelView = new ModelAndView("curso_novo",bind.getModel());
 		}
-		return "redirect:NovoCurso";
+		modeloCurso(modelView);
+		return modelView;
 	}
 	
 	@RequestMapping(value = "DadosCurso/{id}", method = RequestMethod.GET)

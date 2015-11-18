@@ -6,8 +6,13 @@ package rj.handschool.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -29,19 +34,25 @@ public class Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ModuloPK moduloPK;
+    @NotNull(message="Indique a situação")
     @Column(name = "ativo")
     private Character ativo;
-    @Column(name = "data_hora_cadastro")
+    @Column(name = "data_hora_cadastro", updatable=false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
+    @NotNull
+    @NotEmpty(message="Informe a descrição do Módulo")
+    @Size(min=8,message="Nome Muito Pequeno. Min* 8 caracteres")
     @Column(name = "descricao")
     private String descricao;
+    @NotNull(message="Informe o Curso")
     @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Curso curso;
+    @Size(min=1,message="No minimo 1 Disciplina")
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Disciplina disciplina;

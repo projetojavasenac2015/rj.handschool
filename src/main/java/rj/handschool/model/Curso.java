@@ -25,7 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "curso")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"),
+    @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c order by c.nome "),
     @NamedQuery(name = "Curso.findByIdcurso", query = "SELECT c FROM Curso c WHERE c.idcurso = :idcurso"),
     @NamedQuery(name = "Curso.findByAtivo", query = "SELECT c FROM Curso c WHERE c.ativo = :ativo"),
     @NamedQuery(name = "Curso.findByDataHoraCadastro", query = "SELECT c FROM Curso c WHERE c.dataHoraCadastro = :dataHoraCadastro"),
@@ -42,16 +42,17 @@ public class Curso implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcurso")
     private Integer idcurso;
+    @NotEmpty(message="Indique a situação")
     @Column(name = "ativo")
     private Character ativo;
-    @Column(name = "data_hora_cadastro")
+    @Column(name = "data_hora_cadastro", updatable=false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataHoraCadastro = new java.sql.Date(System.currentTimeMillis());
+    private Date dataHoraCadastro;
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
     @NotNull @NotEmpty(message="Informe o Curso")
-    @Size(min=8, message="Nome Muito Pequeno")
+    @Size(min=8, message="Nome Muito Pequeno. Min* 8 caracteres")
     @Column(name = "nome")
     private String nome;
     @NotNull @NotEmpty(message="Descreva os dados do Curso")
