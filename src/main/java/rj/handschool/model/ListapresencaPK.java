@@ -5,6 +5,7 @@
 package rj.handschool.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -32,19 +33,27 @@ public class ListapresencaPK implements Serializable {
     @Column(name = "id_aulas")
     private int idAulas;
     @Basic(optional = false)
-    @Column(name = "id_aluno")
-    private int idAluno;
+    @Column(name = "matricula")
+    private String matricula;
+    
+    public String getMatricula() {
+		return matricula;
+	}
 
-    public ListapresencaPK() {
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+	public ListapresencaPK() {
     }
 
-    public ListapresencaPK(int idlistapresenca, int idTurma, int idCurso, int idDisciplina, int idAulas, int idAluno) {
+    public ListapresencaPK(int idlistapresenca, int idTurma, int idCurso, int idDisciplina, int idAulas, String matricula) {
         this.idlistapresenca = idlistapresenca;
         this.idTurma = idTurma;
         this.idCurso = idCurso;
         this.idDisciplina = idDisciplina;
         this.idAulas = idAulas;
-        this.idAluno = idAluno;
+        this.matricula = matricula;
     }
 
     public int getIdlistapresenca() {
@@ -87,14 +96,6 @@ public class ListapresencaPK implements Serializable {
         this.idAulas = idAulas;
     }
 
-    public int getIdAluno() {
-        return idAluno;
-    }
-
-    public void setIdAluno(int idAluno) {
-        this.idAluno = idAluno;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -103,7 +104,6 @@ public class ListapresencaPK implements Serializable {
         hash += (int) idCurso;
         hash += (int) idDisciplina;
         hash += (int) idAulas;
-        hash += (int) idAluno;
         return hash;
     }
 
@@ -129,15 +129,10 @@ public class ListapresencaPK implements Serializable {
         if (this.idAulas != other.idAulas) {
             return false;
         }
-        if (this.idAluno != other.idAluno) {
+        
+        if (this.matricula != other.matricula) {
             return false;
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.ListapresencaPK[ idlistapresenca=" + idlistapresenca + ", idTurma=" + idTurma + ", idCurso=" + idCurso + ", idDisciplina=" + idDisciplina + ", idAulas=" + idAulas + ", idAluno=" + idAluno + " ]";
-    }
-    
 }

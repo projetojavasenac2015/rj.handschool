@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Pessoa;
-import rj.handschool.model.PessoaPK;
 
 @Repository
 @Transactional
@@ -48,17 +47,8 @@ public class PessoaDAO {
 			}
 	}
 	
-	public void remove(PessoaPK pessoaPk) throws Exception {
-		try {
-				Query q = getSession().getNamedQuery("Pessoa.DeleteForPessoaPK");
-				q.setParameter("pessoaPk", pessoaPk).executeUpdate();
-			} catch (Exception e) {
-	    		throw new Exception("Erro ao Deletar o Pessoa: " + e.getMessage());
-			}
-	}
-	
-	public Pessoa findById(PessoaPK pessoaPk){
-		return (Pessoa) getSession().get(Pessoa.class, pessoaPk);	
+	public Pessoa findById(Pessoa pessoa){
+		return (Pessoa) getSession().get(Pessoa.class, pessoa);	
 	}
 	
 	@SuppressWarnings("unchecked")

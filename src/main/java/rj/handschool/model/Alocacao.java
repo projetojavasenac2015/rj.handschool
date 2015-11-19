@@ -20,7 +20,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Alocacao.findAll", query = "SELECT a FROM Alocacao a"),
     @NamedQuery(name = "Alocacao.findByIdalocacao", query = "SELECT a FROM Alocacao a WHERE a.alocacaoPK.idalocacao = :idalocacao"),
     @NamedQuery(name = "Alocacao.findByDataHoraCadastro", query = "SELECT a FROM Alocacao a WHERE a.dataHoraCadastro = :dataHoraCadastro"),
-    @NamedQuery(name = "Alocacao.findByIdProfessor", query = "SELECT a FROM Alocacao a WHERE a.alocacaoPK.idProfessor = :idProfessor"),
     @NamedQuery(name = "Alocacao.findByIdDisciplina", query = "SELECT a FROM Alocacao a WHERE a.alocacaoPK.idDisciplina = :idDisciplina")})
 public class Alocacao implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -32,11 +31,7 @@ public class Alocacao implements Serializable {
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Disciplina disciplina;
-    @JoinColumns({
-    	@JoinColumn(name = "id_professor", referencedColumnName = "idprofessor", insertable = false, updatable = false)
-    	,@JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
-    	,@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa", insertable = false, updatable = false)
-    })
+    @JoinColumn(name = "matricula_professor", referencedColumnName = "matricula_professor", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Professor professor;
 
@@ -47,8 +42,8 @@ public class Alocacao implements Serializable {
         this.alocacaoPK = alocacaoPK;
     }
 
-    public Alocacao(int idalocacao, int idProfessor, int idDisciplina) {
-        this.alocacaoPK = new AlocacaoPK(idalocacao, idProfessor, idDisciplina);
+    public Alocacao(int idalocacao, String matricula_professor, int idDisciplina) {
+        this.alocacaoPK = new AlocacaoPK(idalocacao, matricula_professor, idDisciplina);
     }
 
     public AlocacaoPK getAlocacaoPK() {

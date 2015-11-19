@@ -27,11 +27,7 @@ public class Login implements Serializable {
     protected LoginPK loginPK;
     @Column(name = "ativo")
     private Character ativo;
-    @JoinColumns({
-    	@JoinColumn(name = "id_pessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
-    	,@JoinColumn(name = "cpf", referencedColumnName = "cpf", insertable = false, updatable = false)
-    	,@JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "id_tipo_pessoa", insertable = false, updatable = false)
-    })
+    @JoinColumn(name = "idpessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Pessoa pessoa;
     @JoinColumn(name = "id_perfil", referencedColumnName = "idperfil", insertable = false, updatable = false)

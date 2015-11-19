@@ -42,7 +42,7 @@ public class Curso implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcurso")
     private Integer idcurso;
-    @NotEmpty(message="Indique a situação")
+    @NotNull(message="Indique a situação")
     @Column(name = "ativo")
     private Character ativo;
     @Column(name = "data_hora_cadastro", updatable=false)

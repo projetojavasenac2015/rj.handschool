@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "AvaliacaoAluno.findByIdavaliacaoAluno", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idavaliacaoAluno = :idavaliacaoAluno"),
     @NamedQuery(name = "AvaliacaoAluno.findByData", query = "SELECT a FROM AvaliacaoAluno a WHERE a.data = :data"),
     @NamedQuery(name = "AvaliacaoAluno.findByValor", query = "SELECT a FROM AvaliacaoAluno a WHERE a.valor = :valor"),
-    @NamedQuery(name = "AvaliacaoAluno.findByIdAluno", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idAluno = :idAluno"),
     @NamedQuery(name = "AvaliacaoAluno.findByIdAvaliacao", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idAvaliacao = :idAvaliacao"),
     @NamedQuery(name = "AvaliacaoAluno.findByIdDisciplina", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idDisciplina = :idDisciplina")})
 public class AvaliacaoAluno implements Serializable {
@@ -43,11 +42,7 @@ public class AvaliacaoAluno implements Serializable {
     })
     @ManyToOne(optional = false)
     private Avaliacao avaliacao;
-    @JoinColumns({
-    	@JoinColumn(name = "id_aluno", referencedColumnName = "idaluno", insertable = false, updatable = false)
-    	,@JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
-    	,@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa", insertable = false, updatable = false)
-    })
+    @JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Aluno aluno;
 
@@ -58,8 +53,8 @@ public class AvaliacaoAluno implements Serializable {
         this.avaliacaoAlunoPK = avaliacaoAlunoPK;
     }
 
-    public AvaliacaoAluno(int idavaliacaoAluno, int idAluno, int idAvaliacao, int idDisciplina) {
-        this.avaliacaoAlunoPK = new AvaliacaoAlunoPK(idavaliacaoAluno, idAluno, idAvaliacao, idDisciplina);
+    public AvaliacaoAluno(int idavaliacaoAluno, int idAluno, int idAvaliacao, int idDisciplina, String matricula) {
+        this.avaliacaoAlunoPK = new AvaliacaoAlunoPK(idavaliacaoAluno,  idAvaliacao, idDisciplina, matricula);
     }
 
     public AvaliacaoAlunoPK getAvaliacaoAlunoPK() {

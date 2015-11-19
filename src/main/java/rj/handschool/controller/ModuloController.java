@@ -2,15 +2,20 @@ package rj.handschool.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.CursoDAO;
 import rj.handschool.dao.DisciplinaDAO;
+import rj.handschool.dao.ModuloDAO;
 import rj.handschool.model.Curso;
 import rj.handschool.model.Disciplina;
 import rj.handschool.model.Modulo;
@@ -23,6 +28,9 @@ public class ModuloController {
 	
 	@Autowired
 	private DisciplinaDAO disciplinaDAO;
+	
+	@Autowired
+	private ModuloDAO moduloDAO;
 	
 	public void rotuloPagina(ModelAndView modelView,String rotulo){
 		modelView.addObject("rotulo",rotulo);
@@ -50,5 +58,34 @@ public class ModuloController {
 	public void listaDisciplina(ModelAndView modelView){
 		List<Disciplina> lista_disciplina =  disciplinaDAO.findAll();
 		modelView.addObject("listadisciplina",lista_disciplina);
+	}
+	
+	@RequestMapping(value = "GravaModulo", method = RequestMethod.POST)
+	public ModelAndView gravaDisciplina(@Valid @ModelAttribute("modulo")Modulo modulo, BindingResult bind) throws Exception{
+		ModelAndView modelView;
+		
+		String msg = "";
+		
+		if(!bind.hasErrors()){
+			try{
+				if(modulo.getModuloPK().getIdmodulo() == 0){
+					moduloDAO.insert(modulo);
+				}
+				else{
+					moduloDAO.update(modulo);
+				}
+				
+				msg = "Registro Gravado com Sucesso";
+			}
+			catch(Exception e){
+				msg = e.getMessage();
+			}
+			modelView = new ModelAndView(modelo_pagina);
+			modelView.addObject("menssagem",msg);
+		}
+		else{
+			modelView = new ModelAndView(modelo_pagina,bind.getModel());
+		}
+		return modelView;
 	}
 }

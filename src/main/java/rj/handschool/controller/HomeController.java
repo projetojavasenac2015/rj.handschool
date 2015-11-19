@@ -42,12 +42,6 @@ public class HomeController {
 	public String cursoNovo(Model model) {
 		return "curso_novo";
 	}
-	
-	@RequestMapping(value="/CadastroALuno", method = RequestMethod.GET)
-	public String alunoNovo(Model model) {
-		return "aluno_novo";
-	}
-	
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
 	public String secondPage(Model model) {
 		model.addAttribute("secondPageMessage", "This is the second page");

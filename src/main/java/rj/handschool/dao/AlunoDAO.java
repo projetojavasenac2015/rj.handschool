@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Aluno;
-import rj.handschool.model.AlunoPK;
-
 
 @Repository
 @Transactional
@@ -34,6 +32,7 @@ public class AlunoDAO {
 	@Transactional
 	public void insert(Aluno aluno) throws Exception{
 		try {
+		   aluno.getTipoPessoa().setIdtipoPessoa(1);
 		   getSession().save(aluno);
 		} catch (Exception e) {
     		throw new Exception("Erro ao Inserir Aluno: " + e.getMessage());
@@ -47,13 +46,15 @@ public class AlunoDAO {
 	    		throw new Exception("Erro ao Atualizar Aluno: " + e.getMessage());
 			}
 	}
-			
-	public Aluno findById(AlunoPK alunoPK){
-		return (Aluno) getSession().get(Aluno.class, alunoPK);	
-	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Aluno> findAll(){
 		return getSession().createCriteria(Aluno.class).list();
-	}	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public int findAlunoJaMatriculado(Aluno aluno){
+		Query q = getSession().getNamedQuery("Aluno.findAlgumAlunoMatriculado");
+		return q.setParameter("matricula",aluno.getMatricula()).getMaxResults();
+	}
 }

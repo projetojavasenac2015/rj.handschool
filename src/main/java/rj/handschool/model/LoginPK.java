@@ -23,7 +23,7 @@ public class LoginPK implements Serializable {
     @Column(name = "id_perfil")
     private int idPerfil;
     @Basic(optional = false)
-    @Column(name = "id_pessoa")
+    @Column(name = "idpessoa")
     private int idPessoa;
 
     public LoginPK() {

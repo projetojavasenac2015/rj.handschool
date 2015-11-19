@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Professor;
-import rj.handschool.model.ProfessorPK;
 
 @Repository
 @Transactional
@@ -47,8 +46,8 @@ public class ProfessorDAO {
 			}
 	}	
 	
-	public Professor findById(ProfessorPK professorPK){
-		return (Professor) getSession().get(Professor.class, professorPK);	
+	public Professor findById(Professor professor){
+		return (Professor) getSession().get(Professor.class, professor);	
 	}
 	
 	@SuppressWarnings("unchecked")

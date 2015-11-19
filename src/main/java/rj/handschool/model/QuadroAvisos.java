@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "QuadroAvisos.findByIdquadroAvisos", query = "SELECT q FROM QuadroAvisos q WHERE q.quadroAvisosPK.idquadroAvisos = :idquadroAvisos"),
     @NamedQuery(name = "QuadroAvisos.findByDataHoraCadastro", query = "SELECT q FROM QuadroAvisos q WHERE q.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "QuadroAvisos.findByAviso", query = "SELECT q FROM QuadroAvisos q WHERE q.aviso = :aviso"),
-    @NamedQuery(name = "QuadroAvisos.findByIdProfessor", query = "SELECT q FROM QuadroAvisos q WHERE q.quadroAvisosPK.idProfessor = :idProfessor"),
     @NamedQuery(name = "QuadroAvisos.findByIdTurma", query = "SELECT q FROM QuadroAvisos q WHERE q.quadroAvisosPK.idTurma = :idTurma"),
     @NamedQuery(name = "QuadroAvisos.findByIdCurso", query = "SELECT q FROM QuadroAvisos q WHERE q.quadroAvisosPK.idCurso = :idCurso"),
     @NamedQuery(name = "QuadroAvisos.findByIdDisciplina", query = "SELECT q FROM QuadroAvisos q WHERE q.quadroAvisosPK.idDisciplina = :idDisciplina")})
@@ -42,11 +41,7 @@ public class QuadroAvisos implements Serializable {
         @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Turma turma;
-    @JoinColumns({
-        @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa", insertable = false, updatable = false),
-        @JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false),
-        @JoinColumn(name = "idprofessor", referencedColumnName = "idprofessor", insertable = false, updatable = false)
-    })
+    @JoinColumn(name = "matricula_professor", referencedColumnName = "matricula_professor", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Professor professor;
 
@@ -57,8 +52,8 @@ public class QuadroAvisos implements Serializable {
         this.quadroAvisosPK = quadroAvisosPK;
     }
 
-    public QuadroAvisos(int idquadroAvisos, int idProfessor, int idTurma, int idCurso, int idDisciplina) {
-        this.quadroAvisosPK = new QuadroAvisosPK(idquadroAvisos, idProfessor, idTurma, idCurso, idDisciplina);
+    public QuadroAvisos(int idquadroAvisos, String matricula_professor, int idTurma, int idCurso, int idDisciplina) {
+        this.quadroAvisosPK = new QuadroAvisosPK(idquadroAvisos, matricula_professor, idTurma, idCurso, idDisciplina);
     }
 
     public QuadroAvisosPK getQuadroAvisosPK() {

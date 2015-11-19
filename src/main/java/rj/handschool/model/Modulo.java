@@ -52,7 +52,7 @@ public class Modulo implements Serializable {
     @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Curso curso;
-    @Size(min=1,message="No minimo 1 Disciplina")
+    @NotNull(message="Informe a Disciplina")
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Disciplina disciplina;

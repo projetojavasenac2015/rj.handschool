@@ -19,7 +19,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Responsaveis.findAll", query = "SELECT r FROM Responsaveis r"),
     @NamedQuery(name = "Responsaveis.findByIdresponsaveis", query = "SELECT r FROM Responsaveis r WHERE r.responsaveisPK.idresponsaveis = :idresponsaveis"),
     @NamedQuery(name = "Responsaveis.findByNome", query = "SELECT r FROM Responsaveis r WHERE r.nome = :nome"),
-    @NamedQuery(name = "Responsaveis.findByAlunoIdaluno", query = "SELECT r FROM Responsaveis r WHERE r.responsaveisPK.alunoIdaluno = :alunoIdaluno"),
     @NamedQuery(name = "Responsaveis.findByIdGrauparentesco", query = "SELECT r FROM Responsaveis r WHERE r.responsaveisPK.idGrauparentesco = :idGrauparentesco"),
     @NamedQuery(name = "Responsaveis.findByGrauparentesco", query = "SELECT r FROM Responsaveis r WHERE r.responsaveisPK.grauparentesco = :grauparentesco")})
 public class Responsaveis implements Serializable {
@@ -33,11 +32,7 @@ public class Responsaveis implements Serializable {
         @JoinColumn(name = "grauparentesco", referencedColumnName = "grauparentesco", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Grauparentesco grauparentesco1;
-    @JoinColumns({
-    	@JoinColumn(name = "aluno_idaluno", referencedColumnName = "idaluno", insertable = false, updatable = false)
-    	,@JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
-    	,@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa", insertable = false, updatable = false)
-    })
+    @JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Aluno aluno;
 
@@ -48,8 +43,8 @@ public class Responsaveis implements Serializable {
         this.responsaveisPK = responsaveisPK;
     }
 
-    public Responsaveis(int idresponsaveis, int alunoIdaluno, int idGrauparentesco, String grauparentesco) {
-        this.responsaveisPK = new ResponsaveisPK(idresponsaveis, alunoIdaluno, idGrauparentesco, grauparentesco);
+    public Responsaveis(int idresponsaveis,  int idGrauparentesco, String grauparentesco) {
+        this.responsaveisPK = new ResponsaveisPK(idresponsaveis, idGrauparentesco, grauparentesco);
     }
 
     public ResponsaveisPK getResponsaveisPK() {

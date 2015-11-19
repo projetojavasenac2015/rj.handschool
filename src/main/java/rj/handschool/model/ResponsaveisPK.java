@@ -20,9 +20,6 @@ public class ResponsaveisPK implements Serializable {
     @Column(name = "idresponsaveis")
     private int idresponsaveis;
     @Basic(optional = false)
-    @Column(name = "aluno_idaluno")
-    private int alunoIdaluno;
-    @Basic(optional = false)
     @Column(name = "id_grauparentesco")
     private int idGrauparentesco;
     @Basic(optional = false)
@@ -32,9 +29,8 @@ public class ResponsaveisPK implements Serializable {
     public ResponsaveisPK() {
     }
 
-    public ResponsaveisPK(int idresponsaveis, int alunoIdaluno, int idGrauparentesco, String grauparentesco) {
+    public ResponsaveisPK(int idresponsaveis, int idGrauparentesco, String grauparentesco) {
         this.idresponsaveis = idresponsaveis;
-        this.alunoIdaluno = alunoIdaluno;
         this.idGrauparentesco = idGrauparentesco;
         this.grauparentesco = grauparentesco;
     }
@@ -46,15 +42,7 @@ public class ResponsaveisPK implements Serializable {
     public void setIdresponsaveis(int idresponsaveis) {
         this.idresponsaveis = idresponsaveis;
     }
-
-    public int getAlunoIdaluno() {
-        return alunoIdaluno;
-    }
-
-    public void setAlunoIdaluno(int alunoIdaluno) {
-        this.alunoIdaluno = alunoIdaluno;
-    }
-
+    
     public int getIdGrauparentesco() {
         return idGrauparentesco;
     }
@@ -75,7 +63,6 @@ public class ResponsaveisPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) idresponsaveis;
-        hash += (int) alunoIdaluno;
         hash += (int) idGrauparentesco;
         hash += (grauparentesco != null ? grauparentesco.hashCode() : 0);
         return hash;
@@ -91,9 +78,7 @@ public class ResponsaveisPK implements Serializable {
         if (this.idresponsaveis != other.idresponsaveis) {
             return false;
         }
-        if (this.alunoIdaluno != other.alunoIdaluno) {
-            return false;
-        }
+        
         if (this.idGrauparentesco != other.idGrauparentesco) {
             return false;
         }
@@ -102,10 +87,4 @@ public class ResponsaveisPK implements Serializable {
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.ResponsaveisPK[ idresponsaveis=" + idresponsaveis + ", alunoIdaluno=" + alunoIdaluno + ", idGrauparentesco=" + idGrauparentesco + ", grauparentesco=" + grauparentesco + " ]";
-    }
-    
 }

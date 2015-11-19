@@ -1,14 +1,69 @@
 package rj.handschool.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import rj.handschool.dao.AlunoDAO;
 import rj.handschool.model.Aluno;
+import rj.handschool.model.Disciplina;
+import rj.handschool.model.Modulo;
+import rj.handschool.model.Pessoa;
+import rj.handshool.util.Utilidades;
 
 @Controller
 public class AlunoController {
-	@RequestMapping("/NovoAluno")
-	public String novoAluno(Aluno aluno){
-		return "aluno_novo";
+	
+	@Autowired
+	private AlunoDAO alunoDAO;
+	
+	static final String  modelo_pagina = "aluno_novo";
+	
+	@RequestMapping("CadastroALuno")
+	public ModelAndView novoModulo(@ModelAttribute("aluno") Aluno aluno){
+		ModelAndView modelView = new ModelAndView(modelo_pagina);
+		modelView.addObject("aluno",new Aluno(Utilidades.formatoMatricula()));
+		rotuloPagina(modelView,"Novo");
+		return modelView;
 	}
+	
+	public void rotuloPagina(ModelAndView modelView,String rotulo){
+		modelView.addObject("rotulo",rotulo);
+	}
+	
+	@RequestMapping(value = "GravaAluno", method = RequestMethod.POST)
+	public ModelAndView gravaDisciplina(@Valid @ModelAttribute("aluno")Aluno aluno, BindingResult bind) throws Exception{
+		ModelAndView modelView;
+		
+		String msg = "";
+		
+		if(!bind.hasErrors()){
+			try{
+				//if(alunoDAO.findAlunoJaMatriculado(aluno) == 0){
+					alunoDAO.insert(aluno);
+				//}
+				//else{
+				//	alunoDAO.update(aluno);
+				//}
+				
+				msg = "Registro Gravado com Sucesso";
+			}
+			catch(Exception e){
+				msg = e.getMessage();
+			}
+			modelView = new ModelAndView(modelo_pagina);
+			modelView.addObject("menssagem",msg);
+		}
+		else{
+			modelView = new ModelAndView(modelo_pagina,bind.getModel());
+		}
+		return modelView;
+	}
+	
 }

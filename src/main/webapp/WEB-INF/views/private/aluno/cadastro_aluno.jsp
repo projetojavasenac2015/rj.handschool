@@ -21,48 +21,36 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="add-comment add-comment-velvet styled" id="addcomments">
-				<div class="add-comment-title"><h3>Aluno</h3></div>
+				<div class="add-comment-title"><h3>${rotulo} Aluno</h3></div>
 				<div class="comment-form">
-					<form action="#" method="post" id="commentForm" class="ajax_form">
+					<form:form action="GravaAluno" commandName="aluno" method="post" id="commentForm" class="ajax_form">
 						<div class="form-inner">
 							<tiles:insertTemplate template="/WEB-INF/views/private/pessoa/cadastro_pessoa.jsp"></tiles:insertTemplate>
-							<div class="row">
-								<div class="col-md-5">
-									<div class="field_text">
-	                           			<select name="turma" id="turma" class="select_styled select_styled_orange">
-	                                        <option value="">Turmas</option>
-	                                    </select>
-		                           </div>
-	                           	</div>
-							</div>
 							<div class="row">
 								<div class="col-md-4">
 									<div class="field_text">
 	                              		<label for="matricula" class="label_title">Matricula:</label>
-	                               		<input type="text" name="matricula" id="matricula" value="" disabled="disabled" class="inputtext input_middle required" />
+	                               		<form:input path="matricula" type="text" name="matricula" id="matricula" value="" readonly="true" class="inputtext input_middle required" />
+	                           			<form:errors path="matricula"></form:errors>
 	                           		</div>
 	                           	</div>
 								<div class="col-md-2">
-									<div class="field_select">
-	                           			<select name="ativo" id="ativo" class="select_styled select_styled_orange">
-	                                        <option value="">Situação</option>
-	                                        <option value="1">Ativo</option>
-	                                        <option value="0">Inativo</option>
-	                                    </select>
-		                           </div>
+									<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_situacao.jsp"></tiles:insertTemplate>
 		                       </div>
 		                   	</div>
 		                   	<div class="row">
 								<div class="col-md-5">
 									<div class="field_text">
 	                              		<label for="email" class="label_title">E-mail:</label>
-                              		 	<input type="text" name="email" id="email" value="" class="inputtext input_middle required" />
+                              		 	<form:input path="email" type="text" name="email" id="email" value="" class="inputtext input_middle required" />
+                              			<form:errors path="email"></form:errors>
                               		</div>
 	                           	</div>
 	                           	<div class="col-md-2 col-md-offset-2">
 									<div class="field_text">
 	                              		<label for="senha" class="label_title">Senha:</label>
-	                               		<input type="text" name="senha" id="senha" value="" class="inputtext input_middle required" />
+	                               		<form:input path="senha" type="text" name="senha" id="senha" value="" class="inputtext input_middle required" />
+	                           			<form:errors path="senha"></form:errors>
 	                           		</div>
 	                           	</div>
                            	</div>
@@ -77,7 +65,7 @@
 					             </div>
 							</div>
 						</div>
-					</form>
+					</form:form>
 				</div>
 			</div>
 		</div>

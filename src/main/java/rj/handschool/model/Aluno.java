@@ -9,8 +9,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -21,15 +24,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a"),
-    @NamedQuery(name = "Aluno.findByIdaluno", query = "SELECT a FROM Aluno a WHERE a.alunoPK.idaluno = :idaluno"),
-    @NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.alunoPK.matricula = :matricula"),
+    @NamedQuery(name = "Aluno.findAlgumAlunoMatriculado", query = "SELECT count(1) FROM Aluno a where a.matricula = :matricula"),
+    @NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.matricula = :matricula"),
     @NamedQuery(name = "Aluno.findByAtivo", query = "SELECT a FROM Aluno a WHERE a.ativo = :ativo"),
     @NamedQuery(name = "Aluno.findByDataHoraCadastro", query = "SELECT a FROM Aluno a WHERE a.dataHoraCadastro = :dataHoraCadastro"),
-    @NamedQuery(name = "Aluno.findByIdPessoa", query = "SELECT a FROM Aluno a WHERE a.alunoPK.idPessoa = :idPessoa")})
-public class Aluno implements Serializable {
+    })
+public class Aluno extends Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected AlunoPK alunoPK;
     @Column(name = "ativo")
     private Character ativo;
     @Column(name = "data_hora_cadastro")
@@ -41,34 +42,26 @@ public class Aluno implements Serializable {
     private List<ListaPresenca> listapresencaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
     private List<Responsaveis> responsaveisList;
-    @JoinColumns({
-    	@JoinColumn(name = "id_pessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
-    	,@JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "id_tipo_pessoa", insertable = false, updatable = false)
-    	,@JoinColumn(name = "cpf", referencedColumnName = "cpf", insertable = false, updatable = false)
-    })
-    @ManyToOne(optional = false)
-    private Pessoa pessoa;
+    @NotNull @NotEmpty(message="Matricula não informada")
+    @Basic(optional = false)
+    @Column(name = "matricula", unique=true)
+    private String matricula;
+    
+    public String getMatricula() {
+		return matricula;
+	}
 
-    public Aluno() {
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+	public Aluno(String matricula){
+		this.matricula = matricula;
+	}
+	
+	public Aluno() {
     }
-
-    public Aluno(AlunoPK alunoPK) {
-        this.alunoPK = alunoPK;
-    }
-
-    public Aluno(int idaluno, String matricula, int idPessoa) {
-        this.alunoPK = new AlunoPK(idaluno, matricula, idPessoa);
-    }
-
-    public AlunoPK getAlunoPK() {
-        return alunoPK;
-    }
-
-    public void setAlunoPK(AlunoPK alunoPK) {
-        this.alunoPK = alunoPK;
-    }
-
-    public Character getAtivo() {
+        public Character getAtivo() {
         return ativo;
     }
 
@@ -111,37 +104,5 @@ public class Aluno implements Serializable {
         this.responsaveisList = responsaveisList;
     }
 
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (alunoPK != null ? alunoPK.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Aluno)) {
-            return false;
-        }
-        Aluno other = (Aluno) object;
-        if ((this.alunoPK == null && other.alunoPK != null) || (this.alunoPK != null && !this.alunoPK.equals(other.alunoPK))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Aluno[ alunoPK=" + alunoPK + " ]";
-    }
     
 }

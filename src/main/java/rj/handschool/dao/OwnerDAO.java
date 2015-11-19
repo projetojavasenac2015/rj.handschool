@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Owner;
-import rj.handschool.model.OwnerPK;
 
 @Repository
 @Transactional

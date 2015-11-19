@@ -26,11 +26,7 @@ public class ListaPresenca implements Serializable {
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
-    @JoinColumns({
-    	@JoinColumn(name = "id_aluno", referencedColumnName = "idaluno", insertable = false, updatable = false)
-    	,@JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
-    	,@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa", insertable = false, updatable = false)
-    })
+    @JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Aluno aluno;
     @JoinColumn(name = "id_aulas", referencedColumnName = "idaulas", insertable = false, updatable = false)
@@ -52,8 +48,8 @@ public class ListaPresenca implements Serializable {
         this.listapresencaPK = listapresencaPK;
     }
 
-    public ListaPresenca(int idlistapresenca, int idTurma, int idCurso, int idDisciplina, int idAulas, int idAluno) {
-        this.listapresencaPK = new ListapresencaPK(idlistapresenca, idTurma, idCurso, idDisciplina, idAulas, idAluno);
+    public ListaPresenca(int idlistapresenca, int idTurma, int idCurso, int idDisciplina, int idAulas, String matricula) {
+        this.listapresencaPK = new ListapresencaPK(idlistapresenca, idTurma, idCurso, idDisciplina, idAulas,matricula);
     }
 
     public ListapresencaPK getListapresencaPK() {

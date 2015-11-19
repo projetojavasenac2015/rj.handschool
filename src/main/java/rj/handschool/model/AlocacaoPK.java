@@ -23,8 +23,8 @@ public class AlocacaoPK implements Serializable {
     @Column(name = "idalocacao")
     private int idalocacao;
     @Basic(optional = false)
-    @Column(name = "id_professor")
-    private int idProfessor;
+    @Column(name = "matricula_professor")
+    private String matricula_professor;
     @Basic(optional = false)
     @Column(name = "id_disciplina")
     private int idDisciplina;
@@ -32,9 +32,9 @@ public class AlocacaoPK implements Serializable {
     public AlocacaoPK() {
     }
 
-    public AlocacaoPK(int idalocacao, int idProfessor, int idDisciplina) {
+    public AlocacaoPK(int idalocacao, String matricula_professor, int idDisciplina) {
         this.idalocacao = idalocacao;
-        this.idProfessor = idProfessor;
+        this.matricula_professor = matricula_professor;
         this.idDisciplina = idDisciplina;
     }
 
@@ -46,15 +46,15 @@ public class AlocacaoPK implements Serializable {
         this.idalocacao = idalocacao;
     }
 
-    public int getIdProfessor() {
-        return idProfessor;
-    }
+    public String getMatricula_professor() {
+		return matricula_professor;
+	}
 
-    public void setIdProfessor(int idProfessor) {
-        this.idProfessor = idProfessor;
-    }
+	public void setMatricula_professor(String matricula_professor) {
+		this.matricula_professor = matricula_professor;
+	}
 
-    public int getIdDisciplina() {
+	public int getIdDisciplina() {
         return idDisciplina;
     }
 
@@ -66,7 +66,6 @@ public class AlocacaoPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) idalocacao;
-        hash += (int) idProfessor;
         hash += (int) idDisciplina;
         return hash;
     }
@@ -81,7 +80,7 @@ public class AlocacaoPK implements Serializable {
         if (this.idalocacao != other.idalocacao) {
             return false;
         }
-        if (this.idProfessor != other.idProfessor) {
+        if (this.matricula_professor != other.matricula_professor) {
             return false;
         }
         if (this.idDisciplina != other.idDisciplina) {
@@ -92,7 +91,7 @@ public class AlocacaoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "rj.handschool.modelo.AlocacaoPK[ idalocacao=" + idalocacao + ", idProfessor=" + idProfessor + ", idDisciplina=" + idDisciplina + " ]";
+        return "rj.handschool.modelo.AlocacaoPK[ idalocacao=" + idalocacao + ", matricula_professor=" + matricula_professor + ", idDisciplina=" + idDisciplina + " ]";
     }
     
 }

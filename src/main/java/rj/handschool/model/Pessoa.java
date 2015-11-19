@@ -7,9 +7,17 @@ package rj.handschool.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.Formula;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -17,70 +25,83 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "pessoa")
+@Inheritance(strategy=InheritanceType.JOINED)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Pessoa.findAll", query = "SELECT p FROM Pessoa p"),
-    @NamedQuery(name = "Pessoa.findByIdpessoa", query = "SELECT p FROM Pessoa p WHERE p.pessoaPK.idpessoa = :idpessoa"),
-    @NamedQuery(name = "Pessoa.findByCpf", query = "SELECT p FROM Pessoa p WHERE p.pessoaPK.cpf = :cpf"),
     @NamedQuery(name = "Pessoa.findByDataHoraCadastro", query = "SELECT p FROM Pessoa p WHERE p.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Pessoa.findByDataUltAlteracao", query = "SELECT p FROM Pessoa p WHERE p.dataUltAlteracao = :dataUltAlteracao"),
     @NamedQuery(name = "Pessoa.findByDataNascimento", query = "SELECT p FROM Pessoa p WHERE p.dataNascimento = :dataNascimento"),
     @NamedQuery(name = "Pessoa.findByNome", query = "SELECT p FROM Pessoa p WHERE p.nome = :nome"),
     @NamedQuery(name = "Pessoa.findByRg", query = "SELECT p FROM Pessoa p WHERE p.rg = :rg"),
     @NamedQuery(name = "Pessoa.findByEmail", query = "SELECT p FROM Pessoa p WHERE p.email = :email"),
-    @NamedQuery(name = "Pessoa.findBySenha", query = "SELECT p FROM Pessoa p WHERE p.senha = :senha"),
-    @NamedQuery(name = "Pessoa.findByIdTipoPessoa", query = "SELECT p FROM Pessoa p WHERE p.pessoaPK.idTipoPessoa = :idTipoPessoa")})
-	@NamedQuery(name = "Pessoa.DeleteForPessoaPK", query = "DELETE FROM Pessoa p WHERE p.pessoaPK = :pessoaPK ")
-public class Pessoa implements Serializable {
+    @NamedQuery(name = "Pessoa.findBySenha", query = "SELECT p FROM Pessoa p WHERE p.senha = :senha")})
+   
+public abstract class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected PessoaPK pessoaPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idpessoa")
+    private int idpessoa;
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataHoraCadastro;
+    protected Date dataHoraCadastro;
     @Column(name = "data_ult_alteracao")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataUltAlteracao;
+    protected Date dataUltAlteracao;
+    @NotNull(message="Data de nascimento não informada")
+    @DateTimeFormat(pattern="d/MM/yyyy")
     @Column(name = "data_nascimento")
     @Temporal(TemporalType.DATE)
-    private Date dataNascimento;
+    protected Date dataNascimento;
+    @NotEmpty(message="Nome não informado")
     @Column(name = "nome")
-    private String nome;
+    protected String nome;
+    @NotNull @NotEmpty(message="RG Não Informado")
     @Column(name = "rg")
-    private String rg;
+    protected String rg;
+    @NotNull @NotEmpty(message="E-mail Não Informado")
+    @Pattern(regexp = ".+@.+\\.[a-z]+")
     @Column(name = "email")
     private String email;
+    @NotNull @NotEmpty(message="Senha não informada")
+    @Size(min=4, max=12,message="A Senha é muito fraca ou está fora do intervalo permitido")
     @Column(name = "senha")
-    private String senha;
+    protected String senha;
+    @NotNull
     @JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "idtipo_pessoa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private TipoPessoa tipoPessoa;
+    protected TipoPessoa tipoPessoa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Aluno> alunoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Owner> ownerList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Professor> professorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Login> loginList;
+    protected List<Login> loginList;
+    @NotNull(message="CPF Nulo")
+    @NotEmpty(message="CPF não informado")
+    @Basic(optional = false)
+    @Column(name = "cpf")
+    protected String cpf;
+    
+    public String getCpf() {
+		return cpf;
+	}
 
-    public Pessoa() {
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public Pessoa() {
     }
+    
+    public int getIdpessoa() {
+		return idpessoa;
+	}
 
-    public Pessoa(PessoaPK pessoaPK) {
-        this.pessoaPK = pessoaPK;
-    }
+	public void setIdpessoa(int idpessoa) {
+		this.idpessoa = idpessoa;
+	}
 
-    public Pessoa(int idpessoa, int cpf, int idTipoPessoa) {
-        this.pessoaPK = new PessoaPK(idpessoa, cpf, idTipoPessoa);
-    }
-
-    public PessoaPK getPessoaPK() {
-        return pessoaPK;
-    }
-
-    public void setPessoaPK(PessoaPK pessoaPK) {
-        this.pessoaPK = pessoaPK;
+	public Pessoa(int idpessoa) {
+        this.idpessoa = idpessoa;
     }
 
     public Date getDataHoraCadastro() {
@@ -148,33 +169,6 @@ public class Pessoa implements Serializable {
     }
 
     @XmlTransient
-    public List<Aluno> getAlunoList() {
-        return alunoList;
-    }
-
-    public void setAlunoList(List<Aluno> alunoList) {
-        this.alunoList = alunoList;
-    }
-
-    @XmlTransient
-    public List<Owner> getOwnerList() {
-        return ownerList;
-    }
-
-    public void setOwnerList(List<Owner> ownerList) {
-        this.ownerList = ownerList;
-    }
-
-    @XmlTransient
-    public List<Professor> getProfessorList() {
-        return professorList;
-    }
-
-    public void setProfessorList(List<Professor> professorList) {
-        this.professorList = professorList;
-    }
-
-    @XmlTransient
     public List<Login> getLoginList() {
         return loginList;
     }
@@ -183,29 +177,37 @@ public class Pessoa implements Serializable {
         this.loginList = loginList;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (pessoaPK != null ? pessoaPK.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idpessoa;
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pessoa)) {
-            return false;
-        }
-        Pessoa other = (Pessoa) object;
-        if ((this.pessoaPK == null && other.pessoaPK != null) || (this.pessoaPK != null && !this.pessoaPK.equals(other.pessoaPK))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pessoa other = (Pessoa) obj;
+		if (idpessoa != other.idpessoa)
+			return false;
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Pessoa[ pessoaPK=" + pessoaPK + " ]";
-    }
-    
+	@Override
+	public String toString() {
+		return "Pessoa [idpessoa=" + idpessoa + ", dataHoraCadastro="
+				+ dataHoraCadastro + ", dataUltAlteracao=" + dataUltAlteracao
+				+ ", dataNascimento=" + dataNascimento + ", nome=" + nome
+				+ ", rg=" + rg + ", email=" + email + ", senha=" + senha
+				+ ", tipoPessoa=" + tipoPessoa + ","
+				+ "loginList="
+				+ loginList + "]";
+	}
+        
 }

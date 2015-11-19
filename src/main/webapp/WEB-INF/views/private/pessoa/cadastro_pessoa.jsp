@@ -22,13 +22,15 @@
 		<div class="col-md-3">
 			<div class="field_text">
            		<label for="cpf" class="label_title">CPF:</label>
-           		<input type="text" name="cpf" id="cpf" value="" class="inputtext input_middle required cpf" />
+           		<form:input path="cpf" type="text" name="cpf" id="cpf" value="" class="inputtext input_middle required cpf" />
+       			<form:errors path="cpf"></form:errors>
        		</div>
 		</div>
 		<div class="col-md-3 col-md-offset-2">
 			<div class="field_text">
            		<label for="rg" class="label_title">RG:</label>
-           		<input type="text" name="rg" id="rg" value="" class="inputtext input_middle required rg" />
+           		<form:input path="rg" type="text" name="rg" id="rg" value="" class="inputtext input_middle required rg" />
+       			<form:errors path="rg"></form:errors>
        		</div>
 		</div>
 		<div class="col-md-2 col-md-offset-2">
@@ -39,13 +41,15 @@
 		<div class="col-md-6">
 			<div class="field_text">
            		<label for="nome" class="label_title">Nome:</label>
-           		<input type="text" name="nome" id="nome" value="" class="inputtext input_middle required" />
+           		<form:input path="nome" type="text" name="nome" id="nome" value="" class="inputtext input_middle required" />
+       			<form:errors path="nome"></form:errors>
        		</div>
 		</div>
 		<div class="col-md-2 col-md-offset-1">
 			<div class="field_text">
 	           	<label for="data_nascimento" class="label_title">Nascimento:</label>
-	            <input type="text" name="data_nascimento" id="data_nascimento" value="" class="inputtext input_middle required data" />
+	            <form:input path="dataNascimento"  type="text" name="data_nascimento" id="data_nascimento" value="" class="inputtext input_middle required data" />
+	        	<form:errors path="dataNascimento"></form:errors>
 	        </div>
 	    </div>
 	</div>

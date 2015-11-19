@@ -20,23 +20,31 @@ public class AvaliacaoAlunoPK implements Serializable {
     @Column(name = "idavaliacao_aluno")
     private int idavaliacaoAluno;
     @Basic(optional = false)
-    @Column(name = "id_aluno")
-    private int idAluno;
-    @Basic(optional = false)
     @Column(name = "id_avaliacao")
     private int idAvaliacao;
     @Basic(optional = false)
     @Column(name = "id_disciplina")
     private int idDisciplina;
+    @Basic(optional = false)
+    @Column(name = "matricula")
+    private String matricula;
+    
+    public String getMatricula() {
+		return matricula;
+	}
 
-    public AvaliacaoAlunoPK() {
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+	public AvaliacaoAlunoPK() {
     }
 
-    public AvaliacaoAlunoPK(int idavaliacaoAluno, int idAluno, int idAvaliacao, int idDisciplina) {
+    public AvaliacaoAlunoPK(int idavaliacaoAluno,  int idAvaliacao, int idDisciplina, String matricula) {
         this.idavaliacaoAluno = idavaliacaoAluno;
-        this.idAluno = idAluno;
         this.idAvaliacao = idAvaliacao;
         this.idDisciplina = idDisciplina;
+        this.matricula = matricula;
     }
 
     public int getIdavaliacaoAluno() {
@@ -45,14 +53,6 @@ public class AvaliacaoAlunoPK implements Serializable {
 
     public void setIdavaliacaoAluno(int idavaliacaoAluno) {
         this.idavaliacaoAluno = idavaliacaoAluno;
-    }
-
-    public int getIdAluno() {
-        return idAluno;
-    }
-
-    public void setIdAluno(int idAluno) {
-        this.idAluno = idAluno;
     }
 
     public int getIdAvaliacao() {
@@ -75,7 +75,6 @@ public class AvaliacaoAlunoPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) idavaliacaoAluno;
-        hash += (int) idAluno;
         hash += (int) idAvaliacao;
         hash += (int) idDisciplina;
         return hash;
@@ -91,21 +90,17 @@ public class AvaliacaoAlunoPK implements Serializable {
         if (this.idavaliacaoAluno != other.idavaliacaoAluno) {
             return false;
         }
-        if (this.idAluno != other.idAluno) {
-            return false;
-        }
+      
         if (this.idAvaliacao != other.idAvaliacao) {
             return false;
         }
         if (this.idDisciplina != other.idDisciplina) {
             return false;
         }
+        
+        if (this.matricula != other.matricula) {
+            return false;
+        }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.AvaliacaoAlunoPK[ idavaliacaoAluno=" + idavaliacaoAluno + ", idAluno=" + idAluno + ", idAvaliacao=" + idAvaliacao + ", idDisciplina=" + idDisciplina + " ]";
-    }
-    
+    }    
 }

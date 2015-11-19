@@ -9,8 +9,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -21,16 +24,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Professor.findAll", query = "SELECT p FROM Professor p"),
-    @NamedQuery(name = "Professor.findByIdprofessor", query = "SELECT p FROM Professor p WHERE p.professorPK.idprofessor = :idprofessor"),
-    @NamedQuery(name = "Professor.findByMatricula", query = "SELECT p FROM Professor p WHERE p.professorPK.matricula = :matricula"),
+    @NamedQuery(name = "Professor.findByMatriculaProfessor", query = "SELECT p FROM Professor p WHERE p.matriculaProcessor = :matricula"),
     @NamedQuery(name = "Professor.findByAtivo", query = "SELECT p FROM Professor p WHERE p.ativo = :ativo"),
     @NamedQuery(name = "Professor.findByDataHoraCadastro", query = "SELECT p FROM Professor p WHERE p.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Professor.findByDataUltAtualizacao", query = "SELECT p FROM Professor p WHERE p.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "Professor.findByIdPessoa", query = "SELECT p FROM Professor p WHERE p.professorPK.idPessoa = :idPessoa")})
-public class Professor implements Serializable {
+   })
+public class Professor extends Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProfessorPK professorPK;
     @Column(name = "ativo")
     private Character ativo;
     @Column(name = "data_hora_cadastro")
@@ -43,31 +43,20 @@ public class Professor implements Serializable {
     private List<QuadroAvisos> quadroAvisosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
     private List<Alocacao> alocacaoList;
-    @JoinColumns({
-    	@JoinColumn(name = "id_pessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
-    	,@JoinColumn(name = "cpf", referencedColumnName = "cpf", insertable = false, updatable = false)
-    	,@JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "id_tipo_pessoa", insertable = false, updatable = false)
-    })
-    @ManyToOne(optional = false)
-    private Pessoa pessoa;
+    @NotNull @NotEmpty(message="Matricula não informada")
+    @Basic(optional = false)
+    @Column(name = "matricula_professor", unique=true)
+    private String matriculaProcessor;
+    
+    public String getMatriculaProfessor() {
+		return matriculaProcessor;
+	}
 
+	public void setMatriculaProfessor(String matricula_processor) {
+		this.matriculaProcessor = matricula_processor;
+	}
+    
     public Professor() {
-    }
-
-    public Professor(ProfessorPK professorPK) {
-        this.professorPK = professorPK;
-    }
-
-    public Professor(int idprofessor, String matricula, int idPessoa) {
-        this.professorPK = new ProfessorPK(idprofessor, matricula, idPessoa);
-    }
-
-    public ProfessorPK getProfessorPK() {
-        return professorPK;
-    }
-
-    public void setProfessorPK(ProfessorPK professorPK) {
-        this.professorPK = professorPK;
     }
 
     public Character getAtivo() {
@@ -111,38 +100,4 @@ public class Professor implements Serializable {
     public void setAlocacaoList(List<Alocacao> alocacaoList) {
         this.alocacaoList = alocacaoList;
     }
-
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (professorPK != null ? professorPK.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Professor)) {
-            return false;
-        }
-        Professor other = (Professor) object;
-        if ((this.professorPK == null && other.professorPK != null) || (this.professorPK != null && !this.professorPK.equals(other.professorPK))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Professor[ professorPK=" + professorPK + " ]";
-    }
-    
 }

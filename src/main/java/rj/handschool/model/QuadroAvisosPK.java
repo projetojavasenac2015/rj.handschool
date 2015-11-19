@@ -20,8 +20,8 @@ public class QuadroAvisosPK implements Serializable {
     @Column(name = "idquadro_avisos")
     private int idquadroAvisos;
     @Basic(optional = false)
-    @Column(name = "id_professor")
-    private int idProfessor;
+    @Column(name = "matricula_professor")
+    private String matricula_professor;
     @Basic(optional = false)
     @Column(name = "id_turma")
     private int idTurma;
@@ -35,9 +35,9 @@ public class QuadroAvisosPK implements Serializable {
     public QuadroAvisosPK() {
     }
 
-    public QuadroAvisosPK(int idquadroAvisos, int idProfessor, int idTurma, int idCurso, int idDisciplina) {
+    public QuadroAvisosPK(int idquadroAvisos, String matricula_professor, int idTurma, int idCurso, int idDisciplina) {
         this.idquadroAvisos = idquadroAvisos;
-        this.idProfessor = idProfessor;
+        this.matricula_professor = matricula_professor;
         this.idTurma = idTurma;
         this.idCurso = idCurso;
         this.idDisciplina = idDisciplina;
@@ -51,15 +51,15 @@ public class QuadroAvisosPK implements Serializable {
         this.idquadroAvisos = idquadroAvisos;
     }
 
-    public int getIdProfessor() {
-        return idProfessor;
-    }
+    public String getMatricula_professor() {
+		return matricula_professor;
+	}
 
-    public void setIdProfessor(int idProfessor) {
-        this.idProfessor = idProfessor;
-    }
+	public void setMatricula_professor(String matricula_professor) {
+		this.matricula_professor = matricula_professor;
+	}
 
-    public int getIdTurma() {
+	public int getIdTurma() {
         return idTurma;
     }
 
@@ -87,7 +87,6 @@ public class QuadroAvisosPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) idquadroAvisos;
-        hash += (int) idProfessor;
         hash += (int) idTurma;
         hash += (int) idCurso;
         hash += (int) idDisciplina;
@@ -104,7 +103,7 @@ public class QuadroAvisosPK implements Serializable {
         if (this.idquadroAvisos != other.idquadroAvisos) {
             return false;
         }
-        if (this.idProfessor != other.idProfessor) {
+        if (this.matricula_professor != other.matricula_professor) {
             return false;
         }
         if (this.idTurma != other.idTurma) {
@@ -121,7 +120,7 @@ public class QuadroAvisosPK implements Serializable {
 
     @Override
     public String toString() {
-        return "rj.handschool.modelo.QuadroAvisosPK[ idquadroAvisos=" + idquadroAvisos + ", idProfessor=" + idProfessor + ", idTurma=" + idTurma + ", idCurso=" + idCurso + ", idDisciplina=" + idDisciplina + " ]";
+        return "rj.handschool.modelo.QuadroAvisosPK[ idquadroAvisos=" + idquadroAvisos + ", matricula_professor=" + matricula_professor + ", idTurma=" + idTurma + ", idCurso=" + idCurso + ", idDisciplina=" + idDisciplina + " ]";
     }
     
 }
