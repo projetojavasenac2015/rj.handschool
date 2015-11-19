@@ -13,8 +13,8 @@
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/rjhandschool?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true"/>
-        <property name="username" value="admin928r8ce"/>
-        <property name="password" value="ivhuCPX_87Ny"/>
+        <property name="username" value="adminhjhwvlc"/>
+        <property name="password" value="faSgW7XE8EXF"/>
     </bean>
 
     <!-- Configura a SessionFactory do Hibernate -->
