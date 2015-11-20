@@ -19,6 +19,10 @@
 </head>
 <body>
 	<div class="row">
+		<div class="col-md-4 col-md-offset-2"></div>
+		<div class="col-md-4">${menssagem}</div>
+	</div>
+	<div class="row">
 		<div class="col-md-3">
 			<div class="field_text">
            		<label for="cpf" class="label_title">CPF:</label>

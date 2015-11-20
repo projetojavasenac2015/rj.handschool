@@ -1,7 +1,9 @@
 package rj.handschool.dao;
 
 import java.util.List;
+
 import javax.transaction.Transactional;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Aluno;
+import rj.handschool.model.TipoPessoa;
 
 @Repository
 @Transactional
@@ -32,13 +35,14 @@ public class AlunoDAO {
 	@Transactional
 	public void insert(Aluno aluno) throws Exception{
 		try {
-		   aluno.getTipoPessoa().setIdtipoPessoa(1);
+		   aluno.setTipoPessoa(TipoPessoa.Aluno);
 		   getSession().save(aluno);
+		   getSession().flush();
 		} catch (Exception e) {
     		throw new Exception("Erro ao Inserir Aluno: " + e.getMessage());
 		}
 	}
-	
+	@Transactional
 	public void update(Aluno aluno) throws Exception {
 		try {
 			   getSession().merge(aluno);
@@ -52,9 +56,8 @@ public class AlunoDAO {
 		return getSession().createCriteria(Aluno.class).list();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public int findAlunoJaMatriculado(Aluno aluno){
 		Query q = getSession().getNamedQuery("Aluno.findAlgumAlunoMatriculado");
-		return q.setParameter("matricula",aluno.getMatricula()).getMaxResults();
+		return q.setParameter("matricula",aluno.getMatricula()).getFetchSize();
 	}
 }

@@ -43,7 +43,7 @@ public abstract class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idpessoa")
-    private int idpessoa;
+    protected int idpessoa;
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dataHoraCadastro;
@@ -70,16 +70,23 @@ public abstract class Pessoa implements Serializable {
     @Column(name = "senha")
     protected String senha;
     @NotNull
-    @JoinColumn(name = "id_tipo_pessoa", referencedColumnName = "idtipo_pessoa", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    protected TipoPessoa tipoPessoa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
+    @Column(name = "tipo_pessoa")
+    protected TipoPessoa tipoPessoa ;
+   	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     protected List<Login> loginList;
     @NotNull(message="CPF Nulo")
     @NotEmpty(message="CPF não informado")
     @Basic(optional = false)
     @Column(name = "cpf")
     protected String cpf;
+    
+    public TipoPessoa getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
     
     public String getCpf() {
 		return cpf;
@@ -88,9 +95,6 @@ public abstract class Pessoa implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-
-	public Pessoa() {
-    }
     
     public int getIdpessoa() {
 		return idpessoa;
@@ -99,10 +103,6 @@ public abstract class Pessoa implements Serializable {
 	public void setIdpessoa(int idpessoa) {
 		this.idpessoa = idpessoa;
 	}
-
-	public Pessoa(int idpessoa) {
-        this.idpessoa = idpessoa;
-    }
 
     public Date getDataHoraCadastro() {
         return dataHoraCadastro;
@@ -160,15 +160,8 @@ public abstract class Pessoa implements Serializable {
         this.senha = senha;
     }
 
-    public TipoPessoa getTipoPessoa() {
-        return tipoPessoa;
-    }
-
-    public void setTipoPessoa(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
-    }
-
-    @XmlTransient
+   
+	@XmlTransient
     public List<Login> getLoginList() {
         return loginList;
     }

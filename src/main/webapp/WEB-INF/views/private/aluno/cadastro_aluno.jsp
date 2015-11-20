@@ -23,7 +23,7 @@
 			<div class="add-comment add-comment-velvet styled" id="addcomments">
 				<div class="add-comment-title"><h3>${rotulo} Aluno</h3></div>
 				<div class="comment-form">
-					<form:form action="GravaAluno" commandName="aluno" method="post" id="commentForm" class="ajax_form">
+					<form:form action="${pageContext.request.contextPath}/GravaAluno" commandName="aluno" method="post" id="commentForm" class="ajax_form">
 						<div class="form-inner">
 							<tiles:insertTemplate template="/WEB-INF/views/private/pessoa/cadastro_pessoa.jsp"></tiles:insertTemplate>
 							<div class="row">

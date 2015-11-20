@@ -21,10 +21,11 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "aluno")
+@PrimaryKeyJoinColumn(name="idpessoa")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a"),
-    @NamedQuery(name = "Aluno.findAlgumAlunoMatriculado", query = "SELECT count(1) FROM Aluno a where a.matricula = :matricula"),
+    @NamedQuery(name = "Aluno.findAlgumAlunoMatriculado", query = "SELECT a FROM Aluno a where a.matricula = :matricula"),
     @NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.matricula = :matricula"),
     @NamedQuery(name = "Aluno.findByAtivo", query = "SELECT a FROM Aluno a WHERE a.ativo = :ativo"),
     @NamedQuery(name = "Aluno.findByDataHoraCadastro", query = "SELECT a FROM Aluno a WHERE a.dataHoraCadastro = :dataHoraCadastro"),
@@ -61,7 +62,8 @@ public class Aluno extends Pessoa implements Serializable {
 	
 	public Aluno() {
     }
-        public Character getAtivo() {
+	
+    public Character getAtivo() {
         return ativo;
     }
 

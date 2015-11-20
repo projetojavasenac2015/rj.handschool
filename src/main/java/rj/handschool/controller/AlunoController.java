@@ -12,9 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.AlunoDAO;
 import rj.handschool.model.Aluno;
-import rj.handschool.model.Disciplina;
-import rj.handschool.model.Modulo;
-import rj.handschool.model.Pessoa;
 import rj.handshool.util.Utilidades;
 
 @Controller
@@ -26,7 +23,7 @@ public class AlunoController {
 	static final String  modelo_pagina = "aluno_novo";
 	
 	@RequestMapping("CadastroALuno")
-	public ModelAndView novoModulo(@ModelAttribute("aluno") Aluno aluno){
+	public ModelAndView novoAluno(@ModelAttribute("aluno") Aluno aluno){
 		ModelAndView modelView = new ModelAndView(modelo_pagina);
 		modelView.addObject("aluno",new Aluno(Utilidades.formatoMatricula()));
 		rotuloPagina(modelView,"Novo");
@@ -38,19 +35,19 @@ public class AlunoController {
 	}
 	
 	@RequestMapping(value = "GravaAluno", method = RequestMethod.POST)
-	public ModelAndView gravaDisciplina(@Valid @ModelAttribute("aluno")Aluno aluno, BindingResult bind) throws Exception{
+	public ModelAndView gravaAluno(@Valid @ModelAttribute("aluno")Aluno aluno, BindingResult bind) throws Exception{
 		ModelAndView modelView;
-		
 		String msg = "";
 		
 		if(!bind.hasErrors()){
 			try{
-				//if(alunoDAO.findAlunoJaMatriculado(aluno) == 0){
+				int qtd = alunoDAO.findAlunoJaMatriculado(aluno);
+				if( qtd == 0){
 					alunoDAO.insert(aluno);
-				//}
-				//else{
-				//	alunoDAO.update(aluno);
-				//}
+				}
+				else{
+					alunoDAO.update(aluno);
+				}
 				
 				msg = "Registro Gravado com Sucesso";
 			}
