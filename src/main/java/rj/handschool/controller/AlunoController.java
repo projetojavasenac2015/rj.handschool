@@ -45,12 +45,12 @@ public class AlunoController {
 		
 		if(!bind.hasErrors()){
 			try{
-				//if(alunoDAO.findAlunoJaMatriculado(aluno) == 0){
+				if(alunoDAO.findAlunoJaMatriculado(aluno) == 0){
 					alunoDAO.insert(aluno);
-				//}
-				//else{
-				//	alunoDAO.update(aluno);
-				//}
+				}
+				else{
+					alunoDAO.update(aluno);
+				}
 				
 				msg = "Registro Gravado com Sucesso";
 			}

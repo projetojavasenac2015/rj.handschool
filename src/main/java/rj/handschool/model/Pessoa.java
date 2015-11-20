@@ -43,7 +43,7 @@ public abstract class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idpessoa")
-    private int idpessoa;
+    protected int idpessoa;
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dataHoraCadastro;

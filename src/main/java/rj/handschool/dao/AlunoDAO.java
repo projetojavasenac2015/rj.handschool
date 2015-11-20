@@ -55,6 +55,6 @@ public class AlunoDAO {
 	@SuppressWarnings("unchecked")
 	public int findAlunoJaMatriculado(Aluno aluno){
 		Query q = getSession().getNamedQuery("Aluno.findAlgumAlunoMatriculado");
-		return q.setParameter("matricula",aluno.getMatricula()).getMaxResults();
+		return q.setParameter("matricula",aluno.getMatricula()).getFetchSize();
 	}
 }
