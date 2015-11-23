@@ -62,9 +62,7 @@ public class Disciplina implements Serializable {
     private List<ListaPresenca> listapresencaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
     private List<Alocacao> alocacaoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
-    private List<Modulo> moduloList;
-
+   
     public Disciplina() {
     }
 
@@ -155,16 +153,7 @@ public class Disciplina implements Serializable {
     public void setAlocacaoList(List<Alocacao> alocacaoList) {
         this.alocacaoList = alocacaoList;
     }
-
-    @XmlTransient
-    public List<Modulo> getModuloList() {
-        return moduloList;
-    }
-
-    public void setModuloList(List<Modulo> moduloList) {
-        this.moduloList = moduloList;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

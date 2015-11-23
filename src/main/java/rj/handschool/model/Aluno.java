@@ -25,7 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a"),
-    @NamedQuery(name = "Aluno.findAlgumAlunoMatriculado", query = "SELECT a FROM Aluno a where a.matricula = :matricula"),
+    @NamedQuery(name = "Aluno.findAlgumAlunoMatriculado", query = "SELECT count(*) FROM Aluno a where a.matricula = :matricula"),
     @NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.matricula = :matricula"),
     @NamedQuery(name = "Aluno.findByAtivo", query = "SELECT a FROM Aluno a WHERE a.ativo = :ativo"),
     @NamedQuery(name = "Aluno.findByDataHoraCadastro", query = "SELECT a FROM Aluno a WHERE a.dataHoraCadastro = :dataHoraCadastro"),

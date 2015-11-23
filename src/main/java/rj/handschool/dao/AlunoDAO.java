@@ -58,6 +58,10 @@ public class AlunoDAO {
 	
 	public int findAlunoJaMatriculado(Aluno aluno){
 		Query q = getSession().getNamedQuery("Aluno.findAlgumAlunoMatriculado");
-		return q.setParameter("matricula",aluno.getMatricula()).getFetchSize();
+		return ((Long)q.setParameter("matricula",aluno.getMatricula()).uniqueResult()).intValue();
+	}
+	
+	public Aluno findByMatricula(Aluno aluno){
+		return (Aluno) getSession().getNamedQuery("Aluno.findByMatricula").setParameter("matricula", aluno.getMatricula()).uniqueResult();	
 	}
 }

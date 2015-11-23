@@ -6,11 +6,13 @@ package rj.handschool.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -28,7 +30,6 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Modulo.findByDataHoraCadastro", query = "SELECT m FROM Modulo m WHERE m.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Modulo.findByDataUltAtualizacao", query = "SELECT m FROM Modulo m WHERE m.dataUltAtualizacao = :dataUltAtualizacao"),
     @NamedQuery(name = "Modulo.findByDescricao", query = "SELECT m FROM Modulo m WHERE m.descricao = :descricao"),
-    @NamedQuery(name = "Modulo.findByIdDisciplina", query = "SELECT m FROM Modulo m WHERE m.moduloPK.idDisciplina = :idDisciplina"),
     @NamedQuery(name = "Modulo.findByIdCurso", query = "SELECT m FROM Modulo m WHERE m.moduloPK.idCurso = :idCurso")})
 public class Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -53,19 +54,27 @@ public class Modulo implements Serializable {
     @ManyToOne(optional = false)
     private Curso curso;
     @NotNull(message="Informe a Disciplina")
-    @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Disciplina disciplina;
+    @Size(min=1,message="No mínimo 1 disciplina")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="modulo", targetEntity = Modulo.class)
+    private List<Disciplina> listadisciplina;
+    
+    public List<Disciplina> getListadisciplina() {
+		return listadisciplina;
+	}
 
-    public Modulo() {
+	public void setListadisciplina(List<Disciplina> listadisciplina) {
+		this.listadisciplina = listadisciplina;
+	}
+
+	public Modulo() {
     }
 
     public Modulo(ModuloPK moduloPK) {
         this.moduloPK = moduloPK;
     }
 
-    public Modulo(int idmodulo, int idDisciplina, int idCurso) {
-        this.moduloPK = new ModuloPK(idmodulo, idDisciplina, idCurso);
+    public Modulo(int idmodulo,int idCurso) {
+        this.moduloPK = new ModuloPK(idmodulo, idCurso);
     }
 
     public ModuloPK getModuloPK() {
@@ -114,14 +123,6 @@ public class Modulo implements Serializable {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
-    }
-
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
-
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
     }
 
     @Override

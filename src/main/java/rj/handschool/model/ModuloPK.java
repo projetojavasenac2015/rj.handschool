@@ -20,18 +20,14 @@ public class ModuloPK implements Serializable {
     @Column(name = "idmodulo")
     private int idmodulo;
     @Basic(optional = false)
-    @Column(name = "id_disciplina")
-    private int idDisciplina;
-    @Basic(optional = false)
     @Column(name = "idcurso")
     private int idCurso;
 
     public ModuloPK() {
     }
 
-    public ModuloPK(int idmodulo, int idDisciplina, int idCurso) {
+    public ModuloPK(int idmodulo,  int idCurso) {
         this.idmodulo = idmodulo;
-        this.idDisciplina = idDisciplina;
         this.idCurso = idCurso;
     }
 
@@ -41,14 +37,6 @@ public class ModuloPK implements Serializable {
 
     public void setIdmodulo(int idmodulo) {
         this.idmodulo = idmodulo;
-    }
-
-    public int getIdDisciplina() {
-        return idDisciplina;
-    }
-
-    public void setIdDisciplina(int idDisciplina) {
-        this.idDisciplina = idDisciplina;
     }
 
     public int getIdCurso() {
@@ -63,7 +51,6 @@ public class ModuloPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) idmodulo;
-        hash += (int) idDisciplina;
         hash += (int) idCurso;
         return hash;
     }
@@ -78,9 +65,6 @@ public class ModuloPK implements Serializable {
         if (this.idmodulo != other.idmodulo) {
             return false;
         }
-        if (this.idDisciplina != other.idDisciplina) {
-            return false;
-        }
         if (this.idCurso != other.idCurso) {
             return false;
         }
@@ -89,7 +73,7 @@ public class ModuloPK implements Serializable {
 
     @Override
     public String toString() {
-        return "rj.handschool.modelo.ModuloPK[ idmodulo=" + idmodulo + ", idDisciplina=" + idDisciplina + ", idCurso=" + idCurso + " ]";
+        return "rj.handschool.modelo.ModuloPK[ idmodulo=" + idmodulo + ",idCurso=" + idCurso + " ]";
     }
     
 }

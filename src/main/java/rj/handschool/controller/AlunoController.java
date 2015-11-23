@@ -2,6 +2,8 @@ package rj.handschool.controller;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,6 +23,7 @@ public class AlunoController {
 	private AlunoDAO alunoDAO;
 	
 	static final String  modelo_pagina = "aluno_novo";
+	static final Logger logger = Logger.getLogger(AlunoController.class);
 	
 	@RequestMapping("CadastroALuno")
 	public ModelAndView novoAluno(@ModelAttribute("aluno") Aluno aluno){
@@ -41,12 +44,15 @@ public class AlunoController {
 		
 		if(!bind.hasErrors()){
 			try{
-				int qtd = alunoDAO.findAlunoJaMatriculado(aluno);
-				if( qtd == 0){
-					alunoDAO.insert(aluno);
+				int qtd = 0;
+				
+				Aluno achado = alunoDAO.findByMatricula(aluno);
+				
+				if( achado.equals(aluno)){
+					alunoDAO.update(aluno);
 				}
 				else{
-					alunoDAO.update(aluno);
+					alunoDAO.insert(aluno);
 				}
 				
 				msg = "Registro Gravado com Sucesso";
@@ -54,6 +60,7 @@ public class AlunoController {
 			catch(Exception e){
 				msg = e.getMessage();
 			}
+			
 			modelView = new ModelAndView(modelo_pagina);
 			modelView.addObject("menssagem",msg);
 		}
