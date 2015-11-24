@@ -35,7 +35,6 @@ public class AlunoDAO {
 	@Transactional
 	public void insert(Aluno aluno) throws Exception{
 		try {
-		   aluno.setTipoPessoa(TipoPessoa.Aluno);
 		   getSession().save(aluno);
 		   getSession().flush();
 		} catch (Exception e) {
@@ -62,6 +61,8 @@ public class AlunoDAO {
 	}
 	
 	public Aluno findByMatricula(Aluno aluno){
-		return (Aluno) getSession().getNamedQuery("Aluno.findByMatricula").setParameter("matricula", aluno.getMatricula()).uniqueResult();	
+		Query q = getSession().getNamedQuery("Aluno.findByMatricula");
+		q.setParameter("matricula",aluno.getMatricula());
+		return (Aluno)q.uniqueResult();
 	}
 }

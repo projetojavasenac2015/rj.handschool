@@ -62,8 +62,20 @@ public class Disciplina implements Serializable {
     private List<ListaPresenca> listapresencaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
     private List<Alocacao> alocacaoList;
+    @JoinColumns({@JoinColumn(name = "idmodulo", referencedColumnName = "idmodulo", insertable = false, updatable = false),
+	@JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Modulo modulo;
    
-    public Disciplina() {
+    public Modulo getModulo() {
+		return modulo;
+	}
+
+	public void setModulo(Modulo modulo) {
+		this.modulo = modulo;
+	}
+
+	public Disciplina() {
     }
 
     public Disciplina(Integer iddisciplina) {

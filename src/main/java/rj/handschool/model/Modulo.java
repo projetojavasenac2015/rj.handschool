@@ -55,7 +55,7 @@ public class Modulo implements Serializable {
     private Curso curso;
     @NotNull(message="Informe a Disciplina")
     @Size(min=1,message="No mínimo 1 disciplina")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="modulo", targetEntity = Modulo.class)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="modulo")
     private List<Disciplina> listadisciplina;
     
     public List<Disciplina> getListadisciplina() {

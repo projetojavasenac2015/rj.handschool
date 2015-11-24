@@ -40,7 +40,7 @@ public class CursoDAO {
 	    		throw new Exception("Erro ao Inserir Curso: " + e.getMessage());
 			}
 		}
-		
+		@Transactional
 		public void update(Curso curso) throws Exception {
 			try {
 					curso.setDataUltAtualizacao(new java.sql.Date(System.currentTimeMillis()));

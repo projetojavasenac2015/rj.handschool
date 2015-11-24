@@ -56,8 +56,9 @@ public class Aluno extends Pessoa implements Serializable {
 		this.matricula = matricula;
 	}
 
-	public Aluno(String matricula){
+	public Aluno(String matricula, TipoPessoa tipo){
 		this.matricula = matricula;
+		this.tipoPessoa = tipo;
 	}
 	
 	public Aluno() {

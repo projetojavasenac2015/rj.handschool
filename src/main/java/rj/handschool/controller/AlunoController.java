@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.AlunoDAO;
 import rj.handschool.model.Aluno;
+import rj.handschool.model.TipoPessoa;
 import rj.handshool.util.Utilidades;
 
 @Controller
@@ -28,7 +29,7 @@ public class AlunoController {
 	@RequestMapping("CadastroALuno")
 	public ModelAndView novoAluno(@ModelAttribute("aluno") Aluno aluno){
 		ModelAndView modelView = new ModelAndView(modelo_pagina);
-		modelView.addObject("aluno",new Aluno(Utilidades.formatoMatricula()));
+		modelView.addObject("aluno",new Aluno(Utilidades.formatoMatricula(),TipoPessoa.Aluno));
 		rotuloPagina(modelView,"Novo");
 		return modelView;
 	}
@@ -44,11 +45,10 @@ public class AlunoController {
 		
 		if(!bind.hasErrors()){
 			try{
-				int qtd = 0;
+				Aluno aluno_cadatrado = alunoDAO.findByMatricula(aluno);
 				
-				Aluno achado = alunoDAO.findByMatricula(aluno);
-				
-				if( achado.equals(aluno)){
+				if(aluno_cadatrado != null){
+					aluno.setIdpessoa(aluno_cadatrado.getIdpessoa());
 					alunoDAO.update(aluno);
 				}
 				else{

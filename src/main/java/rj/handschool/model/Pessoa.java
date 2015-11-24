@@ -71,6 +71,7 @@ public abstract class Pessoa implements Serializable {
     protected String senha;
     @NotNull
     @Column(name = "tipo_pessoa")
+    @Enumerated(EnumType.STRING)
     protected TipoPessoa tipoPessoa ;
    	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     protected List<Login> loginList;
