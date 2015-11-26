@@ -32,16 +32,21 @@ public class TipoAvaliacao implements Serializable {
     @Basic(optional = false)
     @Column(name = "idtipo_avaliacao")
     private Integer idtipoAvaliacao;
+    
     @Column(name = "ativo")
     private Character ativo;
+    
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
+    
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
+    
     @Column(name = "descricao")
     private String descricao;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAvaliacao")
     private List<Avaliacao> avaliacaoList;
     

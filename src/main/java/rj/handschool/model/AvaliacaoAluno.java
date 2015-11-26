@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AvaliacaoAluno.findAll", query = "SELECT a FROM AvaliacaoAluno a"),
+    @NamedQuery(name = "AvaliacaoAluno.findByAluno", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAluno.aluno = :aluno"),
     @NamedQuery(name = "AvaliacaoAluno.findByIdavaliacaoAluno", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idavaliacaoAluno = :idavaliacaoAluno"),
     @NamedQuery(name = "AvaliacaoAluno.findByData", query = "SELECT a FROM AvaliacaoAluno a WHERE a.data = :data"),
     @NamedQuery(name = "AvaliacaoAluno.findByValor", query = "SELECT a FROM AvaliacaoAluno a WHERE a.valor = :valor"),
@@ -27,25 +28,30 @@ public class AvaliacaoAluno implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AvaliacaoAlunoPK avaliacaoAlunoPK;
+    
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "valor")
     private Double valor;
+    
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Disciplina disciplina;
+    
     @JoinColumns({
     	@JoinColumn(name = "id_avaliacao", referencedColumnName = "idavaliacao", insertable = false, updatable = false)
     	,@JoinColumn(name = "id_tipo_avaliacao", referencedColumnName = "id_tipo_avaliacao", insertable = false, updatable = false)
     })
     @ManyToOne(optional = false)
     private Avaliacao avaliacao;
+    
     @JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Aluno aluno;
-
+    
     public AvaliacaoAluno() {
     }
 
