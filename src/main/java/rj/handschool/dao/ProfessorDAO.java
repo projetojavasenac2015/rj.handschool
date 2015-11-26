@@ -34,7 +34,8 @@ public class ProfessorDAO {
 	@Transactional
 	public void insert(Professor professor) throws Exception{
 		try {
-		   getSession().save(professor);
+				professor.setDataHoraCadastro(new java.sql.Date(System.currentTimeMillis()));
+				getSession().save(professor);
 		} catch (Exception e) {
     		throw new Exception("Erro ao Inserir Curso: " + e.getMessage());
 		}
@@ -42,7 +43,8 @@ public class ProfessorDAO {
 	
 	public void update(Professor professor) throws Exception {
 		try {
-			   getSession().merge(professor);
+				professor.setDataUltAtualizacao(new java.sql.Date(System.currentTimeMillis()));
+				getSession().merge(professor);
 			} catch (Exception e) {
 	    		throw new Exception("Erro ao Atualizar Curso: " + e.getMessage());
 			}

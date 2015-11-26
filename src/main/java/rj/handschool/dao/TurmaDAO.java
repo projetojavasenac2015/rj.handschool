@@ -43,7 +43,8 @@ public class TurmaDAO {
 	
 	public void update(Turma turma) throws Exception {
 		try {
-			   getSession().merge(turma);
+				turma.setDataUltAtualizacao(new java.sql.Date(System.currentTimeMillis()));   
+				getSession().merge(turma);
 			} catch (Exception e) {
 	    		throw new Exception("Erro ao Atualizar Turma: " + e.getMessage());
 			}

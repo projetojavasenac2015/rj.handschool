@@ -14,8 +14,7 @@ import rj.handschool.model.Modulo;
 
 @Repository
 @Transactional
-public class ModuloDAO {
-	
+public class ModuloDAO {	
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -43,7 +42,8 @@ public class ModuloDAO {
 	
 	public void update(Modulo modulo) throws Exception {
 		try {
-			   getSession().merge(modulo);
+			 modulo.setDataUltAtualizacao(new java.sql.Date(System.currentTimeMillis()));   
+			 getSession().merge(modulo);
 			} catch (Exception e) {
 	    		throw new Exception("Erro ao Atualizar Modulo: " + e.getMessage());
 			}

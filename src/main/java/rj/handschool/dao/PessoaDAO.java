@@ -33,7 +33,8 @@ public class PessoaDAO {
 	@Transactional
 	public void insert(Pessoa pessoa) throws Exception{
 		try {
-		   getSession().save(pessoa);
+			pessoa.setDataHoraCadastro(new java.sql.Date(System.currentTimeMillis()));
+		    getSession().save(pessoa);
 		} catch (Exception e) {
     		throw new Exception("Erro ao Inserir Pessoa: " + e.getMessage());
 		}
@@ -41,7 +42,8 @@ public class PessoaDAO {
 	
 	public void update(Pessoa pessoa) throws Exception {
 		try {
-			   getSession().merge(pessoa);
+				pessoa.setDataUltAlteracao(new java.sql.Date(System.currentTimeMillis()));
+				getSession().merge(pessoa);
 			} catch (Exception e) {
 	    		throw new Exception("Erro ao Atualizar Pessoa: " + e.getMessage());
 			}

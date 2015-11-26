@@ -34,7 +34,9 @@ public class PerfilDAO {
 	@Transactional
 	public void insert(Perfil perfil) throws Exception{
 		try {
-		   getSession().save(perfil);
+			
+			perfil.setDataHoraCadastro(new java.sql.Date(System.currentTimeMillis()));
+			getSession().save(perfil);
 		} catch (Exception e) {
     		throw new Exception("Erro ao Inserir Perfil: " + e.getMessage());
 		}
@@ -42,7 +44,8 @@ public class PerfilDAO {
 	
 	public void update(Perfil perfil) throws Exception {
 		try {
-			   getSession().merge(perfil);
+				perfil.setDataUltAlteracao(new java.sql.Date(System.currentTimeMillis()));
+				getSession().merge(perfil);
 			} catch (Exception e) {
 	    		throw new Exception("Erro ao Atualizar Perfil: " + e.getMessage());
 			}
