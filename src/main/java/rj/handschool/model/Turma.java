@@ -21,7 +21,6 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "turma")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t"),
     @NamedQuery(name = "Turma.findByIdturma", query = "SELECT t FROM Turma t WHERE t.idturma = :idturma"),
@@ -29,6 +28,7 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Turma.findByDataHoraCadastro", query = "SELECT t FROM Turma t WHERE t.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Turma.findByDataUltAtualizacao", query = "SELECT t FROM Turma t WHERE t.dataUltAtualizacao = :dataUltAtualizacao"),
     @NamedQuery(name = "Turma.findByQuantidadeAlunos", query = "SELECT t FROM Turma t WHERE t.quantidadeAlunos = :quantidadeAlunos")
+    ,@NamedQuery(name = "Turma.findByPorCurso", query = "SELECT t.quantidadeAlunos, t.ativo, t.descricao, t.ano FROM Turma t WHERE t.curso.idcurso = :idcurso and t.ativo = 1")
 })
 public class Turma implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -49,12 +49,12 @@ public class Turma implements Serializable {
     @NotNull(message="Informe a Quantidade de Alunos")
     @Column(name = "quantidade_alunos")
     private Integer quantidadeAlunos;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma", fetch=FetchType.LAZY)
     private List<QuadroAvisos> quadroAvisosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma")
     private List<ListaPresenca> listapresencaList;
     @NotNull(message="Informe o Curso")
-    @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)
+    @JoinColumn(name = "idcurso", referencedColumnName = "idcurso")
     @ManyToOne(optional = false)
     private Curso curso;
     @Column(name="descricao")

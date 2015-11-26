@@ -7,9 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.codehaus.jackson.annotate.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -35,6 +37,7 @@ import rj.handshool.util.Utilidades;
 public class TurmaController {
 	private final static int qtd_anos_abertura_turma = 3;
 	static final String modelo_pagina = "turma_nova";
+	static final String modelo_pagina2 = "composicao_turma";
 
 	@Autowired
 	private CursoDAO cursoDAO;
@@ -112,5 +115,40 @@ public class TurmaController {
 		List<Modulo> modulos = new ArrayList<Modulo>();
 		modulos = this.moduloDAO.findModuloPorCurso(idcurso);
 		return modulos;
+	}
+	
+	@RequestMapping(value = "TurmasAtivas/{idcurso}")
+	public @ResponseBody List<Turma> procurarTurmasAtivas(
+			@PathVariable("idcurso") Integer idcurso) throws Exception {
+		
+		List<Turma> turmas = new ArrayList<Turma>();
+		List<Object[]> obj  = this.turmaDAO.findByPorCurso(idcurso);
+		
+		for (Object[] obj1 : obj) {
+			Turma turma = new Turma();
+			turma.setQuantidadeAlunos((Integer) obj1[0]);
+			turma.setAtivo((Character) obj1[1]);
+			turma.setDescricao((String) obj1[2]);
+			turma.setAno((Integer) obj1[3]);
+			turmas.add(turma);
+		}
+		
+		return turmas;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "TabelaTurmasAtivas/{idcurso}", method = RequestMethod.GET,produces = "application/json")
+	public void procurarTabelaTurmasAtivas(
+			@PathVariable("idcurso") Integer idcurso, ModelAndView modelView) throws Exception {
+		List<Turma> turmas = new ArrayList<Turma>();
+		//turmas = this.turmaDAO.findByPorCurso(idcurso);
+		modelView.addObject("turmasativas", turmas);
+	}
+	
+	@RequestMapping("/ComporTurma")
+	public ModelAndView comporTurma(@ModelAttribute("turma") Turma turma) {
+		ModelAndView modelView = new ModelAndView(modelo_pagina2);
+		listaCurso(modelView);
+		return modelView;
 	}
 }

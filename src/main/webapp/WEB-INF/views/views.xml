@@ -50,4 +50,9 @@
 	<definition name="ultimos_cursos" template="/WEB-INF/views/private/curso/ultimos_cursos_cadastrados.jsp">
 	    <put-attribute name="title" value=""></put-attribute>
 	</definition>
+	
+	<definition name="composicao_turma"  extends="base.definition">
+	    <put-attribute name="title" value="Composição de turma HandSchool"></put-attribute>
+	    <put-attribute name="body" value="/WEB-INF/views/private/turma/compor_turma.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

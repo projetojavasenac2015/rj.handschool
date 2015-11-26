@@ -109,6 +109,7 @@
                                         <li><a href="#">Turma</a>
                                         	<ul>
 		                                        <li><a href="${pageContext.request.contextPath}/NovaTurma">Nova</a></li>
+		                                        <li><a href="${pageContext.request.contextPath}/ComporTurma">Compor Turma</a></li>
 		                                        <li><a href="${pageContext.request.contextPath}/CadastramentoTurma">Listar as turmas</a></li>
 		                                    </ul>
                                         </li>
