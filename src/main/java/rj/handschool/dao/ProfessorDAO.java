@@ -17,9 +17,7 @@ public class ProfessorDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	private SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
+	
 	
 	private Session getSession() {
 		Session sess = getSessionFactory().getCurrentSession();
@@ -27,7 +25,11 @@ public class ProfessorDAO {
 			sess = getSessionFactory().openSession();
 		}
 		return sess;
-	}		
+	}	
+	
+	private SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
 	
 	@Transactional
 	public void insert(Professor professor) throws Exception{

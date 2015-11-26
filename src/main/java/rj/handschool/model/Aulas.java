@@ -32,19 +32,25 @@ public class Aulas implements Serializable {
     @Basic(optional = false)
     @Column(name = "idaulas")
     private Integer idaulas;
+    
     @Column(name = "ativo")
     private Character ativo;
+    
     @Column(name = "data_aula")
     @Temporal(TemporalType.DATE)
     private Date dataAula;
+    
     @Column(name = "hora_inicio")
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaInicio;
+    
     @Column(name = "hora_fim")
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaFim;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aulas")
     private List<AtividadeAula> atividadeAulaList;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aulas")
     private List<ListaPresenca> listapresencaList;
 

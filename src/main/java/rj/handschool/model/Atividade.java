@@ -25,9 +25,11 @@ public class Atividade implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AtividadePK atividadePK;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "atividade")
     private List<AtividadeAula> atividadeAulaList;
-    @JoinColumn(name = "id_tipo_atividade", referencedColumnName = "idtipo_atividade", insertable = false, updatable = false)
+    
+    @JoinColumn(name = "id_tipo_atividade", referencedColumnName = "idtipo_atividade")//, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private TipoAtividade tipoAtividade;
 

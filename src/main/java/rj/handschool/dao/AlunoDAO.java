@@ -19,18 +19,18 @@ public class AlunoDAO {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	private SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-	
+		
 	private Session getSession() {
 		Session sess = getSessionFactory().getCurrentSession();
 		if (sess == null) {
 			sess = getSessionFactory().openSession();
 		}
 		return sess;
-	}		
+	}	
+	
+	private SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
 	
 	@Transactional
 	public void insert(Aluno aluno) throws Exception{
