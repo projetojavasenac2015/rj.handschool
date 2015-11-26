@@ -28,14 +28,18 @@ public class Avaliacao implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AvaliacaoPK avaliacaoPK;
+    
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
+    
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avaliacao")
     private List<AvaliacaoAluno> avaliacaoAlunoList;
+    
     @JoinColumn(name = "id_tipo_avaliacao", referencedColumnName = "idtipo_avaliacao", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private TipoAvaliacao tipoAvaliacao;

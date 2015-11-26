@@ -25,12 +25,15 @@ public class Alocacao implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AlocacaoPK alocacaoPK;
+    
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
+    
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Disciplina disciplina;
+    
     @JoinColumn(name = "matricula_professor", referencedColumnName = "matricula_professor", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Professor professor;

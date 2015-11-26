@@ -20,21 +20,27 @@ public class ListaPresenca implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ListapresencaPK listapresencaPK;
+    
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
+    
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
+    
     @JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Aluno aluno;
+    
     @JoinColumn(name = "id_aulas", referencedColumnName = "idaulas", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Aulas aulas;
+    
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Disciplina disciplina;
+    
     @JoinColumn(name = "id_turma", referencedColumnName = "idturma", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Turma turma;
