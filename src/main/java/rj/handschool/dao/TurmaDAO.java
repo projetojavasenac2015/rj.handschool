@@ -1,7 +1,9 @@
 package rj.handschool.dao;
 
 import java.util.List;
+
 import javax.transaction.Transactional;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Turma;
-import rj.handschool.model.TurmaPK;
 
 @Repository
 @Transactional
@@ -33,6 +34,7 @@ public class TurmaDAO {
 	@Transactional
 	public void insert(Turma turma) throws Exception{
 		try {
+		   turma.setDataHoraCadastro(new java.sql.Date(System.currentTimeMillis()));
 		   getSession().save(turma);
 		} catch (Exception e) {
     		throw new Exception("Erro ao Inserir Turma: " + e.getMessage());
@@ -47,17 +49,17 @@ public class TurmaDAO {
 			}
 	}
 	
-	public void remove(TurmaPK turmaPK) throws Exception {
+	public void remove(Turma turma) throws Exception {
 		try {
 				Query q = getSession().getNamedQuery("Turma.DeleteForID");
-				q.setParameter("turmaPK", turmaPK).executeUpdate();
+				q.setParameter("turma", turma).executeUpdate();
 			} catch (Exception e) {
 	    		throw new Exception("Erro ao Deletar o Curso: " + e.getMessage());
 			}
 	}
 	
-	public Turma findById(TurmaPK turmaPK){
-		return (Turma) getSession().get(Turma.class, turmaPK);	
+	public Turma findById(Turma turma){
+		return (Turma) getSession().get(Turma.class, turma);	
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -71,7 +73,5 @@ public class TurmaDAO {
 		q.setMaxResults(qtd);
 		List<Turma> lista_turma = (List<Turma>)q.list();
 		return lista_turma;
-	}
-
-
+	}	
 }

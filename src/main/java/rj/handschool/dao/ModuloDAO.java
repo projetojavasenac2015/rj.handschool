@@ -1,7 +1,9 @@
 package rj.handschool.dao;
 
 import java.util.List;
+
 import javax.transaction.Transactional;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Modulo;
-import rj.handschool.model.ModuloPK;
 
 @Repository
 @Transactional
@@ -18,23 +19,24 @@ public class ModuloDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	private SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-	
 	private Session getSession() {
 		Session sess = getSessionFactory().getCurrentSession();
 		if (sess == null) {
 			sess = getSessionFactory().openSession();
 		}
 		return sess;
-	}		
+	}
+
+	private SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}	
 	
-	@Transactional
 	public void insert(Modulo modulo) throws Exception{
 		try {
-		   getSession().save(modulo);
+			modulo.setDataHoraCadastro(new java.sql.Date(System.currentTimeMillis()));
+			getSession().save(modulo);
 		} catch (Exception e) {
+			System.out.println("Erro ao Inserir Modulo: " + e.getMessage());
     		throw new Exception("Erro ao Inserir Modulo: " + e.getMessage());
 		}
 	}
@@ -47,17 +49,8 @@ public class ModuloDAO {
 			}
 	}
 	
-	public void remove(ModuloPK moduloPK) throws Exception {
-		try {
-				Query q = getSession().getNamedQuery("Modulo.DeleteForID");
-				q.setParameter("moduloPK", moduloPK).executeUpdate();
-			} catch (Exception e) {
-	    		throw new Exception("Erro ao Deletar o Modulo: " + e.getMessage());
-			}
-	}
-	
-	public Modulo findById(ModuloPK moduloPK){
-		return (Modulo) getSession().get(Modulo.class, moduloPK);	
+	public Modulo findById(Modulo modulo){
+		return (Modulo) getSession().get(Modulo.class, modulo);	
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -73,5 +66,11 @@ public class ModuloDAO {
 		return lista_modulo;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Modulo> findModuloPorCurso(int idcurso){
+		Query q = getSession().getNamedQuery("Modulo.findByIdCurso");
+		q.setParameter("idcurso", idcurso);
+		return (List<Modulo>)q.list();
+	}
 
 }

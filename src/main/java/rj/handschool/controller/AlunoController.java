@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import rj.handschool.dao.AlunoDAO;
 import rj.handschool.model.Aluno;
 import rj.handschool.model.TipoPessoa;
+import rj.handshool.util.RotuloFormatacao;
 import rj.handshool.util.Utilidades;
 
 @Controller
@@ -29,7 +30,7 @@ public class AlunoController {
 	@RequestMapping("CadastroALuno")
 	public ModelAndView novoAluno(@ModelAttribute("aluno") Aluno aluno){
 		ModelAndView modelView = new ModelAndView(modelo_pagina);
-		modelView.addObject("aluno",new Aluno(Utilidades.formatoMatricula(),TipoPessoa.Aluno));
+		modelView.addObject("aluno",new Aluno(Utilidades.formato(RotuloFormatacao.Matricula.getRotuloFormatacao()),TipoPessoa.Aluno));
 		rotuloPagina(modelView,"Novo");
 		return modelView;
 	}

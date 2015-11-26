@@ -7,9 +7,13 @@ package rj.handschool.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -20,17 +24,21 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t"),
-    @NamedQuery(name = "Turma.findByIdturma", query = "SELECT t FROM Turma t WHERE t.turmaPK.idturma = :idturma"),
+    @NamedQuery(name = "Turma.findByIdturma", query = "SELECT t FROM Turma t WHERE t.idturma = :idturma"),
     @NamedQuery(name = "Turma.findByAtivo", query = "SELECT t FROM Turma t WHERE t.ativo = :ativo"),
     @NamedQuery(name = "Turma.findByDataHoraCadastro", query = "SELECT t FROM Turma t WHERE t.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Turma.findByDataUltAtualizacao", query = "SELECT t FROM Turma t WHERE t.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "Turma.findByQuantidadeAlunos", query = "SELECT t FROM Turma t WHERE t.quantidadeAlunos = :quantidadeAlunos"),
-    @NamedQuery(name = "Turma.findByIdCurso", query = "SELECT t FROM Turma t WHERE t.turmaPK.idCurso = :idCurso")})
+    @NamedQuery(name = "Turma.findByQuantidadeAlunos", query = "SELECT t FROM Turma t WHERE t.quantidadeAlunos = :quantidadeAlunos")
+})
 public class Turma implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected TurmaPK turmaPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idturma",nullable = false,unique = true)
+    private Integer idturma;
     @Column(name = "ativo")
+    @NotNull(message = "Indique a situação")
     private Character ativo;
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -38,35 +46,59 @@ public class Turma implements Serializable {
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
+    @NotNull(message="Informe a Quantidade de Alunos")
     @Column(name = "quantidade_alunos")
     private Integer quantidadeAlunos;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma")
     private List<QuadroAvisos> quadroAvisosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma")
     private List<ListaPresenca> listapresencaList;
+    @NotNull(message="Informe o Curso")
     @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Curso curso;
+    @Column(name="descricao")
+    @NotEmpty(message="Turma sem descrição")
+    private String descricao;
+    @Column(name="ano")
+    @NotNull(message="Informe o Ano")
+    private int ano;
 
-    public Turma() {
+    public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Turma() {
     }
+	
+	public Turma(Integer idturma) {
+		this.idturma = idturma;
+	}
+	
+	public Integer getIdturma() {
+		return idturma;
+	}
 
-    public Turma(TurmaPK turmaPK) {
-        this.turmaPK = turmaPK;
-    }
+	public void setIdturma(Integer idturma) {
+		this.idturma = idturma;
+	}
 
-    public Turma(int idturma, int idCurso) {
-        this.turmaPK = new TurmaPK(idturma, idCurso);
-    }
-
-    public TurmaPK getTurmaPK() {
-        return turmaPK;
-    }
-
-    public void setTurmaPK(TurmaPK turmaPK) {
-        this.turmaPK = turmaPK;
-    }
-
+	public Turma(String descricao){
+		this.descricao = descricao;
+	}
+    
     public Character getAtivo() {
         return ativo;
     }
@@ -126,28 +158,37 @@ public class Turma implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (turmaPK != null ? turmaPK.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (idturma != null ? idturma.hashCode() : 0);
+		return hash;
+	}
+		
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Curso)) {
+			return false;
+		}
+		Turma other = (Turma) object;
+		if ((this.idturma == null && other.idturma != null)
+				|| (this.idturma != null && !this.idturma.equals(other.idturma))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Turma)) {
-            return false;
-        }
-        Turma other = (Turma) object;
-        if ((this.turmaPK == null && other.turmaPK != null) || (this.turmaPK != null && !this.turmaPK.equals(other.turmaPK))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public String toString() {
+		return "Turma [idturma=" + idturma + ", ativo=" + ativo
+				+ ", dataHoraCadastro=" + dataHoraCadastro
+				+ ", dataUltAtualizacao=" + dataUltAtualizacao
+				+ ", quantidadeAlunos=" + quantidadeAlunos
+				+ ", quadroAvisosList=" + quadroAvisosList
+				+ ", listapresencaList=" + listapresencaList + ", curso="
+				+ curso + ", descricao=" + descricao + ", ano=" + ano + "]";
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Turma[ turmaPK=" + turmaPK + " ]";
-    }
     
 }

@@ -96,6 +96,7 @@ function mascaras(){
 	$(".rg").mask("99.999.999-9");
 	$(".cep").mask("99999-999");
 	$(".telefone").mask("(99) 99999-9999");
+	$(".centena").mask("999");
 }
 function funcoes_ui(){
 	$( ".data" ).datepicker();	

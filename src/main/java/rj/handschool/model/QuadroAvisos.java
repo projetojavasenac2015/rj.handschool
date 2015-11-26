@@ -36,9 +36,7 @@ public class QuadroAvisos implements Serializable {
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Disciplina disciplina;
-    @JoinColumns({
-        @JoinColumn(name = "id_turma", referencedColumnName = "idturma", insertable = false, updatable = false),
-        @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", insertable = false, updatable = false)})
+    @JoinColumn(name = "id_turma", referencedColumnName = "idturma", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Turma turma;
     @JoinColumn(name = "matricula_professor", referencedColumnName = "matricula_professor", insertable = false, updatable = false)

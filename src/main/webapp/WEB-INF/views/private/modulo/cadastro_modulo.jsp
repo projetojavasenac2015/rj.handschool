@@ -26,6 +26,11 @@
 					<form:form commandName="modulo" action="GravaModulo" method="post" id="commentForm" class="ajax_form">
 						<div class="form-inner">
 							<div class="row">
+								<div class="col-md-8">
+									${menssagem}
+								</div>
+							</div>
+							<div class="row">
 								<div class="col-md-5 col-xs-5">
 									<div class="field_text">
 	                              		<label for="descricao" class="label_title">Modulo:</label>
@@ -43,11 +48,7 @@
 								<div class="col-md-5">
 									<label for="curso" class="label_title">Curso:</label>
 									<div class="field_select">
-										<form:select path="curso" name="idcurso" id="idcurso" class="select_styled">
-	                                        <form:option value="" label="Selecione o Curso"></form:option>
-	                                        <form:options items="${listacurso}" itemValue="idcurso" itemLabel="nome"/>
-	                                    </form:select>
-	                                    <form:errors path="curso"></form:errors>
+										<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_curso.jsp"></tiles:insertTemplate>
 		                           </div>
 		                       </div>
 	                       	</div>
@@ -55,170 +56,31 @@
 	                        	<div class="col-md-8">
 	                        		<label for="disciplinas" class="label_title">Disciplinas:</label>
 	                           		<div class="field_select">
-	                           			<form:select path="disciplina" name="iddisciplina" id="iddisciplina" multiple="true"  data-placeholder="Selecione">
+	                           			<form:select path="listadisciplinas" name="iddisciplina" id="iddisciplina" multiple="true"  data-placeholder="Selecione a(s) Disicplina(s)">
                                   			<form:options items="${listadisciplina}" itemValue="iddisciplina" itemLabel="nome"/>
 	                                    </form:select>
-	                                    <form:errors path="disciplina"></form:errors>
+	                                    <form:errors path="listadisciplinas"></form:errors>
 		                           </div>
 	                           	</div>
 	                        </div>
 	                        <div class="row">
+	                        	<!-- 
 								<div class="panel panel-primary boxed-velvet col-md-7" style="max-height:362.328px;">
                                    	 <div class="panel-heading">
                                          <h4 class="panel-title" style="text-align: center">
                                          	Modulos Cadastrados
                                          </h4>
                                      </div>
+                                    
                                      <div class="panel-body feed" style="overflow: auto;max-height: 200px">
                                          <div class="feed-item-body ">
                                          	 <div class="ribbon ribbon-red"><span>TYESTE</span></div>
                                              teste
-                                             teste
-                                             teste
-                                             teste
-                                             tested
-                                             asdasdas
-                                             teste
-                                             teste
-                                             teste
-                                             teste
-                                             tested
-                                             asdasdas
-                                             teste
-                                             teste
-                                             teste
-                                             teste
-                                             tested
-                                             asdasdas
                                          </div>
                                          <div class="divider"></div>
-                                         <div class="feed-item-body">
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                         </div>
-                                         <div class="divider"></div>
-                                         <div class="feed-item-body">
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                         </div>
-	                                         <div class="divider"></div>
-                                         <div class="feed-item-body">
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                         </div>
-	                                         <div class="divider"></div>
-                                         <div class="feed-item-body">
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                         </div>
-	                                         <div class="divider"></div>
-                                         <div class="feed-item-body">
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                         </div>
-	                                         <div class="divider"></div>
-                                         <div class="feed-item-body">
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             teste
-	                                             tested
-	                                             asdasdas
-	                                         </div>
-                                   	</div>
-                      			</div>
+                                    </div>
+                               </div>
+                      			-->
                        		</div>
 						</div>
 						<div class="clear"></div>
@@ -231,6 +93,7 @@
 					             </div>
 							</div>
 						</div>
+						<form:hidden path="idmodulo"/>
 					</form:form>
 				</div>
 			</div>

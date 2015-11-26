@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Curso;
+import rj.handshool.util.Situacao;
 
 @Repository
 @Transactional
@@ -75,5 +76,11 @@ public class CursoDAO {
 			List<Curso> lista_curso = (List<Curso>)q.list();
 			return lista_curso;
 		}
-	
+		
+		@SuppressWarnings("unchecked")
+		public List<Curso> findCursoSituacao(char situacao){
+			Query q = getSession().getNamedQuery("Curso.findByAtivo");
+			q.setParameter("ativo", situacao);
+			return (List<Curso>)q.list();
+		}
 }
