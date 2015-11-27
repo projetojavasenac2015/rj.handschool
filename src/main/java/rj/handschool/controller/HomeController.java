@@ -6,10 +6,15 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import rj.handschool.dao.ProfessorDAO;
+import rj.handschool.model.Professor;
 
 /**
  * Handles requests for the application home page.
@@ -17,14 +22,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
+	@Autowired
+	private ProfessorDAO professorDAO;
+	
 	@RequestMapping(value = {"/login","/"}, method = RequestMethod.GET)
 	public String firstPage(Model model) {
 		model.addAttribute("firstPageMessage", "This is the first page");
 		return "login";
 	}
 	
-	@RequestMapping(value="/professor", method = RequestMethod.GET)
-	public String professorInicial(Model model) {
+	@RequestMapping(value="/professor/{matricula}", method = RequestMethod.GET)
+	public String professorInicial(Model model, @PathVariable("matricula") String matricula) {
+		Professor prof = new Professor();
+		prof.setMatriculaProfessor(matricula);
+		Professor prof2 = professorDAO.findByMatricula(prof);
+		model.addAttribute("nome_professor", prof2.getNome());
 		return "professor";
 	}
 	

@@ -34,16 +34,17 @@ jQuery(document).ready(function ($) {
                 <div class="inner">
                     <div class="widget_profile_top clearfix">
                         <div class="avatar"><img src="images/temp/avatar.png" alt="" /></div>
-                        <h5>Fulano</h5>
-                        <span class="subtitle">PROFISSAO</span>
+                        <h5>${nome_professor}</h5>
+                        <BR/>
+                        <span class="subtitle">PROFESSOR</span>
                         <div class="follow">
-                            <a href="#" class="btn btn-follow"><span>Follow</span></a>
+                            <a href="#" class="btn btn-follow"><span>Informações</span></a>
                         </div>
                     </div>
                     <ul class="counters clearfix">
-                        <li class="first"><a href="#"><p>530</p><span>Turmas Iniciadas</span></a></li>
-                        <li><a href="#"><p>1450</p><span>Turmas Pendentes</span></a></li>
-                        <li class="last"><a href="#"><p>980</p><span>Indice de Aprovação</span></a></li>
+                        <li class="first"><a href="#"><p>0</p><span>Quantidades de Turmas</span></a></li>
+                        <li><a href="#"><p>0</p><span>Indice de Aprovação do Professor</span></a></li>
+                        <li class="last"><a href="#"><p>0</p><span>Indice de Aprovação de Turma</span></a></li>
                     </ul>
                 </div>
             </div>

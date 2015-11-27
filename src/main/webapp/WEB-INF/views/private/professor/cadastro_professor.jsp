@@ -23,16 +23,16 @@
 			<div class="add-comment add-comment-velvet styled" id="addcomments">
 				<div class="add-comment-title"><h3>${rotulo} Professor</h3></div>
 				<div class="comment-form">
-					<form:form action="${pageContext.request.contextPath}/GravaProfessor" commandName="aluno" method="post" id="commentForm" class="ajax_form">
+					<form:form action="${pageContext.request.contextPath}/GravaProfessor" commandName="professor" method="post" id="commentForm" class="ajax_form">
 						<form:hidden path="tipoPessoa"/>
 						<div class="form-inner">
 							<tiles:insertTemplate template="/WEB-INF/views/private/pessoa/cadastro_pessoa.jsp"></tiles:insertTemplate>
 							<div class="row">
 								<div class="col-md-4">
 									<div class="field_text">
-	                              		<label for="matricula" class="label_title">Matricula:</label>
-	                               		<form:input path="matricula" type="text" name="matricula" id="matricula" value="" readonly="true" class="inputtext input_middle required" />
-	                           			<form:errors path="matricula"></form:errors>
+	                              		<label for="matriculaProfessor" class="label_title">Matricula:</label>
+	                               		<form:input path="matriculaProfessor" type="text" name="matricula" id="matricula" value="" readonly="true" class="inputtext input_middle required" />
+	                           			<form:errors path="matriculaProfessor"></form:errors>
 	                           		</div>
 	                           	</div>
 								<div class="col-md-2">

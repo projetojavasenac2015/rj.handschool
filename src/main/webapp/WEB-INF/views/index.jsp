@@ -84,7 +84,7 @@
                     <div class="col-sm-10">
                         <div class="dropdown-wrap boxed-velvet" style="margin-bottom:20px;">
                              <ul class="dropdown inner clearfix">
-                                <li><a href="#"><span class="glyphicon glyphicon-home">&nbsp;Home</span></a></li>
+                                <li><a href="${pageContext.request.contextPath}/professor/MAT26112015232019"><span class="glyphicon glyphicon-home">&nbsp;Home</span></a></li>
                                 <li><a href="#"><span class="glyphicon glyphicon-wrench">&nbsp;Gerenciador</span></a>
                                     <ul>
                                         <li><a href="#">Aluno</a>
@@ -95,8 +95,8 @@
                                         </li>
                                         <li><a href="#">Professor</a>
                                        		 <ul>
-                                            	<li><a href="${pageContext.request.contextPath}/GravaProfessor">Novo</a></li>
-                                        		<li><a href="CadastroALuno">Listar Professoress</a></li>
+                                            	<li><a href="${pageContext.request.contextPath}/CadastroProfessor">Novo</a></li>
+                                        		<li><a href="ListaProfessor">Listar Professoress</a></li>
                                         	</ul>
                                         </li>
                                         <li><a href="#">Curso</a>

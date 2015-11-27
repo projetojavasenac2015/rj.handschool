@@ -55,4 +55,9 @@
 	    <put-attribute name="title" value="Composição de turma HandSchool"></put-attribute>
 	    <put-attribute name="body" value="/WEB-INF/views/private/turma/compor_turma.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="professor_novo"  extends="base.definition">
+	    <put-attribute name="title" value="Professor"></put-attribute>
+	    <put-attribute name="body" value="/WEB-INF/views/private/professor/cadastro_professor.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>
