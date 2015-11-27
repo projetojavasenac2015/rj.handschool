@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import rj.handschool.model.Aluno;
 import rj.handschool.model.Professor;
 
 @Repository
@@ -57,6 +58,12 @@ public class ProfessorDAO {
 	@SuppressWarnings("unchecked")
 	public List<Professor> findAll(){
 		return getSession().createCriteria(Professor.class).list();
+	}
+	
+	public Professor findByMatricula(Professor professor){
+		Query q = getSession().getNamedQuery("Professor.findByMatriculaProfessor");
+		q.setParameter("matricula",professor.getMatriculaProfessor());
+		return (Professor)q.uniqueResult();
 	}
 	
 }

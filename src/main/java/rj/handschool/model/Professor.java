@@ -24,7 +24,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Professor.findAll", query = "SELECT p FROM Professor p"),
-    @NamedQuery(name = "Professor.findByMatriculaProfessor", query = "SELECT p FROM Professor p WHERE p.matriculaProcessor = :matricula"),
+    @NamedQuery(name = "Professor.findByMatriculaProfessor", query = "SELECT p FROM Professor p WHERE p.matriculaProfessor = :matricula"),
     @NamedQuery(name = "Professor.findByAtivo", query = "SELECT p FROM Professor p WHERE p.ativo = :ativo"),
     @NamedQuery(name = "Professor.findByDataHoraCadastro", query = "SELECT p FROM Professor p WHERE p.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Professor.findByDataUltAtualizacao", query = "SELECT p FROM Professor p WHERE p.dataUltAtualizacao = :dataUltAtualizacao"),
@@ -33,33 +33,43 @@ public class Professor extends Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "ativo")
     private Character ativo;
+    
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
+    
     @Column(name = "data_ult_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
     private List<QuadroAvisos> quadroAvisosList;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
     private List<Alocacao> alocacaoList;
+    
     @NotNull @NotEmpty(message="Matricula não informada")
     @Basic(optional = false)
     @Column(name = "matricula_professor", unique=true)
-    private String matriculaProcessor;
+    private String matriculaProfessor;
     
     public String getMatriculaProfessor() {
-		return matriculaProcessor;
+		return matriculaProfessor;
 	}
 
 	public void setMatriculaProfessor(String matricula_processor) {
-		this.matriculaProcessor = matricula_processor;
+		this.matriculaProfessor = matricula_processor;
 	}
     
     public Professor() {
     }
 
-    public Character getAtivo() {
+    public Professor(String matricula, TipoPessoa tipo){
+		this.matriculaProfessor = matricula;
+		this.tipoPessoa = tipo;
+	}
+
+	public Character getAtivo() {
         return ativo;
     }
 

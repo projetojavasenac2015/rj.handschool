@@ -93,7 +93,12 @@
                                         		<li><a href="CadastroALuno">Listar Alunos</a></li>
                                         	</ul>
                                         </li>
-                                        <li><a href="#">Professor</a></li>
+                                        <li><a href="#">Professor</a>
+                                       		 <ul>
+                                            	<li><a href="${pageContext.request.contextPath}/GravaProfessor">Novo</a></li>
+                                        		<li><a href="CadastroALuno">Listar Professoress</a></li>
+                                        	</ul>
+                                        </li>
                                         <li><a href="#">Curso</a>
                                         	<ul>
 		                                        <li><a href="${pageContext.request.contextPath}/NovoCurso">Novo</a></li>
