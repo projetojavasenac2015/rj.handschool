@@ -9,6 +9,7 @@
         <th class="text-justify">Ano</th>
         <th class="text-nowrap">Qtd Aluno</th>
         <th class="text-justify">Situacao</th>
+        <th class="text-justify">Ação</th>
       </tr>
     </thead>
     <tbody>

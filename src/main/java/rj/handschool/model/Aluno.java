@@ -29,7 +29,9 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.matricula = :matricula"),
     @NamedQuery(name = "Aluno.findByAtivo", query = "SELECT a FROM Aluno a WHERE a.ativo = :ativo"),
     @NamedQuery(name = "Aluno.findByDataHoraCadastro", query = "SELECT a FROM Aluno a WHERE a.dataHoraCadastro = :dataHoraCadastro"),
-    })
+    @NamedQuery(name = "Aluno.findByNaoMatriculado", query = "SELECT a FROM Aluno a WHERE a.turma.idturma is null "),
+    @NamedQuery(name = "Aluno.findByAlunosMatriculadosTurma", query = "SELECT a.matricula, a.nome FROM Aluno a WHERE a.turma.idturma = :idturma ")
+})
 public class Aluno extends Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "ativo")
@@ -47,8 +49,19 @@ public class Aluno extends Pessoa implements Serializable {
     @Basic(optional = false)
     @Column(name = "matricula", unique=true)
     private String matricula;
+    @JoinColumn(name = "idturma", referencedColumnName = "idturma")
+    @ManyToOne(optional = true)
+    private Turma turma;
     
-    public String getMatricula() {
+    public Turma getTurma() {
+		return turma;
+	}
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
+	}
+
+	public String getMatricula() {
 		return matricula;
 	}
 

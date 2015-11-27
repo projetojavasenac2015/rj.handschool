@@ -19,14 +19,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import rj.handschool.dao.AlunoDAO;
 import rj.handschool.dao.CursoDAO;
 import rj.handschool.dao.ModuloDAO;
 import rj.handschool.dao.TurmaDAO;
+import rj.handschool.model.Aluno;
 import rj.handschool.model.Curso;
 import rj.handschool.model.Modulo;
+import rj.handschool.model.TipoPessoa;
 import rj.handschool.model.Turma;
 import rj.handschool.propertys.CursoPropertyEditor;
 import rj.handshool.util.RotuloFormatacao;
@@ -47,6 +51,9 @@ public class TurmaController {
 
 	@Autowired
 	private ModuloDAO moduloDAO;
+	
+	@Autowired
+	private AlunoDAO alunoDAO;
 
 	@RequestMapping("/NovaTurma")
 	public ModelAndView novaTurma(@ModelAttribute("turma") Turma turma) {
@@ -130,25 +137,48 @@ public class TurmaController {
 			turma.setAtivo((Character) obj1[1]);
 			turma.setDescricao((String) obj1[2]);
 			turma.setAno((Integer) obj1[3]);
+			turma.setIdturma((Integer) obj1[4]);
 			turmas.add(turma);
 		}
 		
 		return turmas;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "TabelaTurmasAtivas/{idcurso}", method = RequestMethod.GET,produces = "application/json")
-	public void procurarTabelaTurmasAtivas(
-			@PathVariable("idcurso") Integer idcurso, ModelAndView modelView) throws Exception {
-		List<Turma> turmas = new ArrayList<Turma>();
-		//turmas = this.turmaDAO.findByPorCurso(idcurso);
-		modelView.addObject("turmasativas", turmas);
+	@RequestMapping(value = "AlunosMatriculadosTurma/{idturma}")
+	public @ResponseBody List<Aluno> alunosMatriculadosTurma(
+			@PathVariable("idturma") Integer idturma) throws Exception {
+		
+		List<Aluno> alunos = new ArrayList<Aluno>();
+		List<Object[]> obj  = this.alunoDAO.findByAlunosMatriculadosTurma(idturma);
+		
+		for (Object[] obj1 : obj) {
+			Aluno aluno = new Aluno();
+			aluno.setMatricula((String) obj1[0]);
+			aluno.setNome((String) obj1[1]);
+			alunos.add(aluno);
+		}
+		
+		return alunos;
 	}
 	
 	@RequestMapping("/ComporTurma")
 	public ModelAndView comporTurma(@ModelAttribute("turma") Turma turma) {
 		ModelAndView modelView = new ModelAndView(modelo_pagina2);
 		listaCurso(modelView);
+		alunoNaoMatriculado(modelView);
 		return modelView;
+	}
+	
+	public void alunoNaoMatriculado(ModelAndView model){
+		model.addObject("listaAlunoNaoMatriculado", alunoDAO.findByNaoMatriculado());
+	}
+	
+	
+	@RequestMapping(value="EfetuaMatricula/{idturma}/{matricula}", method=RequestMethod.POST )
+	@ResponseBody
+	public void efetuarMatricula(@PathVariable("idturma") int idturma, @PathVariable("matricula") String matricula){
+		if(idturma !=0 && matricula != ""){
+			alunoDAO.EfetuarMatricula( idturma, matricula);
+		}
 	}
 }
