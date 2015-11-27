@@ -28,7 +28,7 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Turma.findByDataHoraCadastro", query = "SELECT t FROM Turma t WHERE t.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Turma.findByDataUltAtualizacao", query = "SELECT t FROM Turma t WHERE t.dataUltAtualizacao = :dataUltAtualizacao"),
     @NamedQuery(name = "Turma.findByQuantidadeAlunos", query = "SELECT t FROM Turma t WHERE t.quantidadeAlunos = :quantidadeAlunos")
-    ,@NamedQuery(name = "Turma.findByPorCurso", query = "SELECT t.quantidadeAlunos, t.ativo, t.descricao, t.ano FROM Turma t WHERE t.curso.idcurso = :idcurso and t.ativo = 1")
+    ,@NamedQuery(name = "Turma.findByPorCurso", query = "SELECT t.quantidadeAlunos, t.ativo, t.descricao, t.ano, t.idturma FROM Turma t WHERE t.curso.idcurso = :idcurso and t.ativo = 1")
 })
 public class Turma implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -63,8 +63,18 @@ public class Turma implements Serializable {
     @Column(name="ano")
     @NotNull(message="Informe o Ano")
     private int ano;
+    @Column(name = "fechada")
+    private Character fechada;
+    
+    public Character getFechada() {
+		return fechada;
+	}
 
-    public int getAno() {
+	public void setFechada(Character fechada) {
+		this.fechada = fechada;
+	}
+
+	public int getAno() {
 		return ano;
 	}
 

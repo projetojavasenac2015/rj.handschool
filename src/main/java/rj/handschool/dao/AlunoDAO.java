@@ -65,4 +65,22 @@ public class AlunoDAO {
 		q.setParameter("matricula",aluno.getMatricula());
 		return (Aluno)q.uniqueResult();
 	}
+	
+	public List<Aluno> findByNaoMatriculado(){
+		Query q = getSession().getNamedQuery("Aluno.findByNaoMatriculado");
+		return (List<Aluno>)q.list();
+	}
+	
+	public List<Object[]> findByAlunosMatriculadosTurma(int idturma){
+		Query q = getSession().getNamedQuery("Aluno.findByAlunosMatriculadosTurma");
+		q.setParameter("idturma", idturma);
+		return q.list();
+	}
+	
+	public void EfetuarMatricula(int idturma, String matricula){
+		Query q = getSession().createSQLQuery("Update aluno set idturma=:turma where matricula= :matricula");
+		q.setParameter("turma", idturma);
+		q.setParameter("matricula", matricula);
+		q.executeUpdate();
+	}
 }

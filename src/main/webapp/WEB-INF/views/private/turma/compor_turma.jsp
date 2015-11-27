@@ -36,15 +36,42 @@
 									<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/tabela_turmas_ativas.jsp"></tiles:insertTemplate>
 	                        	</div>
 	                        </div>
-                           	<div class="row">
-	                        	<div class="col-md-8">
-	                        		<label for="disciplinas" class="label_title">Aluno(s):</label>
-	                           		<div class="field_select">
-	                           			
-		                           </div>
-	                           	</div>
-	                        </div>
-	                   	</div>
+                           	<div class="row" id="painelMatricula">
+                           		<div class="col-md-12">
+                           		 	<div class="tabs_framed styled">
+	                           		 	<div class="inner">
+	                    					<ul class="tabs clearfix active_bookmark1">
+	                        					<li class="active">
+	                        						<a href="#alunos" data-toggle="tab">Aluno</a>
+	                        					</li>
+	                        					<li>
+						                            <a href="#montar_turma" data-toggle="tab">Montar Turma</a>
+						                        </li>
+	                       					</ul>
+	                           		 	 </div>
+                           			 	<div class="tab-content clearfix" >
+	                           			 	 <div class="tab-pane clearfix fade in active" id="alunos">
+	                           			 	 	<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/tabela_aluno_nao_matriculado.jsp"></tiles:insertTemplate>
+	                           			 	 </div>
+	                           			 	  <div class="tab-pane clearfix fade" id="montar_turma">
+	                         			 	 		<div class="panel panel-primary boxed-velvet col-md-12" style="max-height:362.328px;">
+					                                   	 <div class="panel-heading" style="max-width: 450px;text-align:center;margin:0 auto">
+					                                         <h4 class="panel-title" style="text-align: center">
+					                                         	<span id="turma_matricular"></span>
+					                                         	<form:hidden path="idturma" id="idturma" value=""/>
+					                                         </h4>
+					                                     </div>
+					                                    
+					                                     <div class="panel-body feed" id="painelMatriculaAtribuida" style="overflow: auto;max-height: 200px">
+					                                         
+					                                    </div>
+					                               </div>
+	                           			 	 </div>
+                           			 	</div>
+                           	   		</div>
+	                        	</div>
+                        	</div>
+	                    </div>
 						<div class="clear"></div>
 						<div class="row">
 							<div class="col-sm-12">
