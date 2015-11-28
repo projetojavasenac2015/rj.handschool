@@ -5,9 +5,12 @@
 package rj.handschool.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -33,17 +36,21 @@ public class Aulas implements Serializable {
     @Column(name = "idaulas")
     private Integer idaulas;
     
+    @NotNull(message="Situação não informada")
     @Column(name = "ativo")
     private Character ativo;
     
+    @NotNull(message="Informe a Data")
     @Column(name = "data_aula")
     @Temporal(TemporalType.DATE)
     private Date dataAula;
     
+    @NotNull(message="Informe o horário Inicial")
     @Column(name = "hora_inicio")
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaInicio;
     
+    @NotNull(message="Informe o horário Final")
     @Column(name = "hora_fim")
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaFim;
@@ -53,8 +60,21 @@ public class Aulas implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aulas")
     private List<ListaPresenca> listapresencaList;
+    
+    @NotNull(message = "No mínimo 1 disciplina")
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "auladisciplina", joinColumns = @JoinColumn(name = "idaulas"), inverseJoinColumns = @JoinColumn(name = "iddisciplina"))
+	private List<Disciplina> listadisciplinas = new ArrayList<Disciplina>();
+    
+    public List<Disciplina> getListadisciplinas() {
+		return listadisciplinas;
+	}
 
-    public Aulas() {
+	public void setListadisciplinas(List<Disciplina> listadisciplinas) {
+		this.listadisciplinas = listadisciplinas;
+	}
+
+	public Aulas() {
     }
 
     public Aulas(Integer idaulas) {

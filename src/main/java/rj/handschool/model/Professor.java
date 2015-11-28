@@ -5,6 +5,7 @@
 package rj.handschool.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +54,20 @@ public class Professor extends Pessoa implements Serializable {
     @Column(name = "matricula_professor", unique=true)
     private String matriculaProfessor;
     
-    public String getMatriculaProfessor() {
+    @NotNull(message = "No mínimo 1 disciplina")
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "professordisciplina", joinColumns = @JoinColumn(name = "idpessoa"), inverseJoinColumns = @JoinColumn(name = "iddisciplina"))
+	private List<Disciplina> listadisciplinas = new ArrayList<Disciplina>();
+    
+    public List<Disciplina> getListadisciplinas() {
+		return listadisciplinas;
+	}
+
+	public void setListadisciplinas(List<Disciplina> listadisciplinas) {
+		this.listadisciplinas = listadisciplinas;
+	}
+
+	public String getMatriculaProfessor() {
 		return matriculaProfessor;
 	}
 

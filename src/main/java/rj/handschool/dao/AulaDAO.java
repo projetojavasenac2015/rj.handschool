@@ -67,4 +67,18 @@ public class AulaDAO {
 		q.setParameter("dataAula", dataAula);
 		return (List<Aulas>)q.list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]>  findVerificaHorarios(String data, int iddisciplina){
+		String query = "SELECT concat(hora_inicio, '-', hora_fim) as horario FROM aulas a ";
+		query += " inner join auladisciplina b on a.idaulas = b.idaulas ";
+		query += " inner join disciplina c on b.iddisciplina = c.iddisciplina ";
+		query += " where c.iddisciplina =:iddisciplina ";
+		query += " and a.data_aula =:dataAula";
+		Query q = getSession().createSQLQuery(query);
+
+		q.setParameter("dataAula", data);
+		q.setParameter("iddisciplina", iddisciplina);
+		return q.list();
+	}
 }

@@ -74,7 +74,7 @@ public class ModuloController {
 	}
 
 	@RequestMapping(value = "GravaModulo", method = RequestMethod.POST)
-	public ModelAndView gravaDisciplina(
+	public ModelAndView gravaModulo(
 			@Valid @ModelAttribute("modulo") Modulo modulo, BindingResult bind)
 			throws Exception {
 		ModelAndView modelView;

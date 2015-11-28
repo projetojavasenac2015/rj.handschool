@@ -11,11 +11,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title></title>
-<script>
-	jQuery(document).ready(function(){
-		
-	})
-</script>
 </head>
 <body>
 	<div class="row">
@@ -28,18 +23,6 @@
 						<div class="form-inner">
 							<tiles:insertTemplate template="/WEB-INF/views/private/pessoa/cadastro_pessoa.jsp"></tiles:insertTemplate>
 							<div class="row">
-								<div class="col-md-4">
-									<div class="field_text">
-	                              		<label for="matriculaProfessor" class="label_title">Matricula:</label>
-	                               		<form:input path="matriculaProfessor" type="text" name="matricula" id="matricula" value="" readonly="true" class="inputtext input_middle required" />
-	                           			<form:errors path="matriculaProfessor"></form:errors>
-	                           		</div>
-	                           	</div>
-								<div class="col-md-2">
-									<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_situacao.jsp"></tiles:insertTemplate>
-		                       </div>
-		                   	</div>
-		                   	<div class="row">
 								<div class="col-md-5">
 									<div class="field_text">
 	                              		<label for="email" class="label_title">E-mail:</label>
@@ -54,8 +37,27 @@
 	                           			<form:errors path="senha"></form:errors>
 	                           		</div>
 	                           	</div>
-                           	</div>
-                   		</div>
+							</div>
+                   			<div class="row">
+								<div class="col-md-3">
+									<div class="field_text">
+	                              		<label for="matriculaProfessor" class="label_title">Matricula:</label>
+	                               		<form:input path="matriculaProfessor" type="text" name="matricula" id="matricula" value="" readonly="true" class="inputtext input_middle required" />
+	                           			<form:errors path="matriculaProfessor"></form:errors>
+	                           		</div>
+	                           	</div>
+								<div class="col-md-2">
+									<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_situacao.jsp"></tiles:insertTemplate>
+		                       </div>
+		                       <div class="row">
+									<div class="col-md-4 col-md-offset-2">
+										<div class="field_select">
+											<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_disciplina.jsp"></tiles:insertTemplate>
+			                           </div>
+			                       </div>
+	                       		</div>
+		                   	</div>
+	                  	</div> 	
 						<div class="clear"></div>
 						<div class="row">
 							<div class="col-md-12">

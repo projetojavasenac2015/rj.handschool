@@ -49,7 +49,6 @@
 <link href="${cssCusel}" rel="stylesheet">
 <link href="${persona}" rel="stylesheet">
 <link href="${cssCombo}" rel="stylesheet">
-<link href="${jCui}" rel="stylesheet">
 </head>
 <body>
 	<div class="body_wrap" id="principal">
@@ -127,7 +126,8 @@
                                 </li>
                                 <li><a href="#"><span class="glyphicon glyphicon-book">&nbsp;Aulas</span></a>
                                	 	<ul>
-                                   		<li><a href="Atividades">Agenda de Atividades</a></li>
+                                   		<li><a href="${pageContext.request.contextPath}/Atividades">Agenda de Atividades</a></li>
+                                   		<li><a href="${pageContext.request.contextPath}/LancamentoAula">Lançamento de Aula</a></li>
                                    	</ul>
                                 </li>
                                 <li><a href="#"><span class="glyphicon glyphicon-calendar">&nbsp;Frequencia</span></a>

@@ -72,7 +72,7 @@ jQuery(document).ready(function ($) {
                                     <input type="text" name="date_departure" class="inputField" id="date_departure">
                                 </div>
                             </div>
-                            <div class="panel panel-primary boxed-velvet col-sm-5 col-sm-offset-1" style="max-height:262.328px;">
+                            <div class="panel panel-primary boxed-velvet col-sm-5 col-sm-offset-1" style="min-height:262.328px;max-height:262.328px;">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">
                                     <i class="fa fa-rss"></i>Atividades do dia: </h3>
@@ -99,29 +99,10 @@ jQuery(document).ready(function ($) {
                                         asdasdas
                                     </div>
                                     <div class="divider"></div>
-                                    <div class="feed-item-body">
-                                        teste
-                                        teste
-                                        teste
-                                        teste
-                                        tested
-                                        asdasdas
-                                        teste
-                                        teste
-                                        teste
-                                        teste
-                                        tested
-                                        asdasdas
-                                        teste
-                                        teste
-                                        teste
-                                        teste
-                                        tested
-                                        asdasdas
-                                    </div>
+                                    
                                 </div>
+                                <a href="#" class="btn btn-rigth btn-acute" style="z-index:0"><span>Adicionar Atividade</span></a>
                             </div>
-                            <a href="#" class="btn btn-right btn-acute"><span>Adicionar Atividade</span></a>
                         </div>
                         <div class="tab-pane clearfix fade" id="reminders">
                             <div class="row" style="margin-left:12px;margin-right:12px">

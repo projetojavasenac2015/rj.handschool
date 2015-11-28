@@ -56,10 +56,7 @@
 	                        	<div class="col-md-8">
 	                        		<label for="disciplinas" class="label_title">Disciplinas:</label>
 	                           		<div class="field_select">
-	                           			<form:select path="listadisciplinas" name="iddisciplina" id="iddisciplina" multiple="true"  data-placeholder="Selecione a(s) Disicplina(s)">
-                                  			<form:options items="${listadisciplina}" itemValue="iddisciplina" itemLabel="nome"/>
-	                                    </form:select>
-	                                    <form:errors path="listadisciplinas"></form:errors>
+										<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_disciplina.jsp"></tiles:insertTemplate>
 		                           </div>
 	                           	</div>
 	                        </div>
