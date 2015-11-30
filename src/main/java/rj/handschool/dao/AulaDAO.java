@@ -36,6 +36,7 @@ public class AulaDAO {
 	@Transactional
 	public void insert(Aulas aula) throws Exception{
 		try {
+		   aula.setAtivo('1');
 		   getSession().save(aula);
 		} catch (Exception e) {
     		throw new Exception("Erro ao Inserir a Aula: " + e.getMessage());
@@ -69,7 +70,7 @@ public class AulaDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Object[]>  findVerificaHorarios(String data, int iddisciplina){
+	public List<String>  findVerificaHorarios(String data, int iddisciplina){
 		String query = "SELECT concat(hora_inicio, '-', hora_fim) as horario FROM aulas a ";
 		query += " inner join auladisciplina b on a.idaulas = b.idaulas ";
 		query += " inner join disciplina c on b.iddisciplina = c.iddisciplina ";
@@ -79,6 +80,6 @@ public class AulaDAO {
 
 		q.setParameter("dataAula", data);
 		q.setParameter("iddisciplina", iddisciplina);
-		return q.list();
+		return (List<String>)q.list();
 	}
 }

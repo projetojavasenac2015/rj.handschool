@@ -36,7 +36,6 @@ public class Aulas implements Serializable {
     @Column(name = "idaulas")
     private Integer idaulas;
     
-    @NotNull(message="Situação não informada")
     @Column(name = "ativo")
     private Character ativo;
     
@@ -47,13 +46,11 @@ public class Aulas implements Serializable {
     
     @NotNull(message="Informe o horário Inicial")
     @Column(name = "hora_inicio")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date horaInicio;
+    private String horaInicio;
     
     @NotNull(message="Informe o horário Final")
     @Column(name = "hora_fim")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date horaFim;
+    private String horaFim;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aulas")
     private List<AtividadeAula> atividadeAulaList;
@@ -96,37 +93,36 @@ public class Aulas implements Serializable {
     public void setAtivo(Character ativo) {
         this.ativo = ativo;
     }
-
+    
     public Date getDataAula() {
-        return dataAula;
-    }
+		return dataAula;
+	}
 
-    public void setDataAula(Date dataAula) {
-        this.dataAula = dataAula;
-    }
+	public void setDataAula(Date dataAula) {
+		this.dataAula = dataAula;
+	}
 
-    public Date getHoraInicio() {
-        return horaInicio;
-    }
+	public String getHoraInicio() {
+		return horaInicio;
+	}
 
-    public void setHoraInicio(Date horaInicio) {
-        this.horaInicio = horaInicio;
-    }
+	public void setHoraInicio(String horaInicio) {
+		this.horaInicio = horaInicio;
+	}
 
-    public Date getHoraFim() {
-        return horaFim;
-    }
+	public String getHoraFim() {
+		return horaFim;
+	}
 
-    public void setHoraFim(Date horaFim) {
-        this.horaFim = horaFim;
-    }
+	public void setHoraFim(String horaFim) {
+		this.horaFim = horaFim;
+	}
 
-    @XmlTransient
-    public List<AtividadeAula> getAtividadeAulaList() {
-        return atividadeAulaList;
-    }
+	public List<AtividadeAula> getAtividadeAulaList() {
+		return atividadeAulaList;
+	}
 
-    public void setAtividadeAulaList(List<AtividadeAula> atividadeAulaList) {
+	public void setAtividadeAulaList(List<AtividadeAula> atividadeAulaList) {
         this.atividadeAulaList = atividadeAulaList;
     }
 

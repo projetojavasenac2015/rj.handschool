@@ -1,5 +1,7 @@
 package rj.handschool.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +10,11 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,9 +52,9 @@ public class AulaController {
 	static final String  modelo_pagina = "lancamento_aula";
 	
 	@RequestMapping("LancamentoAula")
-	public ModelAndView novoProfessor(@ModelAttribute("aula") Aulas aula){
+	public ModelAndView novaAula(@ModelAttribute("aula") Aulas aula){
 		ModelAndView modelView = new ModelAndView(modelo_pagina);
-		modelView.addObject("professor",new Professor(Utilidades.formato(RotuloFormatacao.Matricula.getRotuloFormatacao()),TipoPessoa.Professor));
+		modelView.addObject("aula",new Aulas());
 		rotuloPagina(modelView,"Lancamento");
 		listaDisciplina(modelView);
 		return modelView;
@@ -72,22 +76,25 @@ public class AulaController {
 	}
 
 	@RequestMapping(value = "VerificaHorarioDisponivelAula/{data}/{iddisciplina}")
-	public @ResponseBody List<String> alunosMatriculadosTurma(
+	public @ResponseBody List<String> horariosAulasDisponiveis(
 			@PathVariable("data") String data, @PathVariable("iddisciplina") Integer iddisciplina ) throws Exception {
 		
 		List<String> horarios =  new ArrayList<String>();
 		
-		List<Object[]> objs = aulaDAO.findVerificaHorarios(data,iddisciplina);
+		List<String> objs = aulaDAO.findVerificaHorarios(data,iddisciplina);
 			 
-		for (Object[] objects : objs) {
-			horarios.add(objects.toString());
+		for(int i = 0; i < objs.size(); i++) {
+			if(objs.get(i) != null){
+				String hora = objs.get(i).toString();
+				horarios.add(hora);
+			}
 		}
 		
 		return horarios;
 	}
 	
 	@RequestMapping(value = "GravaAula", method = RequestMethod.POST)
-	public ModelAndView gravaCurso(@Valid @ModelAttribute("aula")Aulas aula, BindingResult bind) throws Exception{
+	public ModelAndView gravaAula(@Valid @ModelAttribute("aula")Aulas aula, BindingResult bind) throws Exception{
 		ModelAndView modelView;
 		
 		String msg = "";

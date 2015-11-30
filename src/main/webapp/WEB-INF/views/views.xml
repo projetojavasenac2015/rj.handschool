@@ -65,4 +65,5 @@
 	    <put-attribute name="title" value="Aulas"></put-attribute>
 	    <put-attribute name="body" value="/WEB-INF/views/private/aula/lancamento_aula.jsp"></put-attribute>
 	</definition>
+	
 </tiles-definitions>

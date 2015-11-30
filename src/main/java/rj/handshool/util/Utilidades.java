@@ -1,5 +1,7 @@
 package rj.handshool.util;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,5 +13,11 @@ public class Utilidades {
 		Date hora = Calendar.getInstance().getTime(); 
 		String dataFormatada = sdf.format(hora);
 		return inicio_matricula + dataFormatada;
+	}
+	
+	public static Date converteHora(String hora) throws ParseException{
+		SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");  
+		Date data = formatador.parse(hora);  
+		return data;
 	}
 }

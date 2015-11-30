@@ -15,9 +15,10 @@
 <script src="${aulasNegocio}"></script> 
 </head>
 <body>
-	<c:set var="data_atual" value="<%=new java.util.Date()%>" />
+	<c:set var="dataDia" value="<%=new java.util.Date()%>" />
+	<fmt:formatDate pattern="dd/MM/yyyy" var="dataAtual"  value="${dataDia}"/>
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-md-12">
 			<div class="add-comment add-comment-velvet styled" id="addcomments">
 				<div class="add-comment-title"><h3>Lançamento de Aulas</h3></div>
 				<div class="comment-form">
@@ -27,7 +28,7 @@
 								<div class="col-md-2">
 									<div class="field_text">
 							           	<label for="dataAula" class="label_title">Data Aula:</label>
-							            <form:input path="dataAula" type="text" name="dataAula" id="dataAula" value='<fmt:formatDate pattern="dd/MM/yyyy"  value="${data_atual}"/>' class="inputtext input_middle required data"/>
+							            <form:input path="dataAula" type="text" name="dataAula" id="dataAula" value='${dataAtual}' class="inputtext input_middle required data"/>
 							        </div>
 	                           	</div>
 	                           	<div class="col-md-5 col-md-offset-1">
