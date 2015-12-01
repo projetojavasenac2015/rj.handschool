@@ -50,7 +50,7 @@ jQuery(document).ready(function(){
     		var data_convertida = formata_data_banco($data.val())
     		var horarios = horarios_disponiveis_ala_disciplina(this.value, data_convertida);
     		var horarios_separados_vetor = horarios_separados(horarios)
-    		
+    		jQuery(".tr_horario").remove();
     		jQuery("#tabela_horario").append(quadro_horarios_disponiveis(horarios_separados_vetor));
     	}
     })
@@ -65,14 +65,6 @@ function quadro_horarios_disponiveis(horarios){
 	   if( i == 1){
 			j = 8;
 	   }
-	   var flag = false;
-	   
-	   for(var r = 0 ; r < horarios.length; r++){
-		   if(j == horarios[r]){
-			   flag = true;
-			   break;
-		   }
-	   }
 	   
 	   html += '<tr class="tr_horario">';
 	   for(var l = 0; l <=1 ; l++){
@@ -83,14 +75,33 @@ function quadro_horarios_disponiveis(horarios){
 			else{
 			    aux = j + 1;
 			}
-			html += '<td><a href="javascript:void(0)" class="btn btn-follow" style="margin-left:10px;margin-bottom:10px"><span>'+ (aux < 10 ? "0" + aux : aux) +':00</span></a></td>';
+			var flag = false;
+			   
+			for(var r = 0 ; r < horarios.length; r++){
+			   if(aux == parseInt(horarios[r])){
+				   flag = true;
+				   break;
+			   }
+			}
+			
+			html += '<td>';
+			
+			valor_apresentacao = (aux < 10 ? "0" + aux : aux);
+			
+			if(!flag){
+				html += '<a href="javascript:void(0)" class="btn btn-follow" style="margin-left:10px;margin-bottom:10px"><span>'+ valor_apresentacao +':00</span></a>';
+			}
+			else{
+				html +='<span style="rgb(180,95,52):red;margin-left:10px;margin-bottom:10px;margin-top:10px">'+ valor_apresentacao +':00</span>'
+			}
+			html += '</td>';
 	   }
 	   j = j + 2;
 
 	   html += '</tr>';
    }
 	
-	html +="<tr><td colspan='2' style='text_align:center'><span class='btn btn-small' id='limpar_dados_horario'>Limpar</span><td></tr>";
+	html +="<tr class='tr_horario'><td colspan='2' style='text_align:right;cursor:pointer'><a href=javascript:void(0)<span class='glyphicon glyphicon-trash' id='limpar_dados_horario'></span></a><td></tr>";
 	
 	return html;
 }
@@ -103,10 +114,10 @@ function verificar_horarios(){
 		alert('Data Ou Disciplina nao informados');
 	}
 }
-
+//Contem o controller
 function horarios_disponiveis_ala_disciplina(disciplina, data){
 	var replace_Data = data.replace("'","").replace("'","")
-	var url = "VerificaHorarioDisponivelAula/" + "2015-11-02" + "/" + 1
+	var url = "VerificaHorarioDisponivelAula/" + replace_Data + "/" + disciplina
 	
 	var horarios = [];
 	
@@ -155,8 +166,11 @@ function horarios_separados(hora){
 				valor_fim = horarios_separados[1];
 				var diferenca_hora = parseInt(valor_fim) - parseInt(valor_ini)
 				horarios.push(valor_ini)
-				for(var o = 0; o <=diferenca_hora; o++){
-					horarios.push(o + 1)
+				var hoarios_contidos = parseInt(valor_ini);
+				
+				for(var o = 1; o < diferenca_hora; o++){
+					hoarios_contidos += 1;
+					horarios.push(hoarios_contidos)
 				}
 				horarios.push(valor_fim)
 			}

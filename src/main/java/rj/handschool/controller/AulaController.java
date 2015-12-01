@@ -109,6 +109,7 @@ public class AulaController {
 			}
 			modelView = new ModelAndView(modelo_pagina);
 			modelView.addObject("menssagem",msg);
+			novaAula(aula);
 		}
 		else{
 			modelView = new ModelAndView(modelo_pagina,bind.getModel());

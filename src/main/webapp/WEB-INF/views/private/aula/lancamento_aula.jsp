@@ -29,6 +29,7 @@
 									<div class="field_text">
 							           	<label for="dataAula" class="label_title">Data Aula:</label>
 							            <form:input path="dataAula" type="text" name="dataAula" id="dataAula" value='${dataAtual}' class="inputtext input_middle required data"/>
+							        	<form:errors path="dataAula"></form:errors>
 							        </div>
 	                           	</div>
 	                           	<div class="col-md-5 col-md-offset-1">
@@ -37,20 +38,13 @@
 	                           			<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_disciplina_simples.jsp"></tiles:insertTemplate>
 		                            </div>
 	                           	</div>
-	                           	<div class="col-md-3">
-									<div class="field_text">
-							           	<span class="btn btn-small">
-					                   		<input type="button" id="verificar_horarios" value="Verificar Horários" />
-					           			</span>
-							        </div>
-	                           	</div>
-							</div>
+	                        </div>
 							<div class="row">
 								<div class="col-md-4">
 				                    <div class="widget-container widget_profile boxed-velvet">
 				                        <div class="inner">
 				                            <div class="widget_profile_top clearfix">
-				                                <div class="follow">
+				                            	<div class="follow">
 													<table id="tabela_horario">
 													</table>
 												</div>
@@ -62,11 +56,13 @@
 									<div class="field_text">
 							           	<label for="horarios" class="label_title">Horário:</label>
 							            <form:input path="horaInicio" type="text" name="horaInicio" id="horaInicio" value='' class="inputtext input_middle required" readonly="true"/>
+							        	<form:errors path="horaInicio"></form:errors>
 							        </div>
 							    </div>
 							    <div class="col-md-2">
 							    	<div class="field_text">
 							           	<form:input path="horaFim" type="text" name="horaFim" id="horaFim" value='' class="inputtext input_middle required" readonly="true"/>
+							        	<form:errors path="horaFim"></form:errors>
 							        </div>
 							    </div>
 							    <div class="col-md-2">

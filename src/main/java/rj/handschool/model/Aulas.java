@@ -14,6 +14,9 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  *
  * @author Renan
@@ -41,14 +44,17 @@ public class Aulas implements Serializable {
     
     @NotNull(message="Informe a Data")
     @Column(name = "data_aula")
+    @DateTimeFormat(pattern="dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     private Date dataAula;
     
     @NotNull(message="Informe o horário Inicial")
+    @NotEmpty(message="Informe o horário Inicial")
     @Column(name = "hora_inicio")
     private String horaInicio;
     
     @NotNull(message="Informe o horário Final")
+    @NotEmpty(message="Informe o horário Final")
     @Column(name = "hora_fim")
     private String horaFim;
     
