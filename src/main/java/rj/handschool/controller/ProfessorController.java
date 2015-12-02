@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,11 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.DisciplinaDAO;
 import rj.handschool.dao.ProfessorDAO;
-import rj.handschool.model.Curso;
 import rj.handschool.model.Disciplina;
 import rj.handschool.model.Professor;
 import rj.handschool.model.TipoPessoa;
-import rj.handschool.propertys.CursoPropertyEditor;
 import rj.handschool.propertys.DisciplinaPropertyEditor;
 import rj.handshool.util.RotuloFormatacao;
 import rj.handshool.util.Utilidades;

@@ -11,9 +11,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import rj.handschool.model.Aulas;
-import rj.handschool.model.Modulo;
-import rj.handschool.model.Perfil;;
+import rj.handschool.model.Aulas;;
 
 @Repository
 @Transactional
