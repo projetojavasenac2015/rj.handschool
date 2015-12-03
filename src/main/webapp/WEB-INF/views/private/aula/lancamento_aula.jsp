@@ -75,7 +75,7 @@
 							    </div>
 							    <div class="col-md-2">
 							    	<div class="field_text">
-						    			<input type="text" name="" id="total_horas" class="inputtext input_middle required" readonly="true">
+						    			<input type="text" name="" id="total_horas" class="inputtext input_middle required" readonly>
 						    		</div>
 							    </div>
 					  		</div>

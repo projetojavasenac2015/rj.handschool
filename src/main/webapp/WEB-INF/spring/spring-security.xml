@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security
+                           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<security:http auto-config="true" use-expressions="true">
+
+
+		<!-- ACESSO A TODOS OS PERFIS -->
+		<security:intercept-url pattern="/login"
+			access="isAuthenticated()" />
+		
+		<!--ACESSO SOMENTE AO PERFIL ADMINISTRADOR 
+		<security:intercept-url pattern="/cadastroSecretaria"
+			access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/preparaSecretaria"
+			access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/atualizarsecret"
+			access="hasRole('ROLE_ADMIN')" />
+		-->
+
+		<!-- ACESSO SOMENTE AO PERFIL INSTRUTOR 
+		<security:intercept-url pattern="/lancaPresenca"
+			access="hasRole('ROLE_INSTRUTOR')" />
+		<security:intercept-url pattern="/listaTipoRegistroSec"
+			access="hasRole('ROLE_INSTRUTOR')" />
+		<security:intercept-url pattern="/lancaPresencaAl"
+			access="hasRole('ROLE_INSTRUTOR')" />
+		<security:intercept-url pattern="/listaAulasSec"
+			access="hasRole('ROLE_INSTRUTOR')" />
+		<security:intercept-url pattern="/listaAulasProfessor"
+			access="hasRole('ROLE_INSTRUTOR')" />
+		<security:intercept-url pattern="/insereNotas"
+			access="hasRole('ROLE_INSTRUTOR')" />
+		<security:intercept-url pattern="/adicionaNota"
+			access="hasRole('ROLE_INSTRUTOR')" />
+			
+		-->
+
+		<!-- ACESSO SOMENTE AO ALUNO 
+		<security:intercept-url pattern="/listaAulas"
+			access="hasRole('ROLE_ALUNO')" />
+		<security:intercept-url pattern="/listaFrequencia"
+			access="hasRole('ROLE_ALUNO')" />
+		<security:intercept-url pattern="/listaCursosRealizados"
+			access="hasRole('ROLE_ALUNO')" />
+		<security:intercept-url pattern="/listaGradeCurricular"
+			access="hasRole('ROLE_ALUNO')" />
+		<security:intercept-url pattern="/listaPagamentos"
+			access="hasRole('ROLE_ALUNO')" />
+		<security:intercept-url pattern="/mostrarAvisos"
+			access="hasRole('ROLE_ALUNO')" />
+		<security:intercept-url pattern="/listaBoletim"
+			access="hasRole('ROLE_ALUNO')" />
+		
+		-->
+
+		<!-- ACESSO SOMENTE AO PERFIL SECRETARIA 
+		<security:intercept-url pattern="/lancarAvisos"
+			access="hasRole('ROLE_SECRETARIA')" />
+		<security:intercept-url pattern="/preparaAviso"
+			access="hasRole('ROLE_SECRETARIA')" />
+		<security:intercept-url pattern="/manterAviso"
+			access="hasRole('ROLE_SECRETARIA')" />
+		-->
+
+		<security:form-login login-page="/login"
+			default-target-url="/professor" authentication-failure-url="/error"
+			password-parameter="senha" username-parameter="email" />
+
+		<security:logout logout-success-url="/logout"
+			invalidate-session="true" />
+
+		<security:access-denied-handler
+			error-page="/403" />
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:jdbc-user-service
+				data-source-ref="dataSource" role-prefix="ROLE_"
+				users-by-username-query="SELECT A.email AS username, A.SENHA AS  password, A.ATIVO as enable  FROM login A WHERE A.email = ?"
+				authorities-by-username-query="SELECT A.email AS username , B.NOME  AS authority FROM login A JOIN perfil B ON A.IDPERFIL = B.IDPERFIL WHERE A.MATRICULA = ?" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>

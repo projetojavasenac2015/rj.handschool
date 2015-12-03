@@ -9,19 +9,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-/**
- *
- * @author Renan
- */
 @Embeddable
 public class LoginPK implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
     @Basic(optional = false)
     @Column(name = "idlogin")
-    private int idlogin;
-    @Basic(optional = false)
-    @Column(name = "id_perfil")
-    private int idPerfil;
+    private int idlogin;    
+       
     @Basic(optional = false)
     @Column(name = "idpessoa")
     private int idPessoa;
@@ -31,7 +26,6 @@ public class LoginPK implements Serializable {
 
     public LoginPK(int idlogin, int idPerfil, int idPessoa) {
         this.idlogin = idlogin;
-        this.idPerfil = idPerfil;
         this.idPessoa = idPessoa;
     }
 
@@ -41,15 +35,7 @@ public class LoginPK implements Serializable {
 
     public void setIdlogin(int idlogin) {
         this.idlogin = idlogin;
-    }
-
-    public int getIdPerfil() {
-        return idPerfil;
-    }
-
-    public void setIdPerfil(int idPerfil) {
-        this.idPerfil = idPerfil;
-    }
+    }    
 
     public int getIdPessoa() {
         return idPessoa;
@@ -62,25 +48,21 @@ public class LoginPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) idlogin;
-        hash += (int) idPerfil;
+        hash += (int) idlogin;       
         hash += (int) idPessoa;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // 
         if (!(object instanceof LoginPK)) {
             return false;
         }
         LoginPK other = (LoginPK) object;
         if (this.idlogin != other.idlogin) {
             return false;
-        }
-        if (this.idPerfil != other.idPerfil) {
-            return false;
-        }
+        }       
         if (this.idPessoa != other.idPessoa) {
             return false;
         }
@@ -89,7 +71,7 @@ public class LoginPK implements Serializable {
 
     @Override
     public String toString() {
-        return "rj.handschool.modelo.LoginPK[ idlogin=" + idlogin + ", idPerfil=" + idPerfil + ", idPessoa=" + idPessoa + " ]";
+        return "rj.handschool.modelo.LoginPK[ idlogin=" + idlogin + ", idPessoa=" + idPessoa + " ]";
     }
     
 }

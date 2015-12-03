@@ -8,10 +8,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Renan
- */
+
 @Entity
 @Table(name = "login")
 @XmlRootElement
@@ -23,16 +20,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Login.findByIdPessoa", query = "SELECT l FROM Login l WHERE l.loginPK.idPessoa = :idPessoa")})
 public class Login implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @EmbeddedId
     protected LoginPK loginPK;
+    
     @Column(name = "ativo")
     private Character ativo;
+    
     @JoinColumn(name = "idpessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Pessoa pessoa;
-    @JoinColumn(name = "id_perfil", referencedColumnName = "idperfil", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Perfil perfil;
+    private Pessoa pessoa;    
+   
 
     public Login() {
     }
@@ -68,15 +66,7 @@ public class Login implements Serializable {
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
-
-    public Perfil getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
-    }
-
+   
     @Override
     public int hashCode() {
         int hash = 0;
@@ -86,7 +76,7 @@ public class Login implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // 
         if (!(object instanceof Login)) {
             return false;
         }

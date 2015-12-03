@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Aluno;
-import rj.handschool.model.TipoPessoa;
 
 @Repository
 @Transactional
@@ -66,11 +65,13 @@ public class AlunoDAO {
 		return (Aluno)q.uniqueResult();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Aluno> findByNaoMatriculado(){
 		Query q = getSession().getNamedQuery("Aluno.findByNaoMatriculado");
 		return (List<Aluno>)q.list();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Object[]> findByAlunosMatriculadosTurma(int idturma){
 		Query q = getSession().getNamedQuery("Aluno.findByAlunosMatriculadosTurma");
 		q.setParameter("idturma", idturma);
