@@ -66,4 +66,14 @@
 	    <put-attribute name="body" value="/WEB-INF/views/private/aula/lancamento_aula.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="ambiente_cadastro"  extends="base.definition">
+	    <put-attribute name="title" value="Ambiente"></put-attribute>
+	    <put-attribute name="body" value="/WEB-INF/views/private/ambiente/cadastro_ambiente.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="alocacao_professor"  extends="base.definition">
+	    <put-attribute name="title" value="Alocação Professor"></put-attribute>
+	    <put-attribute name="body" value="/WEB-INF/views/private/aula/alocacao_professor.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

@@ -66,4 +66,15 @@ public class ProfessorDAO {
 		return (Professor)q.uniqueResult();
 	}
 	
+	public List<Object[]> findByDisciplina(int iddisciplina){
+		String query = " select matricula_professor, nome";
+		query += " from professor a ";
+		query += " inner join pessoa b ON a.idpessoa = b.idpessoa ";
+		query += " inner join professordisciplina c ON c.idpessoa = a.idpessoa ";
+		query += " where c.iddisciplina = :iddisciplina ";
+		Query q = getSession().createSQLQuery(query);
+		q.setParameter("iddisciplina",iddisciplina);
+		return q.list();
+	}
+	
 }

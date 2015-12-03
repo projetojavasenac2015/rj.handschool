@@ -32,7 +32,7 @@ public class Alocacao implements Serializable {
     
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Disciplina disciplina;
+    private Disciplina listadisciplinas;
     
     @JoinColumn(name = "matricula_professor", referencedColumnName = "matricula_professor", insertable = false, updatable = false)
     @ManyToOne(optional = false)
@@ -66,11 +66,11 @@ public class Alocacao implements Serializable {
     }
 
     public Disciplina getDisciplina() {
-        return disciplina;
+        return listadisciplinas;
     }
 
     public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
+        this.listadisciplinas = disciplina;
     }
 
     public Professor getProfessor() {

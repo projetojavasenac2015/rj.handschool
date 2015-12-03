@@ -92,6 +92,11 @@
                                         		<li><a href="CadastroALuno">Listar Alunos</a></li>
                                         	</ul>
                                         </li>
+                                        <li><a href="#">Ambiente</a>
+                                        	<ul>
+                                        		<li><a href="${pageContext.request.contextPath}/CadastroAmbiente">Novo</a></li>
+                                        	</ul>
+                                        </li>
                                         <li><a href="#">Professor</a>
                                        		 <ul>
                                             	<li><a href="${pageContext.request.contextPath}/CadastroProfessor">Novo</a></li>
@@ -128,6 +133,7 @@
                                	 	<ul>
                                    		<li><a href="${pageContext.request.contextPath}/Atividades">Agenda de Atividades</a></li>
                                    		<li><a href="${pageContext.request.contextPath}/LancamentoAula">Lançamento de Aula</a></li>
+                                   		<li><a href="${pageContext.request.contextPath}/AlocacaoProfessor">Alocação de Professor</a></li>
                                    	</ul>
                                 </li>
                                 <li><a href="#"><span class="glyphicon glyphicon-calendar">&nbsp;Frequencia</span></a>
