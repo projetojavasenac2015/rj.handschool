@@ -29,6 +29,7 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Professor.findByAtivo", query = "SELECT p FROM Professor p WHERE p.ativo = :ativo"),
     @NamedQuery(name = "Professor.findByDataHoraCadastro", query = "SELECT p FROM Professor p WHERE p.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Professor.findByDataUltAtualizacao", query = "SELECT p FROM Professor p WHERE p.dataUltAtualizacao = :dataUltAtualizacao"),
+    @NamedQuery(name = "Professor.findByPessoa", query = "SELECT p FROM Professor p WHERE p.idpessoa = :idpessoa"),
    })
 public class Professor extends Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;

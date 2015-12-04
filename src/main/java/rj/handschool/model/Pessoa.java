@@ -87,7 +87,7 @@ public abstract class Pessoa implements Serializable {
     @NotNull
     @Column(name = "tipo_pessoa")
     @Enumerated(EnumType.STRING)
-    protected TipoPessoa tipoPessoa ;
+    protected TipoPessoa tipoPessoa;
    	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     protected List<Login> loginList;
     @NotNull(message="CPF Nulo")

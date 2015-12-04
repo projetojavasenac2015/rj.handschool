@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,11 @@ public class PessoaDAO {
 	@SuppressWarnings("unchecked")
 	public List<Pessoa> findAll(){
 		return getSession().createCriteria(Pessoa.class).list();
+	}
+	
+	public Pessoa findByEmail(String email){
+		Query qry =  getSession().getNamedQuery("Pessoa.findByEmail");
+		qry.setParameter("email", email);
+		return (Pessoa)qry.uniqueResult();
 	}
 }

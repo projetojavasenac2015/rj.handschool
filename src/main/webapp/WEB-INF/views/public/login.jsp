@@ -37,7 +37,7 @@
    				<div class="add-comment add-comment-velvet styled" id="login" style="margin-top:25px">
 					<div class="add-comment-title"><h3>Login</h3></div>
 					<div class="comment-form">
-   						<form:form action="login" commandName="login" method="post" id="login_forme" class="ajax_form">
+   						<form:form action="j_spring_security_check" commandName="login" method="post" id="login_forme" class="ajax_form">
 							<div class="form-inner">
 							    <div class="field_text">
 							        <label for="usuario" class="label_title">E-mail:</label>

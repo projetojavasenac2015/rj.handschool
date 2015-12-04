@@ -1,13 +1,16 @@
 package rj.handschool.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import rj.handschool.dao.PessoaDAO;
 import rj.handschool.dao.ProfessorDAO;
+import rj.handschool.model.Pessoa;
 import rj.handschool.model.Professor;
 
 /**
@@ -19,18 +22,24 @@ public class HomeController {
 	@Autowired
 	private ProfessorDAO professorDAO;
 	
+	@Autowired
+	private PessoaDAO pessoaDAO;
+	
 	@RequestMapping(value = {"/login","/"}, method = RequestMethod.GET)
 	public String firstPage(Model model) {
 		model.addAttribute("firstPageMessage", "This is the first page");
 		return "login";
 	}
 	
-	@RequestMapping(value="/professor/{matricula}", method = RequestMethod.GET)
-	public String professorInicial(Model model, @PathVariable("matricula") String matricula) {
+	@RequestMapping(value="/professor", method = RequestMethod.GET)
+	public String professorInicial(Model model,Principal principal) {
 		Professor prof = new Professor();
-		prof.setMatriculaProfessor(matricula);
-		Professor prof2 = professorDAO.findByMatricula(prof);
-		model.addAttribute("nome_professor", prof2.getNome());
+		String email =  principal.getName();
+		Pessoa p  = pessoaDAO.findByEmail(email);
+		prof = professorDAO.findByPessoa(p.getIdpessoa());
+
+//		Professor prof2 = professorDAO.findByMatricula(prof);
+		model.addAttribute("nome_professor", prof.getNome());
 		return "professor";
 	}
 	

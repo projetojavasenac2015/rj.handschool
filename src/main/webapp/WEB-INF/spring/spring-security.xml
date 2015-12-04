@@ -11,8 +11,6 @@
 
 
 		<!-- ACESSO A TODOS OS PERFIS -->
-		<security:intercept-url pattern="/login"
-			access="isAuthenticated()" />
 		
 		<!--ACESSO SOMENTE AO PERFIL ADMINISTRADOR 
 		<security:intercept-url pattern="/cadastroSecretaria"
@@ -69,7 +67,8 @@
 		-->
 
 		<security:form-login login-page="/login"
-			default-target-url="/professor" authentication-failure-url="/error"
+			default-target-url="/professor" 
+			authentication-failure-url="/login"
 			password-parameter="senha" username-parameter="email" />
 
 		<security:logout logout-success-url="/logout"
@@ -81,10 +80,15 @@
 
 	<security:authentication-manager>
 		<security:authentication-provider>
+			<!--  users-by-username-query="SELECT A.email AS username, A.SENHA AS  password, A.ATIVO as enable  FROM login A WHERE A.email = ?"
+			authorities-by-username-query="SELECT A.email AS username , B.NOME  AS authority FROM login A JOIN perfil B ON A.IDPERFIL = B.IDPERFIL WHERE A.MATRICULA = ?" 
+			-->
 			<security:jdbc-user-service
 				data-source-ref="dataSource" role-prefix="ROLE_"
-				users-by-username-query="SELECT A.email AS username, A.SENHA AS  password, A.ATIVO as enable  FROM login A WHERE A.email = ?"
-				authorities-by-username-query="SELECT A.email AS username , B.NOME  AS authority FROM login A JOIN perfil B ON A.IDPERFIL = B.IDPERFIL WHERE A.MATRICULA = ?" />
+				users-by-username-query="SELECT b.email as username,b.senha as password, case a.ativo when 'S' then 1 else 0 end as enable FROM login a inner join pessoa b on a.idpessoa = b.idpessoa where b.email  = ?"
+				authorities-by-username-query="SELECT b.email as username,b.tipo_pessoa as authority FROM login a inner join pessoa b on a.idpessoa = b.idpessoa where b.email  = ?"
+				/>
 		</security:authentication-provider>
 	</security:authentication-manager>
+	
 </beans>
