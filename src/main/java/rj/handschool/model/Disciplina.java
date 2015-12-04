@@ -60,7 +60,7 @@ public class Disciplina implements Serializable {
     private List<AvaliacaoAluno> avaliacaoAlunoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
     private List<ListaPresenca> listapresencaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "listadisciplinas")
     private List<Alocacao> alocacaoList;
     
 	public Disciplina() {
