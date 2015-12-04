@@ -39,6 +39,14 @@
 		                            </div>
 	                           	</div>
 	                        </div>
+	                        <div class="row">
+	                        	<div class="col-md-5">
+									<label for="" class="label_title">Ambiente:</label>
+									<div class="field_select">
+	                           			<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_ambiente.jsp"></tiles:insertTemplate>
+		                            </div>
+	                           	</div>
+	                        </div>
 							<div class="row">
 								<div class="col-md-4">
 				                    <div class="widget-container widget_profile boxed-velvet">

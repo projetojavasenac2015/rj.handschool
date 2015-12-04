@@ -80,4 +80,18 @@ public class AulaDAO {
 		q.setParameter("iddisciplina", iddisciplina);
 		return (List<String>)q.list();
 	}
+	
+	public List<Object[]> findByAulasNaoAlocadas(int iddisciplina, String data){
+		String query = " select date_format(data_aula,'%d/%m/%Y') as data_aula ";
+		query += " , hora_inicio, hora_fim ";
+		query += " ,(select nome from ambiente where idambiente = a.idambiente) as ambiente ";
+		query += " from aulas a ";
+		query += " inner join auladisciplina b on a.idaulas = b.idaulas ";
+		query += " where b.iddisciplina =:iddisciplina ";
+		query += " and data_aula=:data ";
+		Query q = getSession().createSQLQuery(query);
+		q.setParameter("iddisciplina",iddisciplina);
+		q.setParameter("data",data);
+		return q.list();
+	}
 }

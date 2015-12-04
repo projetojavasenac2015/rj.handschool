@@ -68,8 +68,20 @@ public class Aulas implements Serializable {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "auladisciplina", joinColumns = @JoinColumn(name = "idaulas"), inverseJoinColumns = @JoinColumn(name = "iddisciplina"))
 	private List<Disciplina> listadisciplinas = new ArrayList<Disciplina>();
+    @NotNull(message="Informe o Ambiente")
+    @JoinColumn(name = "idambiente", referencedColumnName = "idambiente")
+    @ManyToOne(optional = false)
+    private Ambiente listaambiente;
     
-    public List<Disciplina> getListadisciplinas() {
+    public Ambiente getListaambiente() {
+		return listaambiente;
+	}
+
+	public void setListaambiente(Ambiente listaambiente) {
+		this.listaambiente = listaambiente;
+	}
+
+	public List<Disciplina> getListadisciplinas() {
 		return listadisciplinas;
 	}
 

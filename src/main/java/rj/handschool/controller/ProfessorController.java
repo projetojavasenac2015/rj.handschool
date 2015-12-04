@@ -1,26 +1,33 @@
 package rj.handschool.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.DisciplinaDAO;
 import rj.handschool.dao.ProfessorDAO;
+import rj.handschool.model.Curso;
 import rj.handschool.model.Disciplina;
 import rj.handschool.model.Professor;
 import rj.handschool.model.TipoPessoa;
+import rj.handschool.model.Turma;
+import rj.handschool.propertys.CursoPropertyEditor;
 import rj.handschool.propertys.DisciplinaPropertyEditor;
 import rj.handshool.util.RotuloFormatacao;
 import rj.handshool.util.Utilidades;
@@ -92,5 +99,23 @@ public class ProfessorController {
 	public void listaDisciplina(ModelAndView modelView) {
 		List<Disciplina> lista_disciplina = disciplinaDAO.findAll();
 		modelView.addObject("listadisciplina", lista_disciplina);
+	}
+	
+	@RequestMapping(value = "ProfessorDisciplina/{iddisciplina}")
+	public @ResponseBody List<Professor> listarProfessorDisciplina(
+			@PathVariable("iddisciplina") Integer iddisciplina ) throws Exception {
+		
+		List<Professor> professores =  new ArrayList<Professor>();
+		
+		List<Object[]> objs = professorDAO.findByDisciplina(iddisciplina);
+			 
+		for (Object[] obj1 : objs) {
+			Professor prof = new Professor();
+			prof.setMatriculaProfessor((String) obj1[0]);
+			prof.setNome((String) obj1[1]);
+			professores.add(prof);
+		}
+		
+		return professores;
 	}
 }

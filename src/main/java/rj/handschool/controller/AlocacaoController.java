@@ -1,6 +1,7 @@
 package rj.handschool.controller;
 
 import java.sql.Date;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import rj.handschool.dao.AmbienteDAO;
 import rj.handschool.dao.AulaDAO;
 import rj.handschool.dao.DisciplinaDAO;
+import rj.handschool.model.Alocacao;
 import rj.handschool.model.Aluno;
 import rj.handschool.model.Ambiente;
 import rj.handschool.model.Aulas;
@@ -41,11 +43,7 @@ import rj.handshool.util.Situacao;
 import rj.handshool.util.Utilidades;
 
 @Controller
-public class AulaController {
-	@RequestMapping("/RegistroFrequencia")
-	public String novoAluno(ListaPresenca lista){
-		return "registro_frequencia";
-	}
+public class AlocacaoController {
 	
 	@Autowired
 	private DisciplinaDAO disciplinaDAO;
@@ -56,15 +54,14 @@ public class AulaController {
 	@Autowired
 	private AmbienteDAO ambienteDAO;
 		
-	static final String  modelo_pagina = "lancamento_aula";
+	static final String  modelo_pagina = "alocacao_professor";
 	
-	@RequestMapping("LancamentoAula")
-	public ModelAndView novaAula(@ModelAttribute("aula") Aulas aula){
+	@RequestMapping("AlocacaoProfessor")
+	public ModelAndView novaAula(@ModelAttribute("alocacao") Alocacao alocacao){
 		ModelAndView modelView = new ModelAndView(modelo_pagina);
-		modelView.addObject("aula",new Aulas());
-		rotuloPagina(modelView,"Lancamento");
+		modelView.addObject("alocacao",new Alocacao());
+		rotuloPagina(modelView,"Alocação");
 		listaDisciplina(modelView);
-		listaAmbiente(modelView);
 		return modelView;
 	}
 	
@@ -76,7 +73,6 @@ public class AulaController {
 	protected void initBinder(HttpServletRequest request,
 			ServletRequestDataBinder binder) throws Exception {
 		binder.registerCustomEditor(Disciplina.class, new DisciplinaPropertyEditor(disciplinaDAO));
-		binder.registerCustomEditor(Ambiente.class, new AmbientePropertyEditor(ambienteDAO));
 	}
 	
 	public void listaDisciplina(ModelAndView modelView) {
@@ -84,53 +80,31 @@ public class AulaController {
 		modelView.addObject("listadisciplina", lista_disciplina);
 	}
 
-	@RequestMapping(value = "VerificaHorarioDisponivelAula/{data}/{iddisciplina}")
-	public @ResponseBody List<String> horariosAulasDisponiveis(
+	@RequestMapping(value = "AulasNaoAlocadas/{iddisciplina}/{data}")
+	public @ResponseBody List<Aulas> aulasNaoALocadas(
 			@PathVariable("data") String data, @PathVariable("iddisciplina") Integer iddisciplina ) throws Exception {
+			
+		List<Aulas> aulas =  new ArrayList<Aulas>();
 		
-		List<String> horarios =  new ArrayList<String>();
-		
-		List<String> objs = aulaDAO.findVerificaHorarios(data,iddisciplina);
+		List<Object[]> objs = aulaDAO.findByAulasNaoAlocadas(iddisciplina, data);
 			 
-		for(int i = 0; i < objs.size(); i++) {
-			if(objs.get(i) != null){
-				String hora = objs.get(i).toString();
-				horarios.add(hora);
-			}
+		String data_aux = "";
+		DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+		
+		for (Object[] obj1 : objs) {
+			Aulas aula = new Aulas();
+			data_aux = (String)obj1[0];
+			
+			aula.setDataAula(df.parse(data_aux));
+			aula.setHoraInicio((String)obj1[1]);
+			aula.setHoraFim((String)obj1[2]);
+			Ambiente ambiente = new Ambiente();
+			ambiente.setNome((String)obj1[3]);
+			aula.setListaambiente(ambiente);
+			aulas.add(aula);
 		}
 		
-		return horarios;
+		return aulas;
 	}
 	
-	@RequestMapping(value = "GravaAula", method = RequestMethod.POST)
-	public ModelAndView gravaAula(@Valid @ModelAttribute("aula")Aulas aula, BindingResult bind) throws Exception{
-		ModelAndView modelView;
-		
-		String msg = "";
-		
-		if(!bind.hasErrors()){
-			try{
-				aulaDAO.insert(aula);
-				msg = "Registro Gravado com Sucesso";
-			}
-			catch(Exception e){
-				msg = e.getMessage();
-			}
-			modelView = new ModelAndView(modelo_pagina);
-			modelView.addObject("menssagem",msg);
-			novaAula(aula);
-		}
-		else{
-			modelView = new ModelAndView(modelo_pagina,bind.getModel());
-			listaDisciplina(modelView);
-		}
-		
-		return modelView;
-	}
-	
-	@RequestMapping("ListaAmbiente")
-	public void listaAmbiente(ModelAndView modelView) {
-		List<Ambiente> lista_ambiente = ambienteDAO.findAll();
-		modelView.addObject("listaambiente", lista_ambiente);
-	}
 }

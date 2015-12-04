@@ -32,8 +32,8 @@ public class Alocacao implements Serializable {
     
     @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Disciplina disciplina;
-    
+    private Disciplina listadisciplinas;
+    				   
     @JoinColumn(name = "matricula_professor", referencedColumnName = "matricula_professor", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Professor professor;
@@ -65,15 +65,15 @@ public class Alocacao implements Serializable {
         this.dataHoraCadastro = dataHoraCadastro;
     }
 
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
+    public Disciplina getListadisciplinas() {
+		return listadisciplinas;
+	}
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
-    }
+	public void setListadisciplinas(Disciplina listadisciplinas) {
+		this.listadisciplinas = listadisciplinas;
+	}
 
-    public Professor getProfessor() {
+	public Professor getProfessor() {
         return professor;
     }
 
