@@ -9,25 +9,33 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Renan
- */
 @Entity
 @Table(name = "avaliacao_aluno")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AvaliacaoAluno.findAll", query = "SELECT a FROM AvaliacaoAluno a"),
-    @NamedQuery(name = "AvaliacaoAluno.findByAluno", query = "SELECT a FROM AvaliacaoAluno a WHERE a.aluno = :aluno"),
-    @NamedQuery(name = "AvaliacaoAluno.findByIdavaliacaoAluno", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idavaliacaoAluno = :idavaliacaoAluno"),
+    @NamedQuery(name = "AvaliacaoAluno.findByAluno", query = "SELECT a FROM AvaliacaoAluno a WHERE a.aluno = :aluno"),    
     @NamedQuery(name = "AvaliacaoAluno.findByData", query = "SELECT a FROM AvaliacaoAluno a WHERE a.data = :data"),
     @NamedQuery(name = "AvaliacaoAluno.findByValor", query = "SELECT a FROM AvaliacaoAluno a WHERE a.valor = :valor"),
-    @NamedQuery(name = "AvaliacaoAluno.findByIdAvaliacao", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idAvaliacao = :idAvaliacao"),
-    @NamedQuery(name = "AvaliacaoAluno.findByIdDisciplina", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idDisciplina = :idDisciplina")})
+   })
 public class AvaliacaoAluno implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected AvaliacaoAlunoPK avaliacaoAlunoPK;
+    
+    @Basic(optional = false)
+    @Column(name = "idavaliacao_aluno")
+    private int idavaliacaoAluno;
+    
+    @Basic(optional = false)
+    @Column(name = "id_avaliacao")
+    private int idAvaliacao;
+    
+    @Basic(optional = false)
+    @Column(name = "id_disciplina")
+    private int idDisciplina;
+    
+    @Basic(optional = false)
+    @Column(name = "matricula")
+    private String matricula;
     
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
@@ -55,85 +63,146 @@ public class AvaliacaoAluno implements Serializable {
     public AvaliacaoAluno() {
     }
 
-    public AvaliacaoAluno(AvaliacaoAlunoPK avaliacaoAlunoPK) {
-        this.avaliacaoAlunoPK = avaliacaoAlunoPK;
-    }
+	public int getIdavaliacaoAluno() {
+		return idavaliacaoAluno;
+	}
 
-    public AvaliacaoAluno(int idavaliacaoAluno, int idAluno, int idAvaliacao, int idDisciplina, String matricula) {
-        this.avaliacaoAlunoPK = new AvaliacaoAlunoPK(idavaliacaoAluno,  idAvaliacao, idDisciplina, matricula);
-    }
+	public void setIdavaliacaoAluno(int idavaliacaoAluno) {
+		this.idavaliacaoAluno = idavaliacaoAluno;
+	}
 
-    public AvaliacaoAlunoPK getAvaliacaoAlunoPK() {
-        return avaliacaoAlunoPK;
-    }
+	public int getIdAvaliacao() {
+		return idAvaliacao;
+	}
 
-    public void setAvaliacaoAlunoPK(AvaliacaoAlunoPK avaliacaoAlunoPK) {
-        this.avaliacaoAlunoPK = avaliacaoAlunoPK;
-    }
+	public void setIdAvaliacao(int idAvaliacao) {
+		this.idAvaliacao = idAvaliacao;
+	}
 
-    public Date getData() {
-        return data;
-    }
+	public int getIdDisciplina() {
+		return idDisciplina;
+	}
 
-    public void setData(Date data) {
-        this.data = data;
-    }
+	public void setIdDisciplina(int idDisciplina) {
+		this.idDisciplina = idDisciplina;
+	}
 
-    public Double getValor() {
-        return valor;
-    }
+	public String getMatricula() {
+		return matricula;
+	}
 
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
 
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
+	public Date getData() {
+		return data;
+	}
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
-    }
+	public void setData(Date data) {
+		this.data = data;
+	}
 
-    public Avaliacao getAvaliacao() {
-        return avaliacao;
-    }
+	public Double getValor() {
+		return valor;
+	}
 
-    public void setAvaliacao(Avaliacao avaliacao) {
-        this.avaliacao = avaliacao;
-    }
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
 
-    public Aluno getAluno() {
-        return aluno;
-    }
+	public Disciplina getDisciplina() {
+		return disciplina;
+	}
 
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
-    }
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (avaliacaoAlunoPK != null ? avaliacaoAlunoPK.hashCode() : 0);
-        return hash;
-    }
+	public Avaliacao getAvaliacao() {
+		return avaliacao;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof AvaliacaoAluno)) {
-            return false;
-        }
-        AvaliacaoAluno other = (AvaliacaoAluno) object;
-        if ((this.avaliacaoAlunoPK == null && other.avaliacaoAlunoPK != null) || (this.avaliacaoAlunoPK != null && !this.avaliacaoAlunoPK.equals(other.avaliacaoAlunoPK))) {
-            return false;
-        }
-        return true;
-    }
+	public void setAvaliacao(Avaliacao avaliacao) {
+		this.avaliacao = avaliacao;
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.AvaliacaoAluno[ avaliacaoAlunoPK=" + avaliacaoAlunoPK + " ]";
-    }
-    
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((aluno == null) ? 0 : aluno.hashCode());
+		result = prime * result + ((avaliacao == null) ? 0 : avaliacao.hashCode());
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + ((disciplina == null) ? 0 : disciplina.hashCode());
+		result = prime * result + idAvaliacao;
+		result = prime * result + idDisciplina;
+		result = prime * result + idavaliacaoAluno;
+		result = prime * result + ((matricula == null) ? 0 : matricula.hashCode());
+		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AvaliacaoAluno other = (AvaliacaoAluno) obj;
+		if (aluno == null) {
+			if (other.aluno != null)
+				return false;
+		} else if (!aluno.equals(other.aluno))
+			return false;
+		if (avaliacao == null) {
+			if (other.avaliacao != null)
+				return false;
+		} else if (!avaliacao.equals(other.avaliacao))
+			return false;
+		if (data == null) {
+			if (other.data != null)
+				return false;
+		} else if (!data.equals(other.data))
+			return false;
+		if (disciplina == null) {
+			if (other.disciplina != null)
+				return false;
+		} else if (!disciplina.equals(other.disciplina))
+			return false;
+		if (idAvaliacao != other.idAvaliacao)
+			return false;
+		if (idDisciplina != other.idDisciplina)
+			return false;
+		if (idavaliacaoAluno != other.idavaliacaoAluno)
+			return false;
+		if (matricula == null) {
+			if (other.matricula != null)
+				return false;
+		} else if (!matricula.equals(other.matricula))
+			return false;
+		if (valor == null) {
+			if (other.valor != null)
+				return false;
+		} else if (!valor.equals(other.valor))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "AvaliacaoAluno [idavaliacaoAluno=" + idavaliacaoAluno + ", idAvaliacao=" + idAvaliacao
+				+ ", idDisciplina=" + idDisciplina + ", matricula=" + matricula + ", data=" + data + ", valor=" + valor
+				+ ", disciplina=" + disciplina + ", avaliacao=" + avaliacao + ", aluno=" + aluno + "]";
+	}    
 }

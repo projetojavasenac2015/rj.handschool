@@ -1,20 +1,18 @@
 package rj.handschool.controller;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.WebDataBinder;
+
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,19 +24,15 @@ import org.springframework.web.servlet.ModelAndView;
 import rj.handschool.dao.AmbienteDAO;
 import rj.handschool.dao.AulaDAO;
 import rj.handschool.dao.DisciplinaDAO;
-import rj.handschool.model.Aluno;
+
 import rj.handschool.model.Ambiente;
 import rj.handschool.model.Aulas;
-import rj.handschool.model.Curso;
+
 import rj.handschool.model.Disciplina;
 import rj.handschool.model.ListaPresenca;
-import rj.handschool.model.Professor;
-import rj.handschool.model.TipoPessoa;
+
 import rj.handschool.propertys.AmbientePropertyEditor;
 import rj.handschool.propertys.DisciplinaPropertyEditor;
-import rj.handshool.util.RotuloFormatacao;
-import rj.handshool.util.Situacao;
-import rj.handshool.util.Utilidades;
 
 @Controller
 public class AulaController {

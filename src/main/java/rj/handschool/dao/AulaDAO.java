@@ -81,6 +81,7 @@ public class AulaDAO {
 		return (List<String>)q.list();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Object[]> findByAulasNaoAlocadas(int iddisciplina, String data){
 		String query = " select date_format(data_aula,'%d/%m/%Y') as data_aula ";
 		query += " , hora_inicio, hora_fim ";

@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Ambiente;
-import rj.handschool.model.Curso;
-import rj.handschool.model.Disciplina;
+
 
 @Repository
 @Transactional

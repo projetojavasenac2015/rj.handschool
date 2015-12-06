@@ -9,25 +9,37 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Renan
- */
 @Entity
 @Table(name = "quadro_avisos")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "QuadroAvisos.findAll", query = "SELECT q FROM QuadroAvisos q"),
-    @NamedQuery(name = "QuadroAvisos.findByIdquadroAvisos", query = "SELECT q FROM QuadroAvisos q WHERE q.quadroAvisosPK.idquadroAvisos = :idquadroAvisos"),
+    @NamedQuery(name = "QuadroAvisos.findAll", query = "SELECT q FROM QuadroAvisos q"),    
     @NamedQuery(name = "QuadroAvisos.findByDataHoraCadastro", query = "SELECT q FROM QuadroAvisos q WHERE q.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "QuadroAvisos.findByAviso", query = "SELECT q FROM QuadroAvisos q WHERE q.aviso = :aviso"),
-    @NamedQuery(name = "QuadroAvisos.findByIdTurma", query = "SELECT q FROM QuadroAvisos q WHERE q.quadroAvisosPK.idTurma = :idTurma"),
-    @NamedQuery(name = "QuadroAvisos.findByIdCurso", query = "SELECT q FROM QuadroAvisos q WHERE q.quadroAvisosPK.idCurso = :idCurso"),
-    @NamedQuery(name = "QuadroAvisos.findByIdDisciplina", query = "SELECT q FROM QuadroAvisos q WHERE q.quadroAvisosPK.idDisciplina = :idDisciplina")})
+    })
 public class QuadroAvisos implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected QuadroAvisosPK quadroAvisosPK;
+	
+    @Basic(optional = false)
+    @Column(name = "idquadro_avisos")
+    private int idquadroAvisos;
+    
+    @Basic(optional = false)
+    @Column(name = "matricula_professor")
+    private String matricula_professor;
+    
+    @Basic(optional = false)
+    @Column(name = "id_turma")
+    private int idTurma;
+    
+    @Basic(optional = false)
+    @Column(name = "idcurso")
+    private int idCurso;
+    
+    @Basic(optional = false)
+    @Column(name = "id_disciplina")
+    private int idDisciplina;
+
     
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -51,85 +63,159 @@ public class QuadroAvisos implements Serializable {
     public QuadroAvisos() {
     }
 
-    public QuadroAvisos(QuadroAvisosPK quadroAvisosPK) {
-        this.quadroAvisosPK = quadroAvisosPK;
-    }
+	public int getIdquadroAvisos() {
+		return idquadroAvisos;
+	}
 
-    public QuadroAvisos(int idquadroAvisos, String matricula_professor, int idTurma, int idCurso, int idDisciplina) {
-        this.quadroAvisosPK = new QuadroAvisosPK(idquadroAvisos, matricula_professor, idTurma, idCurso, idDisciplina);
-    }
+	public void setIdquadroAvisos(int idquadroAvisos) {
+		this.idquadroAvisos = idquadroAvisos;
+	}
 
-    public QuadroAvisosPK getQuadroAvisosPK() {
-        return quadroAvisosPK;
-    }
+	public String getMatricula_professor() {
+		return matricula_professor;
+	}
 
-    public void setQuadroAvisosPK(QuadroAvisosPK quadroAvisosPK) {
-        this.quadroAvisosPK = quadroAvisosPK;
-    }
+	public void setMatricula_professor(String matricula_professor) {
+		this.matricula_professor = matricula_professor;
+	}
 
-    public Date getDataHoraCadastro() {
-        return dataHoraCadastro;
-    }
+	public int getIdTurma() {
+		return idTurma;
+	}
 
-    public void setDataHoraCadastro(Date dataHoraCadastro) {
-        this.dataHoraCadastro = dataHoraCadastro;
-    }
+	public void setIdTurma(int idTurma) {
+		this.idTurma = idTurma;
+	}
 
-    public String getAviso() {
-        return aviso;
-    }
+	public int getIdCurso() {
+		return idCurso;
+	}
 
-    public void setAviso(String aviso) {
-        this.aviso = aviso;
-    }
+	public void setIdCurso(int idCurso) {
+		this.idCurso = idCurso;
+	}
 
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
+	public int getIdDisciplina() {
+		return idDisciplina;
+	}
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
-    }
+	public void setIdDisciplina(int idDisciplina) {
+		this.idDisciplina = idDisciplina;
+	}
 
-    public Turma getTurma() {
-        return turma;
-    }
+	public Date getDataHoraCadastro() {
+		return dataHoraCadastro;
+	}
 
-    public void setTurma(Turma turma) {
-        this.turma = turma;
-    }
+	public void setDataHoraCadastro(Date dataHoraCadastro) {
+		this.dataHoraCadastro = dataHoraCadastro;
+	}
 
-    public Professor getProfessor() {
-        return professor;
-    }
+	public String getAviso() {
+		return aviso;
+	}
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
-    }
+	public void setAviso(String aviso) {
+		this.aviso = aviso;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (quadroAvisosPK != null ? quadroAvisosPK.hashCode() : 0);
-        return hash;
-    }
+	public Disciplina getDisciplina() {
+		return disciplina;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof QuadroAvisos)) {
-            return false;
-        }
-        QuadroAvisos other = (QuadroAvisos) object;
-        if ((this.quadroAvisosPK == null && other.quadroAvisosPK != null) || (this.quadroAvisosPK != null && !this.quadroAvisosPK.equals(other.quadroAvisosPK))) {
-            return false;
-        }
-        return true;
-    }
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.QuadroAvisos[ quadroAvisosPK=" + quadroAvisosPK + " ]";
-    }
-    
+	public Turma getTurma() {
+		return turma;
+	}
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((aviso == null) ? 0 : aviso.hashCode());
+		result = prime * result + ((dataHoraCadastro == null) ? 0 : dataHoraCadastro.hashCode());
+		result = prime * result + ((disciplina == null) ? 0 : disciplina.hashCode());
+		result = prime * result + idCurso;
+		result = prime * result + idDisciplina;
+		result = prime * result + idTurma;
+		result = prime * result + idquadroAvisos;
+		result = prime * result + ((matricula_professor == null) ? 0 : matricula_professor.hashCode());
+		result = prime * result + ((professor == null) ? 0 : professor.hashCode());
+		result = prime * result + ((turma == null) ? 0 : turma.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		QuadroAvisos other = (QuadroAvisos) obj;
+		if (aviso == null) {
+			if (other.aviso != null)
+				return false;
+		} else if (!aviso.equals(other.aviso))
+			return false;
+		if (dataHoraCadastro == null) {
+			if (other.dataHoraCadastro != null)
+				return false;
+		} else if (!dataHoraCadastro.equals(other.dataHoraCadastro))
+			return false;
+		if (disciplina == null) {
+			if (other.disciplina != null)
+				return false;
+		} else if (!disciplina.equals(other.disciplina))
+			return false;
+		if (idCurso != other.idCurso)
+			return false;
+		if (idDisciplina != other.idDisciplina)
+			return false;
+		if (idTurma != other.idTurma)
+			return false;
+		if (idquadroAvisos != other.idquadroAvisos)
+			return false;
+		if (matricula_professor == null) {
+			if (other.matricula_professor != null)
+				return false;
+		} else if (!matricula_professor.equals(other.matricula_professor))
+			return false;
+		if (professor == null) {
+			if (other.professor != null)
+				return false;
+		} else if (!professor.equals(other.professor))
+			return false;
+		if (turma == null) {
+			if (other.turma != null)
+				return false;
+		} else if (!turma.equals(other.turma))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "QuadroAvisos [idquadroAvisos=" + idquadroAvisos + ", matricula_professor=" + matricula_professor
+				+ ", idTurma=" + idTurma + ", idCurso=" + idCurso + ", idDisciplina=" + idDisciplina
+				+ ", dataHoraCadastro=" + dataHoraCadastro + ", aviso=" + aviso + ", disciplina=" + disciplina
+				+ ", turma=" + turma + ", professor=" + professor + "]";
+	}
+
 }

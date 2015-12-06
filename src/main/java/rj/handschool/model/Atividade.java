@@ -18,13 +18,16 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "atividade")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Atividade.findAll", query = "SELECT a FROM Atividade a"),
-    @NamedQuery(name = "Atividade.findByIdatividade", query = "SELECT a FROM Atividade a WHERE a.atividadePK.idatividade = :idatividade"),
-    @NamedQuery(name = "Atividade.findByIdTipoAtividade", query = "SELECT a FROM Atividade a WHERE a.atividadePK.idTipoAtividade = :idTipoAtividade")})
+    @NamedQuery(name = "Atividade.findAll", query = "SELECT a FROM Atividade a"),    
+    })
 public class Atividade implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected AtividadePK atividadePK;
+    @Basic(optional = false)
+    @Column(name = "idatividade")
+    private int idatividade;
+    @Basic(optional = false)
+    @Column(name = "id_tipo_atividade")
+    private int idTipoAtividade;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "atividade")
     private List<AtividadeAula> atividadeAulaList;
@@ -36,62 +39,79 @@ public class Atividade implements Serializable {
     public Atividade() {
     }
 
-    public Atividade(AtividadePK atividadePK) {
-        this.atividadePK = atividadePK;
-    }
+	public int getIdatividade() {
+		return idatividade;
+	}
 
-    public Atividade(int idatividade, int idTipoAtividade) {
-        this.atividadePK = new AtividadePK(idatividade, idTipoAtividade);
-    }
+	public void setIdatividade(int idatividade) {
+		this.idatividade = idatividade;
+	}
 
-    public AtividadePK getAtividadePK() {
-        return atividadePK;
-    }
+	public int getIdTipoAtividade() {
+		return idTipoAtividade;
+	}
 
-    public void setAtividadePK(AtividadePK atividadePK) {
-        this.atividadePK = atividadePK;
-    }
+	public void setIdTipoAtividade(int idTipoAtividade) {
+		this.idTipoAtividade = idTipoAtividade;
+	}
 
-    @XmlTransient
-    public List<AtividadeAula> getAtividadeAulaList() {
-        return atividadeAulaList;
-    }
+	public List<AtividadeAula> getAtividadeAulaList() {
+		return atividadeAulaList;
+	}
 
-    public void setAtividadeAulaList(List<AtividadeAula> atividadeAulaList) {
-        this.atividadeAulaList = atividadeAulaList;
-    }
+	public void setAtividadeAulaList(List<AtividadeAula> atividadeAulaList) {
+		this.atividadeAulaList = atividadeAulaList;
+	}
 
-    public TipoAtividade getTipoAtividade() {
-        return tipoAtividade;
-    }
+	public TipoAtividade getTipoAtividade() {
+		return tipoAtividade;
+	}
 
-    public void setTipoAtividade(TipoAtividade tipoAtividade) {
-        this.tipoAtividade = tipoAtividade;
-    }
+	public void setTipoAtividade(TipoAtividade tipoAtividade) {
+		this.tipoAtividade = tipoAtividade;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (atividadePK != null ? atividadePK.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((atividadeAulaList == null) ? 0 : atividadeAulaList.hashCode());
+		result = prime * result + idTipoAtividade;
+		result = prime * result + idatividade;
+		result = prime * result + ((tipoAtividade == null) ? 0 : tipoAtividade.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof Atividade)) {
-            return false;
-        }
-        Atividade other = (Atividade) object;
-        if ((this.atividadePK == null && other.atividadePK != null) || (this.atividadePK != null && !this.atividadePK.equals(other.atividadePK))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Atividade other = (Atividade) obj;
+		if (atividadeAulaList == null) {
+			if (other.atividadeAulaList != null)
+				return false;
+		} else if (!atividadeAulaList.equals(other.atividadeAulaList))
+			return false;
+		if (idTipoAtividade != other.idTipoAtividade)
+			return false;
+		if (idatividade != other.idatividade)
+			return false;
+		if (tipoAtividade == null) {
+			if (other.tipoAtividade != null)
+				return false;
+		} else if (!tipoAtividade.equals(other.tipoAtividade))
+			return false;
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Atividade[ atividadePK=" + atividadePK + " ]";
-    }
+	@Override
+	public String toString() {
+		return "Atividade [idatividade=" + idatividade + ", idTipoAtividade=" + idTipoAtividade + ", atividadeAulaList="
+				+ atividadeAulaList + ", tipoAtividade=" + tipoAtividade + "]";
+	}   
     
 }

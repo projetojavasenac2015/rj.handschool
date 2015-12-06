@@ -8,23 +8,28 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Renan
- */
 @Entity
 @Table(name = "responsaveis")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Responsaveis.findAll", query = "SELECT r FROM Responsaveis r"),
-    @NamedQuery(name = "Responsaveis.findByIdresponsaveis", query = "SELECT r FROM Responsaveis r WHERE r.responsaveisPK.idresponsaveis = :idresponsaveis"),
     @NamedQuery(name = "Responsaveis.findByNome", query = "SELECT r FROM Responsaveis r WHERE r.nome = :nome"),
-    @NamedQuery(name = "Responsaveis.findByIdGrauparentesco", query = "SELECT r FROM Responsaveis r WHERE r.responsaveisPK.idGrauparentesco = :idGrauparentesco"),
-    @NamedQuery(name = "Responsaveis.findByGrauparentesco", query = "SELECT r FROM Responsaveis r WHERE r.responsaveisPK.grauparentesco = :grauparentesco")})
+    })
 public class Responsaveis implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ResponsaveisPK responsaveisPK;
+	
+    @Basic(optional = false)
+    @Column(name = "idresponsaveis")
+    private int idresponsaveis;
+    
+    @Basic(optional = false)
+    @Column(name = "id_grauparentesco")
+    private int idGrauparentesco;
+    
+    @Basic(optional = false)
+    @Column(name = "grauparentesco")
+    private String grauparentesco;
+    
     @Column(name = "nome")
     private String nome;
     @JoinColumns({
@@ -39,69 +44,108 @@ public class Responsaveis implements Serializable {
     public Responsaveis() {
     }
 
-    public Responsaveis(ResponsaveisPK responsaveisPK) {
-        this.responsaveisPK = responsaveisPK;
-    }
+	public int getIdresponsaveis() {
+		return idresponsaveis;
+	}
 
-    public Responsaveis(int idresponsaveis,  int idGrauparentesco, String grauparentesco) {
-        this.responsaveisPK = new ResponsaveisPK(idresponsaveis, idGrauparentesco, grauparentesco);
-    }
+	public void setIdresponsaveis(int idresponsaveis) {
+		this.idresponsaveis = idresponsaveis;
+	}
 
-    public ResponsaveisPK getResponsaveisPK() {
-        return responsaveisPK;
-    }
+	public int getIdGrauparentesco() {
+		return idGrauparentesco;
+	}
 
-    public void setResponsaveisPK(ResponsaveisPK responsaveisPK) {
-        this.responsaveisPK = responsaveisPK;
-    }
+	public void setIdGrauparentesco(int idGrauparentesco) {
+		this.idGrauparentesco = idGrauparentesco;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getGrauparentesco() {
+		return grauparentesco;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setGrauparentesco(String grauparentesco) {
+		this.grauparentesco = grauparentesco;
+	}
 
-    public Grauparentesco getGrauparentesco1() {
-        return grauparentesco1;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setGrauparentesco1(Grauparentesco grauparentesco1) {
-        this.grauparentesco1 = grauparentesco1;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public Aluno getAluno() {
-        return aluno;
-    }
+	public Grauparentesco getGrauparentesco1() {
+		return grauparentesco1;
+	}
 
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
-    }
+	public void setGrauparentesco1(Grauparentesco grauparentesco1) {
+		this.grauparentesco1 = grauparentesco1;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (responsaveisPK != null ? responsaveisPK.hashCode() : 0);
-        return hash;
-    }
+	public Aluno getAluno() {
+		return aluno;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof Responsaveis)) {
-            return false;
-        }
-        Responsaveis other = (Responsaveis) object;
-        if ((this.responsaveisPK == null && other.responsaveisPK != null) || (this.responsaveisPK != null && !this.responsaveisPK.equals(other.responsaveisPK))) {
-            return false;
-        }
-        return true;
-    }
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Responsaveis[ responsaveisPK=" + responsaveisPK + " ]";
-    }
-    
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((aluno == null) ? 0 : aluno.hashCode());
+		result = prime * result + ((grauparentesco == null) ? 0 : grauparentesco.hashCode());
+		result = prime * result + ((grauparentesco1 == null) ? 0 : grauparentesco1.hashCode());
+		result = prime * result + idGrauparentesco;
+		result = prime * result + idresponsaveis;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Responsaveis other = (Responsaveis) obj;
+		if (aluno == null) {
+			if (other.aluno != null)
+				return false;
+		} else if (!aluno.equals(other.aluno))
+			return false;
+		if (grauparentesco == null) {
+			if (other.grauparentesco != null)
+				return false;
+		} else if (!grauparentesco.equals(other.grauparentesco))
+			return false;
+		if (grauparentesco1 == null) {
+			if (other.grauparentesco1 != null)
+				return false;
+		} else if (!grauparentesco1.equals(other.grauparentesco1))
+			return false;
+		if (idGrauparentesco != other.idGrauparentesco)
+			return false;
+		if (idresponsaveis != other.idresponsaveis)
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Responsaveis [idresponsaveis=" + idresponsaveis + ", idGrauparentesco=" + idGrauparentesco
+				+ ", grauparentesco=" + grauparentesco + ", nome=" + nome + ", grauparentesco1=" + grauparentesco1
+				+ ", aluno=" + aluno + "]";
+	}
+
 }

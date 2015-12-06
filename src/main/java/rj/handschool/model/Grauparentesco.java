@@ -10,75 +10,91 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Renan
- */
 @Entity
 @Table(name = "grauparentesco")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Grauparentesco.findAll", query = "SELECT g FROM Grauparentesco g"),
-    @NamedQuery(name = "Grauparentesco.findByIdgrauparentesco", query = "SELECT g FROM Grauparentesco g WHERE g.grauparentescoPK.idgrauparentesco = :idgrauparentesco"),
-    @NamedQuery(name = "Grauparentesco.findByGrauparentesco", query = "SELECT g FROM Grauparentesco g WHERE g.grauparentescoPK.grauparentesco = :grauparentesco")})
+   })
 public class Grauparentesco implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected GrauparentescoPK grauparentescoPK;
+    
+    @Basic(optional = false)
+    @Column(name = "idgrauparentesco")
+    private int idgrauparentesco;
+    
+    @Basic(optional = false)
+    @Column(name = "grauparentesco")
+    private String grauparentesco;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "grauparentesco1")
     private List<Responsaveis> responsaveisList;
 
     public Grauparentesco() {
     }
 
-    public Grauparentesco(GrauparentescoPK grauparentescoPK) {
-        this.grauparentescoPK = grauparentescoPK;
-    }
+	public int getIdgrauparentesco() {
+		return idgrauparentesco;
+	}
 
-    public Grauparentesco(int idgrauparentesco, String grauparentesco) {
-        this.grauparentescoPK = new GrauparentescoPK(idgrauparentesco, grauparentesco);
-    }
+	public void setIdgrauparentesco(int idgrauparentesco) {
+		this.idgrauparentesco = idgrauparentesco;
+	}
 
-    public GrauparentescoPK getGrauparentescoPK() {
-        return grauparentescoPK;
-    }
+	public String getGrauparentesco() {
+		return grauparentesco;
+	}
 
-    public void setGrauparentescoPK(GrauparentescoPK grauparentescoPK) {
-        this.grauparentescoPK = grauparentescoPK;
-    }
+	public void setGrauparentesco(String grauparentesco) {
+		this.grauparentesco = grauparentesco;
+	}
 
-    @XmlTransient
-    public List<Responsaveis> getResponsaveisList() {
-        return responsaveisList;
-    }
+	public List<Responsaveis> getResponsaveisList() {
+		return responsaveisList;
+	}
 
-    public void setResponsaveisList(List<Responsaveis> responsaveisList) {
-        this.responsaveisList = responsaveisList;
-    }
+	public void setResponsaveisList(List<Responsaveis> responsaveisList) {
+		this.responsaveisList = responsaveisList;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (grauparentescoPK != null ? grauparentescoPK.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((grauparentesco == null) ? 0 : grauparentesco.hashCode());
+		result = prime * result + idgrauparentesco;
+		result = prime * result + ((responsaveisList == null) ? 0 : responsaveisList.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof Grauparentesco)) {
-            return false;
-        }
-        Grauparentesco other = (Grauparentesco) object;
-        if ((this.grauparentescoPK == null && other.grauparentescoPK != null) || (this.grauparentescoPK != null && !this.grauparentescoPK.equals(other.grauparentescoPK))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Grauparentesco other = (Grauparentesco) obj;
+		if (grauparentesco == null) {
+			if (other.grauparentesco != null)
+				return false;
+		} else if (!grauparentesco.equals(other.grauparentesco))
+			return false;
+		if (idgrauparentesco != other.idgrauparentesco)
+			return false;
+		if (responsaveisList == null) {
+			if (other.responsaveisList != null)
+				return false;
+		} else if (!responsaveisList.equals(other.responsaveisList))
+			return false;
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Grauparentesco[ grauparentescoPK=" + grauparentescoPK + " ]";
-    }
-    
+	@Override
+	public String toString() {
+		return "Grauparentesco [idgrauparentesco=" + idgrauparentesco + ", grauparentesco=" + grauparentesco
+				+ ", responsaveisList=" + responsaveisList + "]";
+	}
+
 }

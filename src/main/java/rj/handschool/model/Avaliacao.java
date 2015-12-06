@@ -11,23 +11,24 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Renan
- */
 @Entity
 @Table(name = "avaliacao")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Avaliacao.findAll", query = "SELECT a FROM Avaliacao a"),
-    @NamedQuery(name = "Avaliacao.findByIdavaliacao", query = "SELECT a FROM Avaliacao a WHERE a.avaliacaoPK.idavaliacao = :idavaliacao"),
+    @NamedQuery(name = "Avaliacao.findAll", query = "SELECT a FROM Avaliacao a"),    
     @NamedQuery(name = "Avaliacao.findByDataHoraCadastro", query = "SELECT a FROM Avaliacao a WHERE a.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Avaliacao.findByDataUltAtualizacao", query = "SELECT a FROM Avaliacao a WHERE a.dataUltAtualizacao = :dataUltAtualizacao"),
-    @NamedQuery(name = "Avaliacao.findByIdTipoAvaliacao", query = "SELECT a FROM Avaliacao a WHERE a.avaliacaoPK.idTipoAvaliacao = :idTipoAvaliacao")})
+    })
 public class Avaliacao implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected AvaliacaoPK avaliacaoPK;
+    
+    @Basic(optional = false)
+    @Column(name = "idavaliacao")
+    private int idavaliacao;
+    
+    @Basic(optional = false)
+    @Column(name = "id_tipo_avaliacao")
+    private int idTipoAvaliacao;
     
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -47,78 +48,108 @@ public class Avaliacao implements Serializable {
     public Avaliacao() {
     }
 
-    public Avaliacao(AvaliacaoPK avaliacaoPK) {
-        this.avaliacaoPK = avaliacaoPK;
-    }
+	public int getIdavaliacao() {
+		return idavaliacao;
+	}
 
-    public Avaliacao(int idavaliacao, int idTipoAvaliacao) {
-        this.avaliacaoPK = new AvaliacaoPK(idavaliacao, idTipoAvaliacao);
-    }
+	public void setIdavaliacao(int idavaliacao) {
+		this.idavaliacao = idavaliacao;
+	}
 
-    public AvaliacaoPK getAvaliacaoPK() {
-        return avaliacaoPK;
-    }
+	public int getIdTipoAvaliacao() {
+		return idTipoAvaliacao;
+	}
 
-    public void setAvaliacaoPK(AvaliacaoPK avaliacaoPK) {
-        this.avaliacaoPK = avaliacaoPK;
-    }
+	public void setIdTipoAvaliacao(int idTipoAvaliacao) {
+		this.idTipoAvaliacao = idTipoAvaliacao;
+	}
 
-    public Date getDataHoraCadastro() {
-        return dataHoraCadastro;
-    }
+	public Date getDataHoraCadastro() {
+		return dataHoraCadastro;
+	}
 
-    public void setDataHoraCadastro(Date dataHoraCadastro) {
-        this.dataHoraCadastro = dataHoraCadastro;
-    }
+	public void setDataHoraCadastro(Date dataHoraCadastro) {
+		this.dataHoraCadastro = dataHoraCadastro;
+	}
 
-    public Date getDataUltAtualizacao() {
-        return dataUltAtualizacao;
-    }
+	public Date getDataUltAtualizacao() {
+		return dataUltAtualizacao;
+	}
 
-    public void setDataUltAtualizacao(Date dataUltAtualizacao) {
-        this.dataUltAtualizacao = dataUltAtualizacao;
-    }
+	public void setDataUltAtualizacao(Date dataUltAtualizacao) {
+		this.dataUltAtualizacao = dataUltAtualizacao;
+	}
 
-    @XmlTransient
-    public List<AvaliacaoAluno> getAvaliacaoAlunoList() {
-        return avaliacaoAlunoList;
-    }
+	public List<AvaliacaoAluno> getAvaliacaoAlunoList() {
+		return avaliacaoAlunoList;
+	}
 
-    public void setAvaliacaoAlunoList(List<AvaliacaoAluno> avaliacaoAlunoList) {
-        this.avaliacaoAlunoList = avaliacaoAlunoList;
-    }
+	public void setAvaliacaoAlunoList(List<AvaliacaoAluno> avaliacaoAlunoList) {
+		this.avaliacaoAlunoList = avaliacaoAlunoList;
+	}
 
-    public TipoAvaliacao getTipoAvaliacao() {
-        return tipoAvaliacao;
-    }
+	public TipoAvaliacao getTipoAvaliacao() {
+		return tipoAvaliacao;
+	}
 
-    public void setTipoAvaliacao(TipoAvaliacao tipoAvaliacao) {
-        this.tipoAvaliacao = tipoAvaliacao;
-    }
+	public void setTipoAvaliacao(TipoAvaliacao tipoAvaliacao) {
+		this.tipoAvaliacao = tipoAvaliacao;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (avaliacaoPK != null ? avaliacaoPK.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((avaliacaoAlunoList == null) ? 0 : avaliacaoAlunoList.hashCode());
+		result = prime * result + ((dataHoraCadastro == null) ? 0 : dataHoraCadastro.hashCode());
+		result = prime * result + ((dataUltAtualizacao == null) ? 0 : dataUltAtualizacao.hashCode());
+		result = prime * result + idTipoAvaliacao;
+		result = prime * result + idavaliacao;
+		result = prime * result + ((tipoAvaliacao == null) ? 0 : tipoAvaliacao.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof Avaliacao)) {
-            return false;
-        }
-        Avaliacao other = (Avaliacao) object;
-        if ((this.avaliacaoPK == null && other.avaliacaoPK != null) || (this.avaliacaoPK != null && !this.avaliacaoPK.equals(other.avaliacaoPK))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Avaliacao other = (Avaliacao) obj;
+		if (avaliacaoAlunoList == null) {
+			if (other.avaliacaoAlunoList != null)
+				return false;
+		} else if (!avaliacaoAlunoList.equals(other.avaliacaoAlunoList))
+			return false;
+		if (dataHoraCadastro == null) {
+			if (other.dataHoraCadastro != null)
+				return false;
+		} else if (!dataHoraCadastro.equals(other.dataHoraCadastro))
+			return false;
+		if (dataUltAtualizacao == null) {
+			if (other.dataUltAtualizacao != null)
+				return false;
+		} else if (!dataUltAtualizacao.equals(other.dataUltAtualizacao))
+			return false;
+		if (idTipoAvaliacao != other.idTipoAvaliacao)
+			return false;
+		if (idavaliacao != other.idavaliacao)
+			return false;
+		if (tipoAvaliacao == null) {
+			if (other.tipoAvaliacao != null)
+				return false;
+		} else if (!tipoAvaliacao.equals(other.tipoAvaliacao))
+			return false;
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Avaliacao[ avaliacaoPK=" + avaliacaoPK + " ]";
-    }
+	@Override
+	public String toString() {
+		return "Avaliacao [idavaliacao=" + idavaliacao + ", idTipoAvaliacao=" + idTipoAvaliacao + ", dataHoraCadastro="
+				+ dataHoraCadastro + ", dataUltAtualizacao=" + dataUltAtualizacao + ", avaliacaoAlunoList="
+				+ avaliacaoAlunoList + ", tipoAvaliacao=" + tipoAvaliacao + "]";
+	}
     
 }

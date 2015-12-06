@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.AlunoDAO;
 import rj.handschool.model.Aluno;
+import rj.handschool.model.Login;
+import rj.handschool.dao.LoginDAO;
 import rj.handschool.model.TipoPessoa;
 import rj.handshool.util.RotuloFormatacao;
 import rj.handshool.util.Utilidades;
@@ -22,6 +24,7 @@ public class AlunoController {
 	
 	@Autowired
 	private AlunoDAO alunoDAO;
+	private LoginDAO loginDAO;
 	
 	static final String  modelo_pagina = "aluno_novo";
 	static final Logger logger = Logger.getLogger(AlunoController.class);
@@ -46,13 +49,17 @@ public class AlunoController {
 		if(!bind.hasErrors()){
 			try{
 				Aluno aluno_cadatrado = alunoDAO.findByMatricula(aluno);
-				
+				Login login = new Login();
+				login.setAtivo('S');				
+				login.setPessoa(aluno);
 				if(aluno_cadatrado != null){
 					aluno.setIdpessoa(aluno_cadatrado.getIdpessoa());
 					alunoDAO.update(aluno);
+					loginDAO.update(login);
 				}
 				else{
 					alunoDAO.insert(aluno);
+					loginDAO.insert(login);
 				}
 				
 				msg = "Registro Gravado com Sucesso";

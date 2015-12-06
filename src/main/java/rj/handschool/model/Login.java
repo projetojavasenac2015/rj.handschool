@@ -14,14 +14,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
-    @NamedQuery(name = "Login.findByIdlogin", query = "SELECT l FROM Login l WHERE l.loginPK.idlogin = :idlogin"),
-    @NamedQuery(name = "Login.findByAtivo", query = "SELECT l FROM Login l WHERE l.ativo = :ativo"),
-    @NamedQuery(name = "Login.findByIdPessoa", query = "SELECT l FROM Login l WHERE l.loginPK.idPessoa = :idPessoa")})
+    @NamedQuery(name = "Login.findByIdlogin", query = "SELECT l FROM Login l WHERE l.idlogin = :idlogin"),
+    @NamedQuery(name = "Login.findByAtivo", query = "SELECT l FROM Login l WHERE l.ativo = :ativo")})
 public class Login implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @EmbeddedId
-    protected LoginPK loginPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idlogin")
+    private int idlogin;    
     
     @Column(name = "ativo")
     private Character ativo;
@@ -34,20 +36,16 @@ public class Login implements Serializable {
     public Login() {
     }
 
-    public Login(LoginPK loginPK) {
-        this.loginPK = loginPK;
+    public Login(int idlogin) {
+        this.idlogin = idlogin;
+    }
+   
+    public int getIdlogin() {
+        return idlogin;
     }
 
-    public Login(int idlogin, int idPerfil, int idPessoa) {
-        this.loginPK = new LoginPK(idlogin, idPerfil, idPessoa);
-    }
-
-    public LoginPK getLoginPK() {
-        return loginPK;
-    }
-
-    public void setLoginPK(LoginPK loginPK) {
-        this.loginPK = loginPK;
+    public void setIdlogin(int idlogin) {
+        this.idlogin = idlogin;
     }
 
     public Character getAtivo() {
@@ -65,30 +63,43 @@ public class Login implements Serializable {
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
-   
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (loginPK != null ? loginPK.hashCode() : 0);
-        return hash;
-    }
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof Login)) {
-            return false;
-        }
-        Login other = (Login) object;
-        if ((this.loginPK == null && other.loginPK != null) || (this.loginPK != null && !this.loginPK.equals(other.loginPK))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ativo == null) ? 0 : ativo.hashCode());
+		result = prime * result + idlogin;
+		result = prime * result + ((pessoa == null) ? 0 : pessoa.hashCode());
+		return result;
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Login[ loginPK=" + loginPK + " ]";
-    }
-    
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Login other = (Login) obj;
+		if (ativo == null) {
+			if (other.ativo != null)
+				return false;
+		} else if (!ativo.equals(other.ativo))
+			return false;
+		if (idlogin != other.idlogin)
+			return false;
+		if (pessoa == null) {
+			if (other.pessoa != null)
+				return false;
+		} else if (!pessoa.equals(other.pessoa))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Login [idlogin=" + idlogin + ", ativo=" + ativo + ", pessoa=" + pessoa + "]";
+	}    
 }

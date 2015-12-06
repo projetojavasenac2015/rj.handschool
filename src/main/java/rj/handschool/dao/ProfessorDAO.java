@@ -65,6 +65,7 @@ public class ProfessorDAO {
 		return (Professor) q.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Object[]> findByDisciplina(int iddisciplina) {
 		String query = " select matricula_professor, nome";
 		query += " from professor a ";

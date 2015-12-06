@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,13 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.DisciplinaDAO;
+import rj.handschool.dao.LoginDAO;
 import rj.handschool.dao.ProfessorDAO;
-import rj.handschool.model.Curso;
 import rj.handschool.model.Disciplina;
+import rj.handschool.model.Login;
 import rj.handschool.model.Professor;
 import rj.handschool.model.TipoPessoa;
-import rj.handschool.model.Turma;
-import rj.handschool.propertys.CursoPropertyEditor;
 import rj.handschool.propertys.DisciplinaPropertyEditor;
 import rj.handshool.util.RotuloFormatacao;
 import rj.handshool.util.Utilidades;
@@ -36,6 +34,7 @@ import rj.handshool.util.Utilidades;
 public class ProfessorController {
 	@Autowired
 	private ProfessorDAO professorDAO;
+	private LoginDAO loginDAO;
 	
 	@Autowired
 	private DisciplinaDAO disciplinaDAO;
@@ -70,13 +69,17 @@ public class ProfessorController {
 		if(!bind.hasErrors()){
 			try{
 				Professor professor_cadastrado = professorDAO.findByMatricula(professor);
-				
+				Login login = new Login();
+				login.setAtivo('S');				
+				login.setPessoa(professor);
 				if(professor_cadastrado != null){
 					professor.setIdpessoa(professor_cadastrado.getIdpessoa());
 					professorDAO.update(professor);
+					loginDAO.update(login);
 				}
 				else{
 					professorDAO.insert(professor);
+					loginDAO.insert(login);
 				}
 				
 				msg = "Registro Gravado com Sucesso";
