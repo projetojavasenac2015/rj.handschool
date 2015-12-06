@@ -2,8 +2,10 @@ package rj.handschool.dao;
 
 import java.util.List;
 
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,8 +32,9 @@ public class AlocacaoDAO {
 
 	private SessionFactory getSessionFactory() {
 		return sessionFactory;
-	}	
+	}
 	
+	@Transactional
 	public void insert(Alocacao alocacao) throws Exception{
 		try {
 			alocacao.setDataHoraCadastro(new java.sql.Date(System.currentTimeMillis()));
@@ -59,12 +62,10 @@ public class AlocacaoDAO {
 		return getSession().createCriteria(Alocacao.class).list();
 	}	
 	
-
 	@SuppressWarnings("unchecked")
 	public List<Alocacao> findAlocacaoPorDisciplina(Disciplina disciplina){
 		Query q = getSession().getNamedQuery("Alocacao.findByIdDisciplina");
 		q.setParameter("disciplina", disciplina);
 		return (List<Alocacao>)q.list();
 	}
-
 }

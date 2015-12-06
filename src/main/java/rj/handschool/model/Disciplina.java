@@ -60,9 +60,7 @@ public class Disciplina implements Serializable {
     private List<AvaliacaoAluno> avaliacaoAlunoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
     private List<ListaPresenca> listapresencaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "listadisciplinas")
-    private List<Alocacao> alocacaoList;
-    
+       
 	public Disciplina() {
     }
 
@@ -143,15 +141,6 @@ public class Disciplina implements Serializable {
 
     public void setListapresencaList(List<ListaPresenca> listapresencaList) {
         this.listapresencaList = listapresencaList;
-    }
-
-    @XmlTransient
-    public List<Alocacao> getAlocacaoList() {
-        return alocacaoList;
-    }
-
-    public void setAlocacaoList(List<Alocacao> alocacaoList) {
-        this.alocacaoList = alocacaoList;
     }
         
     @Override

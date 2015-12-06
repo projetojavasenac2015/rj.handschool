@@ -9,6 +9,7 @@
         <th class="text-justify">Hora</th>
         <th class="text-justify">Ambiente</th>
         <th class="text-nowrap">Professor</th>
+        <th class="text-nowrap">Alocação</th>
       </tr>
     </thead>
     <tbody>

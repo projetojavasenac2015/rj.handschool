@@ -1,5 +1,6 @@
 package rj.handschool.controller;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,9 +25,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import rj.handschool.dao.AlocacaoDAO;
 import rj.handschool.dao.AmbienteDAO;
 import rj.handschool.dao.AulaDAO;
 import rj.handschool.dao.DisciplinaDAO;
+import rj.handschool.dao.ProfessorDAO;
 import rj.handschool.model.Alocacao;
 import rj.handschool.model.Aluno;
 import rj.handschool.model.Ambiente;
@@ -53,6 +56,12 @@ public class AlocacaoController {
 	
 	@Autowired
 	private AmbienteDAO ambienteDAO;
+	
+	@Autowired
+	private AlocacaoDAO alocacaoDAO;
+	
+	@Autowired
+	private ProfessorDAO professorDAO;
 		
 	static final String  modelo_pagina = "alocacao_professor";
 	
@@ -101,10 +110,20 @@ public class AlocacaoController {
 			Ambiente ambiente = new Ambiente();
 			ambiente.setNome((String)obj1[3]);
 			aula.setListaambiente(ambiente);
+			aula.setIdaulas((Integer) obj1[4] );
 			aulas.add(aula);
 		}
 		
 		return aulas;
 	}
 	
+	@RequestMapping(value = "AlocacaoProfessorAula/{matricula}/{aula}")
+	public @ResponseBody void alocarProfessor(@PathVariable("matricula") String matricula_professor
+			, @PathVariable("aula") int idaula) throws Exception{
+		Aulas aula = aulaDAO.findById(idaula);
+		Professor prof2 = new Professor(matricula_professor);
+		Professor prof = professorDAO.findByMatricula(prof2);
+		Alocacao alocacao = new Alocacao(prof,aula);
+		alocacaoDAO.insert(alocacao);
+	}
 }

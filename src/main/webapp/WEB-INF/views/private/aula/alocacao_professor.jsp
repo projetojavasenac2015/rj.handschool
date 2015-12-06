@@ -20,7 +20,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="add-comment add-comment-velvet styled" id="addcomments">
-				<div class="add-comment-title"><h3>Lançamento de Aulas</h3></div>
+				<div class="add-comment-title"><h3>Alocação do Professor</h3></div>
 				<div class="comment-form">
 					<form:form action="GravaAlocacao" method="post" commandName="alocacao" id="commentForm" class="ajax_form">
 						<div class="form-inner">

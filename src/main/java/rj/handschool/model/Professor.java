@@ -82,6 +82,10 @@ public class Professor extends Pessoa implements Serializable {
 		this.matriculaProfessor = matricula;
 		this.tipoPessoa = tipo;
 	}
+    
+    public Professor(String matricula){
+		this.matriculaProfessor = matricula;
+	}
 
 	public Character getAtivo() {
         return ativo;

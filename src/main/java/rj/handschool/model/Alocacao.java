@@ -6,6 +6,7 @@ package rj.handschool.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,45 +19,58 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Alocacao.findAll", query = "SELECT a FROM Alocacao a"),
-    @NamedQuery(name = "Alocacao.findByIdalocacao", query = "SELECT a FROM Alocacao a WHERE a.alocacaoPK.idalocacao = :idalocacao"),
-    @NamedQuery(name = "Alocacao.findByDataHoraCadastro", query = "SELECT a FROM Alocacao a WHERE a.dataHoraCadastro = :dataHoraCadastro"),
-    @NamedQuery(name = "Alocacao.findByIdDisciplina", query = "SELECT a FROM Alocacao a WHERE a.alocacaoPK.idDisciplina = :idDisciplina")})
+    @NamedQuery(name = "Alocacao.findByIdalocacao", query = "SELECT a FROM Alocacao a WHERE a.idalocacao = :idalocacao"),
+    @NamedQuery(name = "Alocacao.findByDataHoraCadastro", query = "SELECT a FROM Alocacao a WHERE a.dataHoraCadastro = :dataHoraCadastro")
+    })
 public class Alocacao implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected AlocacaoPK alocacaoPK;
     
-    @Column(name = "data_hora_cadastro")
+    @Id
+    @Basic(optional = false)
+    @Column(name = "idalocacao")
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+    private int idalocacao;
+  
+	@Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraCadastro;
-    
-    @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
+	    
+    @JoinColumn(name = "idaulas", referencedColumnName = "idaulas")
     @ManyToOne(optional = false)
+    private Aulas aula;
+    
+    @Transient
     private Disciplina listadisciplinas;
     				   
-    @JoinColumn(name = "matricula_professor", referencedColumnName = "matricula_professor", insertable = false, updatable = false)
+    @JoinColumn(name = "matricula_professor", referencedColumnName = "matricula_professor")
     @ManyToOne(optional = false)
     private Professor professor;
 
     public Alocacao() {
     }
-
-    public Alocacao(AlocacaoPK alocacaoPK) {
-        this.alocacaoPK = alocacaoPK;
+   
+    public Alocacao(int idalocacao) {
+    	this.idalocacao = idalocacao;
     }
-
-    public Alocacao(int idalocacao, String matricula_professor, int idDisciplina) {
-        this.alocacaoPK = new AlocacaoPK(idalocacao, matricula_professor, idDisciplina);
+    
+    public Alocacao(String matricula_prof, int iddisciplina) {
+    	this.professor = new Professor(matricula_prof);
+    	this.listadisciplinas =  new Disciplina(iddisciplina);
     }
-
-    public AlocacaoPK getAlocacaoPK() {
-        return alocacaoPK;
+    
+    public Alocacao(Professor prof, Aulas aula) {
+    	this.professor = prof;
+    	this.aula =  aula;
     }
+    
+    public int getIdalocacao() {
+  		return idalocacao;
+  	}
 
-    public void setAlocacaoPK(AlocacaoPK alocacaoPK) {
-        this.alocacaoPK = alocacaoPK;
-    }
-
+  	public void setIdalocacao(int idalocacao) {
+  		this.idalocacao = idalocacao;
+  	}
+    
     public Date getDataHoraCadastro() {
         return dataHoraCadastro;
     }
@@ -81,29 +95,33 @@ public class Alocacao implements Serializable {
         this.professor = professor;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (alocacaoPK != null ? alocacaoPK.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idalocacao;
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof Alocacao)) {
-            return false;
-        }
-        Alocacao other = (Alocacao) object;
-        if ((this.alocacaoPK == null && other.alocacaoPK != null) || (this.alocacaoPK != null && !this.alocacaoPK.equals(other.alocacaoPK))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Alocacao other = (Alocacao) obj;
+		if (idalocacao != other.idalocacao)
+			return false;
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Alocacao[ alocacaoPK=" + alocacaoPK + " ]";
-    }
+	@Override
+	public String toString() {
+		return "Alocacao [idalocacao=" + idalocacao + ", dataHoraCadastro="
+				+ dataHoraCadastro + ", listadisciplinas=" + listadisciplinas
+				+ ", professor=" + professor + "]";
+	}
     
 }
