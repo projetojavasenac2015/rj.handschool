@@ -82,4 +82,22 @@ public class TurmaDAO {
 		q.setParameter("idcurso", idcurso);
 		return q.list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> findByTurmaProfessor(String matricula) {
+		String sql = " select g.idturma, g.descricao ";
+		sql+=" from alocacao a ";
+		sql+=" inner join auladisciplina b on a.idaulas = b.idaulas  ";
+		sql+=" inner join disciplina c on b.iddisciplina = c.iddisciplina  ";
+		sql+=" inner join modulodisciplina d on d.iddisciplina  = c.iddisciplina ";
+		sql+=" inner join modulo e on e.idmodulo = d.idmodulo ";
+		sql+=" inner join curso f on f.idcurso = e.idcurso ";
+		sql+=" inner join turma g on g.idcurso = f.idcurso ";
+		sql+=" inner join professor h on a.matricula_professor = h.matricula_professor ";
+		sql+=" where a.matricula_professor = :matricula";
+		
+		Query q = getSession().createSQLQuery(sql);
+		q.setParameter("matricula", matricula);
+		return q.list();
+	}
 }

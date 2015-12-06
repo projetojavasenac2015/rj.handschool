@@ -108,3 +108,55 @@ function retoraAlunosTurma(idturma){
 		  }
 	})
 }
+	
+function retorna_combo_turmas(obj, url){
+	var html = "";
+	var html2 = "";
+	
+	jQuery.ajax({
+		  method: "GET",
+		  url: url,
+		  dataType: 'json', 
+		  contentType: 'application/json',
+		  mimeType: 'application/json',
+		  async:false,
+		  success:function(data){
+			  var quantidade = data.length;
+			  for(var i=0; i < quantidade; i++){
+				  html +='<option value="'+ data[i].idturma +'">'+ data[i].descricao +'</option>';
+				  html2 += '<span val="'+ data[i].idturma +'" class="last">'+ data[i].descricao +'</span>';
+			  }
+			  obj.append(html) ;
+			  jQuery("#cusel-scroll-" + obj.attr("id")).append(html2);
+		  }
+	})
+}
+
+function retorna_combo_disciplinas_turma(obj, url){
+	var html = "";
+	var html2 = "";
+	var spans = jQuery("#cusel-scroll-" + obj.attr("id"));
+	
+	obj.find("option").remove();
+	spans.find("span:eq(0)").addClass("cuselActive first las");
+	jQuery("#curselFrame-"+ obj.attr("id") +" > div .cuselText").text(spans.find("span:eq(0)").text());
+	spans.find("span:not(:eq(0))").remove();
+	
+	jQuery.ajax({
+		  method: "GET",
+		  url: url,
+		  dataType: 'json', 
+		  contentType: 'application/json',
+		  mimeType: 'application/json',
+		  async:false,
+		  success:function(data){
+			  var quantidade = data.length;
+			  for(var i=0; i < quantidade; i++){
+				  html +='<option value="'+ data[i].iddisciplina +'">'+ data[i].nome +'</option>';
+				  html2 += '<span val="'+ data[i].iddisciplina +'" class="last">'+ data[i].nome +'</span>';
+			  }
+			  obj.append(html) ;
+			  spans.append(html2);
+		  }
+	})
+}

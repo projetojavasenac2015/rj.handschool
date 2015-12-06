@@ -76,4 +76,9 @@
 	    <put-attribute name="body" value="/WEB-INF/views/private/aula/alocacao_professor.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="tipo_avaliacao"  extends="base.definition">
+	    <put-attribute name="title" value="Tipo Avaliação"></put-attribute>
+	    <put-attribute name="body" value="/WEB-INF/views/private/avaliacao/cadastro_tipo_avaliacao.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

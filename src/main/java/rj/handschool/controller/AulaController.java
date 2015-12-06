@@ -42,11 +42,7 @@ import rj.handshool.util.Utilidades;
 
 @Controller
 public class AulaController {
-	@RequestMapping("/RegistroFrequencia")
-	public String novoAluno(ListaPresenca lista){
-		return "registro_frequencia";
-	}
-	
+		
 	@Autowired
 	private DisciplinaDAO disciplinaDAO;
 	

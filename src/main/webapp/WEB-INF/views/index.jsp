@@ -134,6 +134,7 @@
                                    		<li><a href="${pageContext.request.contextPath}/Atividades">Agenda de Atividades</a></li>
                                    		<li><a href="${pageContext.request.contextPath}/LancamentoAula">Lançamento de Aula</a></li>
                                    		<li><a href="${pageContext.request.contextPath}/AlocacaoProfessor">Alocação de Professor</a></li>
+                                   		<li><a href="${pageContext.request.contextPath}/QuadroHorarios">Quadro de Horários</a></li>
                                    	</ul>
                                 </li>
                                 <li><a href="#"><span class="glyphicon glyphicon-calendar">&nbsp;Frequencia</span></a>
@@ -147,6 +148,7 @@
                                     	<li><a href="${pageContext.request.contextPath}/AgendarAvaliacao">Agendar Avaliação</a></li>
                                     	<li><a href="${pageContext.request.contextPath}/LancamentoNotas">Lançamento de Notas</a></li>
                                     	<li><a href="${pageContext.request.contextPath}/AlterarAvaliacoes">Alterar Avaliações</a></li>
+                                    	<li><a href="${pageContext.request.contextPath}/CadastroTipoAvaliacao">Tipo de Avaliação</a></li>
                                     </ul>
                                 </li>
                             </ul>

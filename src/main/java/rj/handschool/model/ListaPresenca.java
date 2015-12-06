@@ -6,6 +6,7 @@ package rj.handschool.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,8 +19,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ListaPresenca implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ListapresencaPK listapresencaPK;
+    @Id
+    @Basic(optional = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "idlistapresenca")
+    private int idlistapresenca;
     
     @Column(name = "data_hora_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -48,22 +52,28 @@ public class ListaPresenca implements Serializable {
     public ListaPresenca() {
     }
 
-    public ListaPresenca(ListapresencaPK listapresencaPK) {
-        this.listapresencaPK = listapresencaPK;
-    }
+    @Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ListaPresenca other = (ListaPresenca) obj;
+		if (idlistapresenca != other.idlistapresenca)
+			return false;
+		return true;
+	}
 
-    public ListaPresenca(int idlistapresenca, int idTurma, int idCurso, int idDisciplina, int idAulas, String matricula) {
-        this.listapresencaPK = new ListapresencaPK(idlistapresenca, idTurma, idCurso, idDisciplina, idAulas,matricula);
-    }
+	public int getIdlistapresenca() {
+		return idlistapresenca;
+	}
 
-    public ListapresencaPK getListapresencaPK() {
-        return listapresencaPK;
-    }
-
-    public void setListapresencaPK(ListapresencaPK listapresencaPK) {
-        this.listapresencaPK = listapresencaPK;
-    }
-
+	public void setIdlistapresenca(int idlistapresenca) {
+		this.idlistapresenca = idlistapresenca;
+	}
+    
     public Date getDataHoraCadastro() {
         return dataHoraCadastro;
     }
@@ -113,28 +123,11 @@ public class ListaPresenca implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (listapresencaPK != null ? listapresencaPK.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idlistapresenca;
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof ListaPresenca)) {
-            return false;
-        }
-        ListaPresenca other = (ListaPresenca) object;
-        if ((this.listapresencaPK == null && other.listapresencaPK != null) || (this.listapresencaPK != null && !this.listapresencaPK.equals(other.listapresencaPK))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Listapresenca[ listapresencaPK=" + listapresencaPK + " ]";
-    }
-    
 }

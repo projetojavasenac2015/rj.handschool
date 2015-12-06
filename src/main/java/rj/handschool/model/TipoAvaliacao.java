@@ -7,9 +7,13 @@ package rj.handschool.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -45,6 +49,7 @@ public class TipoAvaliacao implements Serializable {
     private Date dataUltAtualizacao;
     
     @Column(name = "descricao")
+    @NotEmpty(message="Informe o Tipo")
     private String descricao;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoAvaliacao")

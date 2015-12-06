@@ -67,4 +67,18 @@ public class DisciplinaDAO {
 		public List<Disciplina> findAll(){
 			return getSession().createCriteria(Disciplina.class).list();
 		}
+		
+		@SuppressWarnings("unchecked")
+		public List<Object[]> findByDisciplinaTurma(int idturma) {
+			String sql = " select e.iddisciplina,e.nome ";
+			sql+=" from turma a ";
+			sql+=" inner join curso b on a.idcurso= b.idcurso  ";
+			sql+=" inner join modulo c on b.idcurso = c.idcurso  ";
+			sql+=" inner join modulodisciplina d on c.idmodulo =  d.idmodulo ";
+			sql+=" inner join disciplina e on e.iddisciplina = d.iddisciplina ";
+			sql+=" where a.idturma =:turma ";
+			Query q = getSession().createSQLQuery(sql);
+			q.setParameter("turma", idturma);
+			return q.list();
+		}
 }
