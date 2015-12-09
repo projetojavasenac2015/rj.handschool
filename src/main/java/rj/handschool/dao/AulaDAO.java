@@ -81,6 +81,24 @@ public class AulaDAO {
 		return (List<String>)q.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<String>  findAulasDisciplinasTurma(int idturma, int iddisciplina){
+		String query = "SELECT date_format(data_aula,'%m/%d/%Y') as data FROM aulas a ";
+		query += " inner join auladisciplina b on a.idaulas = b.idaulas ";
+		query += " inner join disciplina c on b.iddisciplina = c.iddisciplina ";
+		query += " inner join modulodisciplina d on d.iddisciplina =  b.iddisciplina  ";
+		query += " inner join modulo e on e.idmodulo = d.idmodulo ";
+		query += " inner join curso f on f.idcurso = e.idcurso ";
+		query += " inner join turma g on g.idcurso = f.idcurso";
+		query += " where c.iddisciplina =:iddisciplina ";
+		query += " and g.idturma =:idturma group by data_aula , g.idturma";
+		Query q = getSession().createSQLQuery(query);
+
+		q.setParameter("idturma", idturma);
+		q.setParameter("iddisciplina", iddisciplina);
+		return (List<String>)q.list();
+	}
+	
 	public List<Object[]> findByAulasNaoAlocadas(int iddisciplina, String data){
 		String query = " select date_format(data_aula,'%d/%m/%Y') as data_aula ";
 		query += " , hora_inicio, hora_fim ";

@@ -14,11 +14,13 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import rj.handschool.dao.AlunoDAO;
 import rj.handschool.dao.ListaPresencaDAO;
 import rj.handschool.dao.TurmaDAO;
 import rj.handschool.dao.AulaDAO;
@@ -43,6 +45,9 @@ public class ListaPresencaController {
 	
 	@Autowired
 	private ListaPresencaDAO listaPresencaDAO;
+	
+	@Autowired
+	private AlunoDAO alunoDAO;
 	
 	static final String  modelo_pagina = "registro_frequencia";
 	
@@ -119,9 +124,28 @@ public class ListaPresencaController {
 			lista_p.getAulas().setHoraFim((String) objects[6]);
 			lista_p.getTurma().setIdturma((Integer) objects[7]);;
 			lista_p.getDisciplina().setIddisciplina((Integer) objects[8]);
+			lista_p.getAulas().setIdaulas((Integer) objects[10]);
 			lista.add(lista_p);
 		}
 		
 		return lista;
+	}
+	
+	@RequestMapping(value ="EfetuaPresenca/{matricula}/{aula}/{situacao}")
+	public @ResponseBody String efetuaPresenca(
+			@PathVariable("matricula") String matricula
+			,@PathVariable("aula") Integer idaula
+			,@PathVariable("situacao") Character situacao) throws Exception{
+		
+		Aluno aluno = new Aluno();
+		aluno.setMatricula(matricula);
+		Aluno aluno_presenca = alunoDAO.findByMatricula(aluno);
+		
+		Aulas aulas =  new Aulas();
+		aulas.setIdaulas(idaula);
+		
+		ListaPresenca listaPresenca = new ListaPresenca(aluno_presenca,aulas,situacao);
+		listaPresencaDAO.insert(listaPresenca);
+		return "ok";
 	}
 }

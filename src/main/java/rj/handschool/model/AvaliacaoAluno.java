@@ -6,6 +6,7 @@ package rj.handschool.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -19,15 +20,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "AvaliacaoAluno.findAll", query = "SELECT a FROM AvaliacaoAluno a"),
     @NamedQuery(name = "AvaliacaoAluno.findByAluno", query = "SELECT a FROM AvaliacaoAluno a WHERE a.aluno = :aluno"),
-    @NamedQuery(name = "AvaliacaoAluno.findByIdavaliacaoAluno", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idavaliacaoAluno = :idavaliacaoAluno"),
+    @NamedQuery(name = "AvaliacaoAluno.findByIdavaliacaoAluno", query = "SELECT a FROM AvaliacaoAluno a WHERE a.idavaliacaoAluno = :idavaliacaoAluno"),
     @NamedQuery(name = "AvaliacaoAluno.findByData", query = "SELECT a FROM AvaliacaoAluno a WHERE a.data = :data"),
     @NamedQuery(name = "AvaliacaoAluno.findByValor", query = "SELECT a FROM AvaliacaoAluno a WHERE a.valor = :valor"),
-    @NamedQuery(name = "AvaliacaoAluno.findByIdAvaliacao", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idAvaliacao = :idAvaliacao"),
-    @NamedQuery(name = "AvaliacaoAluno.findByIdDisciplina", query = "SELECT a FROM AvaliacaoAluno a WHERE a.avaliacaoAlunoPK.idDisciplina = :idDisciplina")})
+    @NamedQuery(name = "AvaliacaoAluno.findByIdAvaliacao", query = "SELECT a FROM AvaliacaoAluno a WHERE a.idavaliacaoAluno = :idAvaliacao")
+    })
 public class AvaliacaoAluno implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected AvaliacaoAlunoPK avaliacaoAlunoPK;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "idavaliacao_aluno")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int idavaliacaoAluno;
     
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
@@ -37,38 +41,15 @@ public class AvaliacaoAluno implements Serializable {
     @Column(name = "valor")
     private Double valor;
     
-    @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Disciplina disciplina;
-    
-    @JoinColumns({
-    	@JoinColumn(name = "id_avaliacao", referencedColumnName = "idavaliacao", insertable = false, updatable = false)
-    	,@JoinColumn(name = "id_tipo_avaliacao", referencedColumnName = "id_tipo_avaliacao", insertable = false, updatable = false)
-    })
+	@JoinColumn(name = "id_avaliacao", referencedColumnName = "idavaliacao")
     @ManyToOne(optional = false)
     private Avaliacao avaliacao;
     
-    @JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
+    @JoinColumn(name = "matricula", referencedColumnName = "matricula")
     @ManyToOne(optional = false)
     private Aluno aluno;
     
     public AvaliacaoAluno() {
-    }
-
-    public AvaliacaoAluno(AvaliacaoAlunoPK avaliacaoAlunoPK) {
-        this.avaliacaoAlunoPK = avaliacaoAlunoPK;
-    }
-
-    public AvaliacaoAluno(int idavaliacaoAluno, int idAluno, int idAvaliacao, int idDisciplina, String matricula) {
-        this.avaliacaoAlunoPK = new AvaliacaoAlunoPK(idavaliacaoAluno,  idAvaliacao, idDisciplina, matricula);
-    }
-
-    public AvaliacaoAlunoPK getAvaliacaoAlunoPK() {
-        return avaliacaoAlunoPK;
-    }
-
-    public void setAvaliacaoAlunoPK(AvaliacaoAlunoPK avaliacaoAlunoPK) {
-        this.avaliacaoAlunoPK = avaliacaoAlunoPK;
     }
 
     public Date getData() {
@@ -86,15 +67,7 @@ public class AvaliacaoAluno implements Serializable {
     public void setValor(Double valor) {
         this.valor = valor;
     }
-
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
-
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
-    }
-
+   
     public Avaliacao getAvaliacao() {
         return avaliacao;
     }
@@ -111,29 +84,42 @@ public class AvaliacaoAluno implements Serializable {
         this.aluno = aluno;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (avaliacaoAlunoPK != null ? avaliacaoAlunoPK.hashCode() : 0);
-        return hash;
-    }
+	public int getIdavaliacaoAluno() {
+		return idavaliacaoAluno;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof AvaliacaoAluno)) {
-            return false;
-        }
-        AvaliacaoAluno other = (AvaliacaoAluno) object;
-        if ((this.avaliacaoAlunoPK == null && other.avaliacaoAlunoPK != null) || (this.avaliacaoAlunoPK != null && !this.avaliacaoAlunoPK.equals(other.avaliacaoAlunoPK))) {
-            return false;
-        }
-        return true;
-    }
+	public void setIdavaliacaoAluno(int idavaliacaoAluno) {
+		this.idavaliacaoAluno = idavaliacaoAluno;
+	}
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.AvaliacaoAluno[ avaliacaoAlunoPK=" + avaliacaoAlunoPK + " ]";
-    }
-    
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idavaliacaoAluno;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AvaliacaoAluno other = (AvaliacaoAluno) obj;
+		if (idavaliacaoAluno != other.idavaliacaoAluno)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "AvaliacaoAluno [idavaliacaoAluno=" + idavaliacaoAluno
+				+ ", data=" + data + ", valor=" + valor + ", avaliacao="
+				+ avaliacao + ", aluno=" + aluno + "]";
+	}
+
+  
 }

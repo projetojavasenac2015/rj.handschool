@@ -81,4 +81,9 @@
 	    <put-attribute name="body" value="/WEB-INF/views/private/avaliacao/cadastro_tipo_avaliacao.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="agendamento_avaliacao"  extends="base.definition">
+	    <put-attribute name="title" value="Agendamento de Avaliação"></put-attribute>
+	    <put-attribute name="body" value="/WEB-INF/views/private/avaliacao/agendamento_avaliacao.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

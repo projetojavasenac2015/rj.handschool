@@ -33,23 +33,30 @@ public class ListaPresenca implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltAtualizacao;
     
-    @JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
+    @JoinColumn(name = "matricula", referencedColumnName = "matricula")
     @ManyToOne(optional = false)
     private Aluno aluno;
     
-    @JoinColumn(name = "id_aulas", referencedColumnName = "idaulas", insertable = false, updatable = false)
+    @JoinColumn(name = "id_aulas", referencedColumnName = "idaulas")
     @ManyToOne(optional = false)
     private Aulas aulas;
     
-    @JoinColumn(name = "id_disciplina", referencedColumnName = "iddisciplina", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @javax.persistence.Transient
     private Disciplina disciplina;
     
-    @JoinColumn(name = "id_turma", referencedColumnName = "idturma", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @javax.persistence.Transient
     private Turma turma;
 
+    @Column(name = "situacao")
+    private Character situacao;
+    
     public ListaPresenca() {
+    }
+    
+    public ListaPresenca(Aluno aluno, Aulas aulas, Character situacao) {
+    	this.aluno = aluno;
+    	this.aulas = aulas;
+    	this.situacao = situacao;
     }
 
     @Override

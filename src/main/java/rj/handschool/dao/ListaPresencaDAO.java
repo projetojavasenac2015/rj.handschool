@@ -62,7 +62,7 @@ public class ListaPresencaDAO {
 	@SuppressWarnings("unchecked")
 	public List<Object[]> findByListaPresenca(int idturma, int iddisciplina, String dataaula,String matricula) {
 		String sql = " select k.matricula, (select nome from pessoa where idpessoa = k.idpessoa) as nome_aluno ";
-		sql+=" ,a.descricao, e.nome, h.data_aula, hora_inicio, hora_fim, a.idturma,e.iddisciplina,p.matricula_professor ";
+		sql+=" ,a.descricao, e.nome, h.data_aula, hora_inicio, hora_fim, a.idturma,e.iddisciplina,p.matricula_professor, h.idaulas ";
 		sql+=" from aluno k  ";
 		sql+=" inner join turma a on k.idturma = a.idturma ";
 		sql+=" inner join curso b on a.idcurso= b.idcurso ";

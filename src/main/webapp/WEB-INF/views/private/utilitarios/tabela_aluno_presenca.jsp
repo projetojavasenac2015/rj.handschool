@@ -6,6 +6,7 @@
     <thead>
       <tr>
         <th class="text-justify">Aluno</th>
+        <th class="text-justify">Ação</th>
         <th class="text-justify">Matricula</th>
         <th class="text-justify">Turma</th>
         <th class="text-nowrap">Disciplina</th>

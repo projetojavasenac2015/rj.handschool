@@ -14,10 +14,19 @@ jQuery(document).ready(function(){
 		var data_aula = formata_data_banco($dataAula.val()).replace("'","").replace("'","")
 		retornaAlunoTurma($turma.val(), $disciplina.val(),data_aula, 'MAT06122015192455');
 	})
+	
+	retorna_combo_presenca();
+	
+	jQuery(document).on('change',"[name='presenca_aluno']",function(){
+		var index = jQuery(this).parent("td").parent("tr").index();
+		var dados = jQuery("[name='matricula_aula']:eq("+index+")").val().split("/");
+		efetua_lancamento_presenca(dados[0],dados[1],jQuery(this).val());
+		jQuery(".tr_presenca_tabela:eq("+index+")").remove();
+	})
 });
 
 function retornaAlunoTurma(turma, disciplina, data_aula, matricula){
-	var html = "";
+	var html = "", html2 = "";
 	var obTabela = jQuery("#tabelaAlunoPresenca")
 	var trobTabela = jQuery(".tr_presenca_tabela")
 	trobTabela.remove();
@@ -34,14 +43,15 @@ function retornaAlunoTurma(turma, disciplina, data_aula, matricula){
 			  
 			  for(var i=0; i < quantidade; i++){
 				  html +=  "<tr class='tr_presenca_tabela'>";
-					  html +=  "<td>" + data[i].aluno.nome + "&nbsp;<input type='checkbox' name='aluno_presenca'/>" + "</td>";
+					  html +=  "<td>" + data[i].aluno.nome + "</td>";
+					  html +=  "<td>" + combo_presenca_aluno+ "</td>";
 					  html +=  "<td>" + data[i].aluno.matricula + "</td>";
 					  html +=  "<td>" + data[i].turma.descricao + "</td>";
 					  html +=  "<td>" + data[i].disciplina.nome + "</td>";
 					  html +=  "<td>" + data[i].aulas.dataAula + "</td>";
 					  html +=  "<td>" + data[i].aulas.horaInicio + "/" + data[i].aulas.horaFim + "</td>";
-					 
-				  html +=  "<tr>";
+					  html += "<input type='hidden' name='matricula_aula' value="+ data[i].aluno.matricula + "/" + data[i].aulas.idaulas +" />"
+				  html +=  "</tr>";
 			  }
 			  obTabela.append(html)
 		  }
@@ -56,4 +66,35 @@ function formata_data_banco(data){
 	data_banco_dados = "'"+ dados[2] + "-" +  dados[1] + "-" + dados[0] + "'";
 	
 	return data_banco_dados;
+}
+
+var combo_presenca_aluno = "";
+
+function retorna_combo_presenca(){
+	var html2 = "";
+	html2 += "<select name='presenca_aluno' class='select_styled'>";
+	html2 += "<option value='0'>Selecione</option>";
+	html2 += "<option value='P'>Presente</option>";
+	html2 += "<option value='A'>Ausente</option>";
+	html2 += "</select>";
+	combo_presenca_aluno = html2;
+}
+
+function efetua_lancamento_presenca(matricula, aula,situacao){
+	if(matricula != "" && aula != "" && situacao !=0){
+		jQuery.ajax({
+			  method: "POST",
+			  url: "EfetuaPresenca/" + matricula + "/" + aula  + "/" + situacao,
+			  dataType: 'json', 
+			  contentType: 'application/json',
+			  mimeType: 'application/json',
+			  async:false,
+			  success:function(data){
+				  alert("Registro efetuado");
+			  }
+		})
+	}
+	else{
+		alert("Algum dado não informado.")
+	}
 }

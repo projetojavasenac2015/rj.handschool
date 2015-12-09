@@ -56,10 +56,6 @@ public class Disciplina implements Serializable {
     private String ementa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
     private List<QuadroAvisos> quadroAvisosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
-    private List<AvaliacaoAluno> avaliacaoAlunoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
-    private List<ListaPresenca> listapresencaList;
        
 	public Disciplina() {
     }
@@ -124,25 +120,7 @@ public class Disciplina implements Serializable {
     public void setQuadroAvisosList(List<QuadroAvisos> quadroAvisosList) {
         this.quadroAvisosList = quadroAvisosList;
     }
-
-    @XmlTransient
-    public List<AvaliacaoAluno> getAvaliacaoAlunoList() {
-        return avaliacaoAlunoList;
-    }
-
-    public void setAvaliacaoAlunoList(List<AvaliacaoAluno> avaliacaoAlunoList) {
-        this.avaliacaoAlunoList = avaliacaoAlunoList;
-    }
-
-    @XmlTransient
-    public List<ListaPresenca> getListapresencaList() {
-        return listapresencaList;
-    }
-
-    public void setListapresencaList(List<ListaPresenca> listapresencaList) {
-        this.listapresencaList = listapresencaList;
-    }
-        
+     
     @Override
     public int hashCode() {
         int hash = 0;

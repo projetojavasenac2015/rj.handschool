@@ -65,8 +65,6 @@ public class Turma implements Serializable {
     private Integer quantidadeAlunos;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma", fetch=FetchType.LAZY)
     private List<QuadroAvisos> quadroAvisosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "turma")
-    private List<ListaPresenca> listapresencaList;
     @NotNull(message="Informe o Curso")
     @JoinColumn(name = "idcurso", referencedColumnName = "idcurso")
     @ManyToOne(optional = false)
@@ -163,16 +161,7 @@ public class Turma implements Serializable {
     public void setQuadroAvisosList(List<QuadroAvisos> quadroAvisosList) {
         this.quadroAvisosList = quadroAvisosList;
     }
-
-    @XmlTransient
-    public List<ListaPresenca> getListapresencaList() {
-        return listapresencaList;
-    }
-
-    public void setListapresencaList(List<ListaPresenca> listapresencaList) {
-        this.listapresencaList = listapresencaList;
-    }
-
+   
     public Curso getCurso() {
         return curso;
     }
@@ -208,7 +197,7 @@ public class Turma implements Serializable {
 				+ ", dataUltAtualizacao=" + dataUltAtualizacao
 				+ ", quantidadeAlunos=" + quantidadeAlunos
 				+ ", quadroAvisosList=" + quadroAvisosList
-				+ ", listapresencaList=" + listapresencaList + ", curso="
+				+ ", curso="
 				+ curso + ", descricao=" + descricao + ", ano=" + ano + "]";
 	}
 
