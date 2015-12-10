@@ -50,7 +50,15 @@ public class ListaPresenca implements Serializable {
     @Column(name = "situacao")
     private Character situacao;
     
-    public ListaPresenca() {
+    public Character getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(Character situacao) {
+		this.situacao = situacao;
+	}
+
+	public ListaPresenca() {
     }
     
     public ListaPresenca(Aluno aluno, Aulas aulas, Character situacao) {

@@ -86,4 +86,9 @@
 	    <put-attribute name="body" value="/WEB-INF/views/private/avaliacao/agendamento_avaliacao.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="lancamento_notas_avaliacao"  extends="base.definition">
+	    <put-attribute name="title" value="Lançamento de Notas Avaliação"></put-attribute>
+	    <put-attribute name="body" value="/WEB-INF/views/private/avaliacao/lancamento_notas_avaliacao.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

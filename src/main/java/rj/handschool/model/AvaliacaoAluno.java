@@ -49,7 +49,18 @@ public class AvaliacaoAluno implements Serializable {
     @ManyToOne(optional = false)
     private Aluno aluno;
     
-    public AvaliacaoAluno() {
+    @Transient
+    private TipoAvaliacao tipoAvaliacao;
+    
+    public TipoAvaliacao getTipoAvaliacao() {
+		return tipoAvaliacao;
+	}
+
+	public void setTipoAvaliacao(TipoAvaliacao tipoAvaliacao) {
+		this.tipoAvaliacao = tipoAvaliacao;
+	}
+
+	public AvaliacaoAluno() {
     }
 
     public Date getData() {

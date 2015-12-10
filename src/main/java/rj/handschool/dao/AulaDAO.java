@@ -82,7 +82,7 @@ public class AulaDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<String>  findAulasDisciplinasTurma(int idturma, int iddisciplina){
+	public List<String>  findAulasDisciplinasTurma(int idturma, int iddisciplina, String matricula){
 		String query = "SELECT date_format(data_aula,'%m/%d/%Y') as data FROM aulas a ";
 		query += " inner join auladisciplina b on a.idaulas = b.idaulas ";
 		query += " inner join disciplina c on b.iddisciplina = c.iddisciplina ";
@@ -90,12 +90,38 @@ public class AulaDAO {
 		query += " inner join modulo e on e.idmodulo = d.idmodulo ";
 		query += " inner join curso f on f.idcurso = e.idcurso ";
 		query += " inner join turma g on g.idcurso = f.idcurso";
+		query += " inner join alocacao h on h.idaulas = a.idaulas ";
 		query += " where c.iddisciplina =:iddisciplina ";
-		query += " and g.idturma =:idturma group by data_aula , g.idturma";
+		query += " and h.matricula_professor=:matricula ";
+		query += " and g.idturma =:idturma  and date(data_aula) >= current_Date group by data_aula , g.idturma";
+		query += " order by data_aula asc ";
 		Query q = getSession().createSQLQuery(query);
 
 		q.setParameter("idturma", idturma);
 		q.setParameter("iddisciplina", iddisciplina);
+		q.setParameter("matricula", matricula);
+		return (List<String>)q.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String>  findAulasDisciplinasTurma(int idturma, int iddisciplina, String matricula, String data){
+		String query = "SELECT concat(a.idaulas,'?',hora_inicio,'-',hora_fim) as horario FROM aulas a ";
+		query += " inner join auladisciplina b on a.idaulas = b.idaulas ";
+		query += " inner join disciplina c on b.iddisciplina = c.iddisciplina ";
+		query += " inner join modulodisciplina d on d.iddisciplina =  b.iddisciplina  ";
+		query += " inner join modulo e on e.idmodulo = d.idmodulo ";
+		query += " inner join curso f on f.idcurso = e.idcurso ";
+		query += " inner join turma g on g.idcurso = f.idcurso";
+		query += " inner join alocacao h on h.idaulas = a.idaulas ";
+		query += " where c.iddisciplina =:iddisciplina ";
+		query += " and h.matricula_professor=:matricula ";
+		query += " and g.idturma =:idturma  and data_aula =:data_aula ";
+		Query q = getSession().createSQLQuery(query);
+
+		q.setParameter("idturma", idturma);
+		q.setParameter("iddisciplina", iddisciplina);
+		q.setParameter("matricula", matricula);
+		q.setParameter("data_aula", data);
 		return (List<String>)q.list();
 	}
 	
@@ -110,6 +136,25 @@ public class AulaDAO {
 		Query q = getSession().createSQLQuery(query);
 		q.setParameter("iddisciplina",iddisciplina);
 		q.setParameter("data",data);
+		return q.list();
+	}
+	
+	public List<Object[]> findByALunoAulas(int idaula){
+		String query = " select i.matricula, (select nome from pessoa where i.idpessoa = idpessoa) as nome ";
+		query += " ,i.idpessoa ";
+		query += ",(select situacao from listapresenca z where z.matricula = i.matricula = z.id_aulas = a.idaulas) as situacao_aula ";
+		query += " from aulas a ";
+		query += " inner join auladisciplina b ON a.idaulas = b.idaulas ";
+		query += " inner join disciplina c ON b.iddisciplina = c.iddisciplina ";
+		query += " inner join modulodisciplina d ON d.iddisciplina = b.iddisciplina ";
+		query += " inner join modulo e ON e.idmodulo = d.idmodulo ";
+		query += " inner join curso f ON f.idcurso = e.idcurso ";
+		query += " inner join turma g ON g.idcurso = f.idcurso ";
+		query += " inner join alocacao h ON h.idaulas = a.idaulas ";
+		query += " inner join aluno i on i.idturma = g.idturma ";
+		query += " where h.idaulas =:idaula order by 2 asc  ";
+		Query q = getSession().createSQLQuery(query);
+		q.setParameter("idaula",idaula);
 		return q.list();
 	}
 }

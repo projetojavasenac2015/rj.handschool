@@ -66,14 +66,18 @@
 					                            </div>
 					                            <div class="col-md-5 col-md-offset-1">
 					                                <div class="row">
-					                                	<div class="col-md-8"><h4>Data:<span id="data_selecionada"></span></h4></div>
+					                                	<div class="col-md-8">
+					                                		<select name="datas_todas_aula" id="datas_todas_aula" class="select_styled select_styled_orange">
+						                                        <option value="0">Data(s)</option>
+						                                    </select>
+					                                	</div>
 					                                	<input type="hidden" value="" id="idaulas" name="idaulas">
 					                                </div>
 					                                <br/>
 					                                <br/>
 					                                <div class="row">
 					                                	<div class="col-md-8">
-				                                			<select name="hoarios" id="hoarios" class="select_styled select_styled_orange">
+				                                			<select name="horarios" id="horarios" class="select_styled select_styled_orange">
 						                                        <option value="">Horário(s)</option>
 						                                    </select>
 					                                	</div>
@@ -97,7 +101,7 @@
 							<div class="col-sm-12">
 								<div class="rowSubmit">
 					   			 	<span class="btn btn-small">
-					                   <input type="submit" id="confirmar" value="Confirmar" />
+					                   <input type="button" id="confirmar_avaliacao" value="Confirmar" />
 					           		</span>
 					             </div>
 							</div>

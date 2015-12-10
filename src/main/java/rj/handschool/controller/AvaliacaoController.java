@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.AulaDAO;
+import rj.handschool.dao.AvaliacaoDAO;
 import rj.handschool.dao.TipoAvaliacaoDAO;
+import rj.handschool.model.Aulas;
 import rj.handschool.model.Avaliacao;
 import rj.handschool.model.Disciplina;
 import rj.handschool.model.TipoAvaliacao;
@@ -35,6 +37,9 @@ public class AvaliacaoController {
 	
 	@Autowired
 	private AulaDAO aulasDAO;
+	
+	@Autowired
+	private AvaliacaoDAO avaliacaoDAO;
 	
 	static final String  modelo_pagina = "agendamento_avaliacao";
 	
@@ -50,11 +55,45 @@ public class AvaliacaoController {
 		modelView.addObject("listaTipoAvaliacao", lista);
 	}
 	
-	@RequestMapping(value = "AulasDisciplinas/{idturma}/{iddisciplina}")
+	@RequestMapping(value = "AulasDisciplinas/{idturma}/{iddisciplina}/{matricula}")
 	public @ResponseBody List<String> aulasDisciplinas(
 			@PathVariable("idturma") int idturma
-			,@PathVariable("iddisciplina") int iddisciplina) throws Exception {
-		List<String> aulas_disciplinas = aulasDAO.findAulasDisciplinasTurma(idturma,iddisciplina);
+			,@PathVariable("iddisciplina") int iddisciplina
+			,@PathVariable("matricula") String matricula
+			) throws Exception {
+		List<String> aulas_disciplinas = aulasDAO.findAulasDisciplinasTurma(idturma,iddisciplina,matricula);
 		return aulas_disciplinas;
 	}
+	
+	@RequestMapping(value = "AulasDisciplinas/{idturma}/{iddisciplina}/{matricula}/{data}")
+	public @ResponseBody List<String> aulasDisciplinas(
+			@PathVariable("idturma") int idturma
+			,@PathVariable("iddisciplina") int iddisciplina
+			,@PathVariable("matricula") String matricula
+			,@PathVariable("data") String data
+			) throws Exception {
+		List<String> aulas_disciplinas = aulasDAO.findAulasDisciplinasTurma(idturma,iddisciplina,matricula, data);
+		return aulas_disciplinas;
+	}
+	
+	@RequestMapping(value = "ConfirmaAgendaAvaliacao/{idaula}/{tipoavaliacao}")
+	public @ResponseBody String  confirmaAgendamentoAvaliacao(
+			@PathVariable("idaula") int idaula
+			,@PathVariable("tipoavaliacao") int tipoavaliacao
+			) throws Exception {
+		
+		if(idaula != 0 && tipoavaliacao != 0){
+			Avaliacao avaliacao = new Avaliacao();
+			TipoAvaliacao tipo = new TipoAvaliacao();
+			tipo.setIdtipoAvaliacao(tipoavaliacao);
+			avaliacao.setTipoAvaliacao(tipo);
+			Aulas aula = new Aulas(idaula);
+			avaliacao.setAula(aula);
+			avaliacaoDAO.insert(avaliacao);
+		}
+		
+		return "ok";
+	}
+	
+	
 }
