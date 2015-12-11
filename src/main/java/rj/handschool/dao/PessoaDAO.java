@@ -52,6 +52,10 @@ public class PessoaDAO {
 		return (Pessoa) getSession().get(Pessoa.class, pessoa);	
 	}
 	
+	public Pessoa findByPessoa(String email){
+		return (Pessoa) getSession().getNamedQuery("Pessoa.findByEmail").setParameter("email", email).uniqueResult();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Pessoa> findAll(){
 		return getSession().createCriteria(Pessoa.class).list();

@@ -100,4 +100,10 @@ public class ProfessorDAO {
 		return q.list();
 	}
 	
+	public Professor findById(int idpessoa){
+		Query q = getSession().getNamedQuery("Professor.findById");
+		q.setParameter("id",idpessoa);
+		return (Professor)q.uniqueResult();
+	}
+	
 }

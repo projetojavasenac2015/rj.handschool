@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.AlunoDAO;
+import rj.handschool.dao.LoginDAO;
 import rj.handschool.model.Aluno;
+import rj.handschool.model.Login;
+import rj.handschool.model.Pessoa;
 import rj.handschool.model.TipoPessoa;
 import rj.handshool.util.RotuloFormatacao;
 import rj.handshool.util.Utilidades;
@@ -22,6 +25,9 @@ public class AlunoController {
 	
 	@Autowired
 	private AlunoDAO alunoDAO;
+	
+	@Autowired
+	private LoginDAO loginDAO;
 	
 	static final String  modelo_pagina = "aluno_novo";
 	static final Logger logger = Logger.getLogger(AlunoController.class);

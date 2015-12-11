@@ -13,7 +13,7 @@
         <mysql.connector.version>5.1.37</mysql.connector.version>
 		<org.aspectj-version>1.8.6</org.aspectj-version>
 		<org.slf4j-version>1.7.12</org.slf4j-version>
-		<org.spring-security-web>3.1.7.RELEASE</org.spring-security-web>
+		<org.spring-security-web>3.1.3.RELEASE</org.spring-security-web>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -97,12 +97,22 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<!-- Spring Security -->
+		<!-- Spring Security -->			
+    	<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${org.spring-security-web}</version>
+		</dependency>
 		<dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-web</artifactId>
-        <version>${org.spring-security-web}</version>
-    </dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${org.spring-security-web}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${org.spring-security-web}</version>
+		</dependency>
 		
 		<!-- Hibernate -->
         <dependency>

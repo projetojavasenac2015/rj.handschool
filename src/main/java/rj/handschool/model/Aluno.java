@@ -27,6 +27,7 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Aluno.findAll", query = "SELECT a FROM Aluno a"),
     @NamedQuery(name = "Aluno.findAlgumAlunoMatriculado", query = "SELECT count(*) FROM Aluno a where a.matricula = :matricula"),
     @NamedQuery(name = "Aluno.findByMatricula", query = "SELECT a FROM Aluno a WHERE a.matricula = :matricula"),
+    @NamedQuery(name = "Aluno.findByMatriculaID", query = "SELECT a.idpessoa FROM Aluno a WHERE a.matricula = :matricula"),
     @NamedQuery(name = "Aluno.findByAtivo", query = "SELECT a FROM Aluno a WHERE a.ativo = :ativo"),
     @NamedQuery(name = "Aluno.findByDataHoraCadastro", query = "SELECT a FROM Aluno a WHERE a.dataHoraCadastro = :dataHoraCadastro"),
     @NamedQuery(name = "Aluno.findByNaoMatriculado", query = "SELECT a FROM Aluno a WHERE a.turma.idturma is null "),

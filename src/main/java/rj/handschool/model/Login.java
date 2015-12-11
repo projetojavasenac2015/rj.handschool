@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package rj.handschool.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,20 +10,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "login")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
-    @NamedQuery(name = "Login.findByIdlogin", query = "SELECT l FROM Login l WHERE l.loginPK.idlogin = :idlogin"),
+    @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),    
     @NamedQuery(name = "Login.findByAtivo", query = "SELECT l FROM Login l WHERE l.ativo = :ativo"),
-    @NamedQuery(name = "Login.findByIdPessoa", query = "SELECT l FROM Login l WHERE l.loginPK.idPessoa = :idPessoa")})
+   })
 public class Login implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @EmbeddedId
-    protected LoginPK loginPK;
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idlogin")
+    private int idlogin;    
+     
     @Column(name = "ativo")
     private Character ativo;
     
-    @JoinColumn(name = "idpessoa", referencedColumnName = "idpessoa", insertable = false, updatable = false)
+    @JoinColumn(name = "idpessoa", referencedColumnName = "idpessoa")
     @ManyToOne(optional = false)
     private Pessoa pessoa;    
    
@@ -34,61 +33,60 @@ public class Login implements Serializable {
     public Login() {
     }
 
-    public Login(LoginPK loginPK) {
-        this.loginPK = loginPK;
-    }
 
-    public Login(int idlogin, int idPerfil, int idPessoa) {
-        this.loginPK = new LoginPK(idlogin, idPerfil, idPessoa);
-    }
+	public int getIdlogin() {
+		return idlogin;
+	}
 
-    public LoginPK getLoginPK() {
-        return loginPK;
-    }
 
-    public void setLoginPK(LoginPK loginPK) {
-        this.loginPK = loginPK;
-    }
+	public void setIdlogin(int idlogin) {
+		this.idlogin = idlogin;
+	}
 
-    public Character getAtivo() {
-        return ativo;
-    }
+	public Character getAtivo() {
+		return ativo;
+	}
 
-    public void setAtivo(Character ativo) {
-        this.ativo = ativo;
-    }
+	public void setAtivo(Character ativo) {
+		this.ativo = ativo;
+	}
 
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-   
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (loginPK != null ? loginPK.hashCode() : 0);
-        return hash;
-    }
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // 
-        if (!(object instanceof Login)) {
-            return false;
-        }
-        Login other = (Login) object;
-        if ((this.loginPK == null && other.loginPK != null) || (this.loginPK != null && !this.loginPK.equals(other.loginPK))) {
-            return false;
-        }
-        return true;
-    }
 
-    @Override
-    public String toString() {
-        return "rj.handschool.modelo.Login[ loginPK=" + loginPK + " ]";
-    }
-    
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idlogin;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Login other = (Login) obj;
+		if (idlogin != other.idlogin)
+			return false;
+		return true;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Login [idlogin=" + idlogin + ", ativo=" + ativo + ", pessoa="
+				+ pessoa + "]";
+	}    
 }

@@ -35,7 +35,6 @@ public class AlunoDAO {
 	public void insert(Aluno aluno) throws Exception{
 		try {
 		   getSession().save(aluno);
-		   getSession().flush();
 		} catch (Exception e) {
     		throw new Exception("Erro ao Inserir Aluno: " + e.getMessage());
 		}
@@ -62,6 +61,12 @@ public class AlunoDAO {
 	public Aluno findByMatricula(Aluno aluno){
 		Query q = getSession().getNamedQuery("Aluno.findByMatricula");
 		q.setParameter("matricula",aluno.getMatricula());
+		return (Aluno)q.uniqueResult();
+	}
+	
+	public Aluno findByMatricula(String matricula){
+		Query q = getSession().getNamedQuery("Aluno.findByMatricula");
+		q.setParameter("matricula", matricula);
 		return (Aluno)q.uniqueResult();
 	}
 	

@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import rj.handschool.model.Login;
-import rj.handschool.model.LoginPK;
 
 @Repository
 @Transactional
@@ -51,11 +50,6 @@ public class LoginDAO {
 		}
 	}
 	
-	//Não removemos o login, removemos a pessoa ok?
-	
-	public Login findById(LoginPK loginPk){
-		return (Login) getSession().get(Login.class, loginPk);	
-	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Login> findAll(){
