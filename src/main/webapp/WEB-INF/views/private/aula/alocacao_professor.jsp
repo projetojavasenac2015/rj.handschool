@@ -45,7 +45,7 @@
 	                        </div>
 	                        <div class="row">
 								<div class="col-md-12">
-				                    <tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/tabela_aulas_nao_alucadas.jsp"></tiles:insertTemplate>
+				                    <tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/tabela_aulas_nao_alocadas.jsp"></tiles:insertTemplate>
 				                </div>
 	                   		</div>
 	                   	</div>

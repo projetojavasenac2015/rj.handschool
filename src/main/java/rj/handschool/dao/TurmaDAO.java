@@ -94,7 +94,7 @@ public class TurmaDAO {
 		sql+=" inner join curso f on f.idcurso = e.idcurso ";
 		sql+=" inner join turma g on g.idcurso = f.idcurso ";
 		sql+=" inner join professor h on a.matricula_professor = h.matricula_professor ";
-		sql+=" where a.matricula_professor = :matricula";
+		sql+=" where a.matricula_professor = :matricula  group by g.descricao ";
 		
 		Query q = getSession().createSQLQuery(sql);
 		q.setParameter("matricula", matricula);

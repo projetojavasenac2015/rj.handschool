@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<table class="table table-hover" id="tabelaAlunoNaoAvaliado">
+<table class="table" id="tabelaAlunoNaoAvaliado">
     <thead>
       <tr>
         <th class="text-justify">Matricula</th>

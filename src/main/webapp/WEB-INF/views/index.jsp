@@ -83,7 +83,7 @@
                     <div class="col-sm-10">
                         <div class="dropdown-wrap boxed-velvet" style="margin-bottom:20px;">
                              <ul class="dropdown inner clearfix">
-                                <li><a href="${pageContext.request.contextPath}/professor/MAT26112015232019"><span class="glyphicon glyphicon-home">&nbsp;Home</span></a></li>
+                                <li><a href="${pageContext.request.contextPath}/Professor"><span class="glyphicon glyphicon-home">&nbsp;Home</span></a></li>
                                 <li><a href="#"><span class="glyphicon glyphicon-wrench">&nbsp;Gerenciador</span></a>
                                     <ul>
                                         <li><a href="#">Aluno</a>

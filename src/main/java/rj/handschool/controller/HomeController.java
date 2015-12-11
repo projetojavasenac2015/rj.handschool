@@ -25,15 +25,6 @@ public class HomeController {
 		return "login";
 	}
 	
-	@RequestMapping(value="/professor/{matricula}", method = RequestMethod.GET)
-	public String professorInicial(Model model, @PathVariable("matricula") String matricula) {
-		Professor prof = new Professor();
-		prof.setMatriculaProfessor(matricula);
-		Professor prof2 = professorDAO.findByMatricula(prof);
-		model.addAttribute("nome_professor", prof2.getNome());
-		return "professor";
-	}
-	
 	@RequestMapping(value="/CadastramentoTurma", method = RequestMethod.GET)
 	public String turmaNova(Model model) {
 		return "turma_nova";

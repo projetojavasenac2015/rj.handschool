@@ -62,6 +62,7 @@
 											<select name="horarios" id="horarios" class="select_styled select_styled_orange">
 		                                        <option value="">Horário(s)</option>
 		                                    </select>
+		                                    <input type="hidden" id="idaulas"/>
 		                               	</div>
 									</div>
 									<br/>
@@ -72,14 +73,14 @@
 									</div>
 									<br/>
 									<div class="row">
-										<div class="col-md-9">
-		                               		 <a href="#" class="btn btn-rigth btn-acute" style="z-index:0"><span>Verificar</span></a>
+										<div class="col-md-12">
+		                               		 <a href="#" class="btn" id="verificar_aulas"><span>Verificar</span></a>
 		                               	</div>
 									</div>
 	                           	</div>
 	                           	<div class="col-md-6">
 									<div class="row">
-										<div class="widget-container widget_calendar boxed-velvet col-md-4" style="min-width: 500px; min-height:300px;max-height:300px">
+										<div class="widget-container widget_calendar boxed-velvet col-md-10" style="min-width: 550px; min-height:300px;max-height:300px">
 											<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/tabela_aluno_nao_avaliado.jsp"></tiles:insertTemplate>
 										</div>
 									</div>

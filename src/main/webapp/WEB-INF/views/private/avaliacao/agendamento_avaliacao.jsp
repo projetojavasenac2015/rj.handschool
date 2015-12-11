@@ -39,7 +39,7 @@
 	                                    </select>
 		                           </div>
 	                           	</div>
-	                           	<div class="col-md-5 col-md-offset-1">
+	                           	<div class="col-md-5 col-md-offset-0">
 									<div class="field_text">
 	                           			<select name="iddisciplinas" id="iddisciplinas" class="select_styled select_styled_orange">
 	                                        <option value="">Disciplina(s)</option>
@@ -85,7 +85,7 @@
 					                                <br/>
 					                                <br/>
 					                                <div class="row">
-					                                	<div class="col-md-12">
+					                                	<div class="col-md-8">
 					                                		<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_tipo_avaliacao.jsp"></tiles:insertTemplate>
 					                                	</div>
 					                                </div>

@@ -1,5 +1,6 @@
 package rj.handschool.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.DisciplinaDAO;
 import rj.handschool.dao.ProfessorDAO;
+import rj.handschool.model.Aluno;
 import rj.handschool.model.Curso;
 import rj.handschool.model.Disciplina;
 import rj.handschool.model.Professor;
@@ -117,5 +120,34 @@ public class ProfessorController {
 		}
 		
 		return professores;
+	}
+	
+	@RequestMapping(value="/Professor", method = RequestMethod.GET)
+	public String professorInicial(Model model) {
+		Professor prof = new Professor();
+		prof.setMatriculaProfessor("MAT03122015211611");
+		Professor prof2 = professorDAO.findByMatricula(prof);
+		model.addAttribute("nome_professor", prof2.getNome());
+		return "professor";
+	}
+	
+	@RequestMapping(value="/alunoVinculadosProfessor/{matricula}/{turma}", method = RequestMethod.GET)
+	public @ResponseBody List<Aluno> alunoVinculadosProfessor(@PathVariable("matricula") String matricula
+			,@PathVariable("turma") int turma) {
+			
+		List<Aluno> alunos =  new ArrayList<Aluno>();
+		
+		List<Object[]> obj = professorDAO.findByAlunoTurmaProfessor(matricula, turma);
+		
+		for (Object[] objects : obj) {
+			Aluno aluno = new Aluno();
+			aluno.setNome((String) objects[0]);
+			aluno.setMatricula((String) objects[1]);
+			aluno.setDataNascimento((Date) objects[2]);
+			aluno.setEmail((String) objects[3]);
+			alunos.add(aluno);
+		}
+		
+		return alunos;
 	}
 }

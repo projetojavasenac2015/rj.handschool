@@ -139,10 +139,11 @@ public class AulaDAO {
 		return q.list();
 	}
 	
-	public List<Object[]> findByALunoAulas(int idaula){
+	public List<Object[]> findByALunoAulas(int idaula, int id_tipo_avaliacao){
 		String query = " select i.matricula, (select nome from pessoa where i.idpessoa = idpessoa) as nome ";
 		query += " ,i.idpessoa ";
 		query += ",(select situacao from listapresenca z where z.matricula = i.matricula = z.id_aulas = a.idaulas) as situacao_aula ";
+		query += " ,j.idavaliacao ";
 		query += " from aulas a ";
 		query += " inner join auladisciplina b ON a.idaulas = b.idaulas ";
 		query += " inner join disciplina c ON b.iddisciplina = c.iddisciplina ";
@@ -152,9 +153,11 @@ public class AulaDAO {
 		query += " inner join turma g ON g.idcurso = f.idcurso ";
 		query += " inner join alocacao h ON h.idaulas = a.idaulas ";
 		query += " inner join aluno i on i.idturma = g.idturma ";
-		query += " where h.idaulas =:idaula order by 2 asc  ";
+		query += " inner join avaliacao j on j.idaulas = a.idaulas ";
+		query += " where h.idaulas =:idaula and j.id_tipo_avaliacao =:id_tipo_avaliacao order by 2 asc  ";
 		Query q = getSession().createSQLQuery(query);
 		q.setParameter("idaula",idaula);
+		q.setParameter("id_tipo_avaliacao",id_tipo_avaliacao);
 		return q.list();
 	}
 }
