@@ -89,6 +89,16 @@
 					                                		<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/combo_tipo_avaliacao.jsp"></tiles:insertTemplate>
 					                                	</div>
 					                                </div>
+					                                <br/>
+					                                <br/>
+					                                <div class="row">
+					                                	<div class="col-md-4">
+					                                		<input type="text" name="valor_min" class="inputField" id="valor_min" placeholder="Min">
+					                                	</div>
+					                                	<div class="col-md-4">
+					                                		<input type="text" name="valor_max" class="inputField" id="valor_max" placeholder="Max">
+					                                	</div>
+					                                </div>
 					                            </div>
 	                           			 	 </div>
 	                           		 	</div>
@@ -106,6 +116,7 @@
 					             </div>
 							</div>
 						</div>
+						<input type="hidden" value="${matriculaProfessor}" id="matriculaProfessor"/>
 					</form:form>
 				</div>
 			</div>

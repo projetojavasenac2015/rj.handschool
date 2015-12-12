@@ -57,6 +57,7 @@ public class DisciplinaController {
 			}
 			modelView = new ModelAndView(modelo_pagina);
 			modelView.addObject("menssagem",msg);
+			return novoDisciplina(disciplina);
 		}
 		else{
 			modelView = new ModelAndView(modelo_pagina,bind.getModel());

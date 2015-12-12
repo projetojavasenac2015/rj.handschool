@@ -5,6 +5,7 @@
 package rj.handschool.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -50,6 +51,36 @@ public class AvaliacaoAluno implements Serializable {
     private Aluno aluno;
     
     @Transient
+    private BigInteger qtdAvaliacoes;
+    
+    public BigInteger getQtdAvaliacoes() {
+		return qtdAvaliacoes;
+	}
+    @Transient
+    private BigInteger qtdAprovados;
+    public BigInteger getQtdAprovados() {
+		return qtdAprovados;
+	}
+
+	public void setQtdAprovados(BigInteger qtdAprovados) {
+		this.qtdAprovados = qtdAprovados;
+	}
+
+	public BigInteger getQtdReprovados() {
+		return qtdReprovados;
+	}
+
+	public void setQtdReprovados(BigInteger qtdReprovados) {
+		this.qtdReprovados = qtdReprovados;
+	}
+	@Transient
+    private BigInteger qtdReprovados;
+    
+	public void setQtdAvaliacoes(BigInteger qtdAvaliacoes) {
+		this.qtdAvaliacoes = qtdAvaliacoes;
+	}
+
+	@Transient
     private TipoAvaliacao tipoAvaliacao;
     
     public TipoAvaliacao getTipoAvaliacao() {
@@ -132,5 +163,5 @@ public class AvaliacaoAluno implements Serializable {
 				+ avaliacao + ", aluno=" + aluno + "]";
 	}
 
-  
+    
 }

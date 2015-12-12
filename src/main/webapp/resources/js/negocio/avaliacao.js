@@ -8,8 +8,11 @@ jQuery(document).ready(function($){
 	var $verificar_aulas = jQuery("#verificar_aulas")
 	var $idaulas = jQuery("#idaulas")
 	var $horarios = jQuery("#horarios")
+	var $matriculaProfessor = jQuery("#matriculaProfessor")
+	var $valor_min = jQuery("#valor_min")
+	var $valor_max = jQuery("#valor_max")
 	
-	retorna_combo_turmas($turma,"TurmaProfessor/MAT03122015211611");
+	retorna_combo_turmas($turma,"TurmaProfessor/" + $matriculaProfessor.val());
 	
 	$turma.change(function(){
 		retorna_combo_disciplinas_turma($disciplina,"DisciplinasTurma/" + this.value)
@@ -17,7 +20,7 @@ jQuery(document).ready(function($){
 	
 	$disciplina.change(function(){
 		if(this.value != 0){
-			retorna_datas($turma.val(), this.value, "MAT05122015160341");
+			retorna_datas($turma.val(), this.value, $matriculaProfessor.val());
 			jQuery(".calendar").remove();
 			if(dados_data_aula != ""){
 				calendario("#data_aulas");
@@ -32,13 +35,15 @@ jQuery(document).ready(function($){
 		if(data_da_aula != ""){
 			var data_aux = data_da_aula.split("/");
 			var data_real = data_aux[2] + "-" + data_aux[1] +"-" + data_aux[0];
-			retorna_datas_aula($horarios,$turma.val(), $disciplina.val(), "MAT05122015160341",data_real)
+			retorna_datas_aula($horarios,$turma.val(), $disciplina.val(), $matriculaProfessor.val(),data_real)
 		}
 	})
 	
 	$confirmar_avaliacao.click(function(){
 		if($horarios.val() != "" && $horarios.val() != "0"){
-			agenda_avaliacao($horarios.val(),$tipoAvaliacao.val());
+			agenda_avaliacao($horarios.val(),$tipoAvaliacao.val(),$valor_min.val(), $valor_max.val());
+			alerta('Aula Agendada!')
+			window.location.reload();
 		}
 		else{
 			alert('Nenhuma aula foi informada.')
@@ -60,6 +65,10 @@ jQuery(document).ready(function($){
 				alert('Nenhuma aula encontrada');
 			}
 		})
+	}
+	
+	if($matriculaProfessor.val() != ''){
+		retornaQuadroAvaliacao($matriculaProfessor.val());
 	}
 });
 
@@ -86,13 +95,13 @@ function retorna_combo_turmas(obj, url){
 	})
 }
 
-function agenda_avaliacao(idaula, tipo){
+function agenda_avaliacao(idaula, tipo, valor_min, valor_max){
 	var html = "";
 	var html2 = "";
 	
 	jQuery.ajax({
 		  method: "POST",
-		  url: "ConfirmaAgendaAvaliacao/" + idaula + "/" + tipo,
+		  url: "ConfirmaAgendaAvaliacao/" + idaula + "/" + tipo + "/" + valor_min + "/" + valor_max,
 		  dataType: 'json', 
 		  contentType: 'application/json',
 		  mimeType: 'application/json',
@@ -254,6 +263,12 @@ function retornaAlunoAvaliacao(idaulas, tipoavaliacao){
 					  html +=  "<td style='vertical-align:middle'>" + "<a class='glyphicon glyphicon-edit' name='lancar_nota' onclick='lancar_notas("+ data[i].avaliacao.idavaliacao +","+ i +")'></a>" + "</td>";
 				  html +=  "</tr>";
 			  }
+			  
+			  if(quantidade ==0){
+				  html +=  "<tr class='tr_nao_avaliado_tabela'>";
+				  html +=  "<td colspan='4' style='text-align:center'>Nenhum dado econtrado.</td></tr>";
+			  }
+			  
 			  obTabela.append(html)
 		  }
 	})
@@ -264,8 +279,11 @@ function lancar_notas(idavaliacao, id){
 		var nota = jQuery("#nota_" +id);
 		var matricula = jQuery("#matricula_td_" + id)
 		
-		if(nota.val() !=0 && matricula.text() != ""){
+		if(nota.val() !=0 && nota.val() != "" && matricula.text() != ""){
 			efetua_lancamento_nota(nota.val(),idavaliacao,matricula.text());
+		}
+		else{
+			alert('Informe o Valor da Nota!');
 		}
 	}
 }
@@ -284,3 +302,44 @@ function efetua_lancamento_nota(nota,idavaliacao, matricula){
 	})
 }
 
+function retornaQuadroAvaliacao(matricula){
+	var html = "", html2 = "";
+	var obTabela = jQuery("#tabelaQuadroAvisos")
+	var trobTabela = jQuery(".tr_nao_avaliado_tabela")
+	trobTabela.remove();
+	
+	if(obTabela != undefined){
+		jQuery.ajax({
+			  method: "GET",
+			  url: "QuadroAvaliacoes/" + matricula,
+			  dataType: 'json', 
+			  contentType: 'application/json',
+			  mimeType: 'application/json',
+			  success:function(data){
+				  var quantidade = data.length;
+				  var dados = eval(data);
+				  
+				  for(var i=0; i < quantidade; i++){
+					  html +=  "<tr class='tr_nao_avaliado_tabela'>";
+						  html +=  "<td>"+ formataDatas(data[i].data) +"</td>"
+						  html +=  "<td style='text-align:center'>"+data[i].tipoAvaliacao.descricao+"</td>"
+						  html +=  "<td style='text-align:center'>"+data[i].qtdAvaliacoes+"</td>"
+						  html +=  "<td style='text-align:center'>"+data[i].valor +"</td>"
+						  html +=  "<td style='text-align:center'>"+data[i].qtdReprovados +"</td>"
+						  html +=  "<td style='text-align:center'>"+data[i].qtdAprovados +"</td>"
+					  html +=  "</tr>";
+				  }
+				  obTabela.append(html)
+			  }
+		})
+	}
+}
+
+function formataDatas(datas){
+	if(datas != ''){
+		var datas2 = datas.split('-');
+		var datas3= datas2[2] + "/" + datas2[1] + "/" + datas2[0];
+	}
+	
+	return datas3;
+}

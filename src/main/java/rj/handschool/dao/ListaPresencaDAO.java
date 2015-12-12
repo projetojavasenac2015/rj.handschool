@@ -75,7 +75,7 @@ public class ListaPresencaDAO {
 		sql+=" where a.idturma =:turma";
 		sql+=" and e.iddisciplina =:disciplina  ";
 		sql+=" and h.data_aula =:dataula";
-		sql+=" and p.matricula_professor =:matricula";
+		sql+=" and p.matricula_professor =:matricula and concat(h.idaulas,k.matricula) not in( select concat(id_aulas,matricula) from listapresenca)";
 		Query q = getSession().createSQLQuery(sql);
 		q.setParameter("turma", idturma);
 		q.setParameter("disciplina", iddisciplina);

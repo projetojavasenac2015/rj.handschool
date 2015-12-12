@@ -51,6 +51,28 @@ public class Avaliacao implements Serializable {
     @JoinColumn(name = "idaulas", referencedColumnName = "idaulas")
     @ManyToOne(optional = false)
     private Aulas aula;
+    
+    public Double getValor_min() {
+		return valor_min;
+	}
+
+	public void setValor_min(Double valor_min) {
+		this.valor_min = valor_min;
+	}
+
+	public Double getValor_max() {
+		return valor_max;
+	}
+
+	public void setValor_max(Double valor_max) {
+		this.valor_max = valor_max;
+	}
+
+	@Column(name = "valor_min")
+    private Double valor_min;
+    
+    @Column(name = "valor_max")
+    private Double valor_max;
 
     public Aulas getAula() {
 		return aula;

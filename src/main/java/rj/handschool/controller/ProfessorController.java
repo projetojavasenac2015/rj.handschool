@@ -23,10 +23,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import rj.handschool.dao.AulaDAO;
 import rj.handschool.dao.DisciplinaDAO;
 import rj.handschool.dao.PessoaDAO;
 import rj.handschool.dao.ProfessorDAO;
 import rj.handschool.model.Aluno;
+import rj.handschool.model.Ambiente;
+import rj.handschool.model.Aulas;
 import rj.handschool.model.Disciplina;
 import rj.handschool.model.Pessoa;
 import rj.handschool.model.Professor;
@@ -34,6 +37,7 @@ import rj.handschool.model.TipoPessoa;
 import rj.handschool.propertys.DisciplinaPropertyEditor;
 import rj.handshool.util.RotuloFormatacao;
 import rj.handshool.util.Utilidades;
+
 
 @Controller
 public class ProfessorController {
@@ -45,10 +49,15 @@ public class ProfessorController {
 
 	@Autowired
 	private PessoaDAO pessoaDAO;
+	
+	@Autowired
+	private AulaDAO aulaDAO;
 
 	static final String modelo_pagina = "professor_novo";
 	static final Logger logger = Logger.getLogger(ProfessorController.class);
 
+	private int qtd_aulas_dia = 0;
+	
 	@RequestMapping("CadastroProfessor")
 	public ModelAndView novoProfessor(
 			@ModelAttribute("professor") Professor professor) {
@@ -99,7 +108,7 @@ public class ProfessorController {
 
 			modelView = new ModelAndView(modelo_pagina);
 			modelView.addObject("menssagem", msg);
-			novoProfessor(professor);
+			return novoProfessor(professor);
 		} else {
 			modelView = new ModelAndView(modelo_pagina, bind.getModel());
 			listaDisciplina(modelView);
@@ -141,6 +150,10 @@ public class ProfessorController {
 		prof = professorDAO.findById(p.getIdpessoa());
 		session.setAttribute("profLogado", prof);
 		model.addAttribute("nome_professor", prof.getNome());
+		model.addAttribute("matriculaProfessor", prof.getMatriculaProfessor());
+		model.addAttribute("aulasProfessor",retornaAulaDia(prof));
+		model.addAttribute("qtdaulasProfessor",qtd_aulas_dia);
+		
 		return "professor";
 	}
 
@@ -165,4 +178,27 @@ public class ProfessorController {
 
 		return alunos;
 	}
+	
+	public List<Aulas> retornaAulaDia(Professor prof){
+		List<Aulas> aulas = new ArrayList<Aulas>();
+		
+		List<Object[]> obj = aulaDAO.findByAulasDoProfessor(prof.getMatriculaProfessor());
+		
+		for (Object[] objects : obj) {
+			Aulas aula = new Aulas();
+			aula.setDataAula((Date) objects[0]);
+			aula.setHoraInicio((String) objects[1]);
+			aula.setHoraFim((String) objects[2]);
+			aula.setAtivo((Character) objects[4]);
+			
+			Ambiente amb = new Ambiente();
+			amb.setDescricao((String) objects[3]);
+			aula.setListaambiente(amb);
+			aulas.add(aula);
+		}
+		
+		qtd_aulas_dia = aulas.size();
+		return aulas;
+	}
+	
 }

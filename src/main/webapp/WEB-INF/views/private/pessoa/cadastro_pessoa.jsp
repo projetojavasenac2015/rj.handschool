@@ -19,9 +19,11 @@
 </head>
 <body>
 	<div class="row">
-		<div class="col-md-4 col-md-offset-2"></div>
+		<div class="col-md-4 col-md-offset-1"></div>
 		<div class="col-md-4">${menssagem}</div>
 	</div>
+	<br/>
+	<br/>
 	<div class="row">
 		<div class="col-md-3">
 			<div class="field_text">

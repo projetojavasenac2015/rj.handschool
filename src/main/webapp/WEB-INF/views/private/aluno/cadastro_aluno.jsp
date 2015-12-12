@@ -50,7 +50,7 @@
 	                           	<div class="col-md-2 col-md-offset-2">
 									<div class="field_text">
 	                              		<label for="senha" class="label_title">Senha:</label>
-	                               		<form:input path="senha" type="text" name="senha" id="senha" value="" class="inputtext input_middle required" />
+	                               		<form:input path="senha" type="password" name="senha" id="senha" value="" class="inputtext input_middle required" />
 	                           			<form:errors path="senha"></form:errors>
 	                           		</div>
 	                           	</div>

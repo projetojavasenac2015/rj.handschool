@@ -27,7 +27,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="add-comment add-comment-velvet styled" id="addcomments">
-				<div class="add-comment-title"><h3>Registro de Frenquência<sup class="note_lado" title="Turmas Pendentes">3</sup></h3></div>
+				<div class="add-comment-title"><h3>Registro de Frenquência <!-- <sup class="note_lado" title="Turmas Pendentes">3</sup> --></h3></div>
 				<div class="comment-form">
 					<form action="#" method="post" id="commentForm" class="ajax_form">
 						<div class="form-inner">
@@ -68,7 +68,7 @@
 					  			</div>
 	                   		</div>
 	                   	</div>
-						<div class="clear"></div>
+						<!-- <div class="clear"></div>
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="rowSubmit">
@@ -78,6 +78,8 @@
 					             </div>
 							</div>
 						</div>
+						 -->
+						<input type="hidden" value="${matriculaProfessor}" id="matriculaProfessor"/>
 					</form>
 				</div>
 			</div>

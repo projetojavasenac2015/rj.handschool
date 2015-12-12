@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.AulaDAO;
@@ -26,9 +28,10 @@ import rj.handschool.dao.TipoAvaliacaoDAO;
 import rj.handschool.model.Aulas;
 import rj.handschool.model.Avaliacao;
 import rj.handschool.model.Disciplina;
+import rj.handschool.model.Professor;
 import rj.handschool.model.TipoAvaliacao;
 
-
+@SessionAttributes("profLogado")
 @Controller
 public class AvaliacaoController {
 	
@@ -44,9 +47,10 @@ public class AvaliacaoController {
 	static final String  modelo_pagina = "agendamento_avaliacao";
 	
 	@RequestMapping("AgendarAvaliacao")
-	public ModelAndView novaAvaliacao(@ModelAttribute("avaliacao") Avaliacao avaliacao){
+	public ModelAndView novaAvaliacao(@ModelAttribute("avaliacao") Avaliacao avaliacao, @ModelAttribute("profLogado") Professor professor){
 		ModelAndView modelView = new ModelAndView(modelo_pagina);
 		listaTipoAvaliacao(modelView);
+		modelView.addObject("matriculaProfessor",professor.getMatriculaProfessor());
 		return modelView;
 	}
 	
@@ -76,14 +80,18 @@ public class AvaliacaoController {
 		return aulas_disciplinas;
 	}
 	
-	@RequestMapping(value = "ConfirmaAgendaAvaliacao/{idaula}/{tipoavaliacao}")
+	@RequestMapping(value = "ConfirmaAgendaAvaliacao/{idaula}/{tipoavaliacao}/{valor_min}/{valor_max}")
 	public @ResponseBody String  confirmaAgendamentoAvaliacao(
 			@PathVariable("idaula") int idaula
 			,@PathVariable("tipoavaliacao") int tipoavaliacao
+			,@PathVariable("valor_min") double valor_min
+			,@PathVariable("valor_max") double valor_max
 			) throws Exception {
 		
 		if(idaula != 0 && tipoavaliacao != 0){
 			Avaliacao avaliacao = new Avaliacao();
+			avaliacao.setValor_min(valor_min);
+			avaliacao.setValor_max(valor_max);
 			TipoAvaliacao tipo = new TipoAvaliacao();
 			tipo.setIdtipoAvaliacao(tipoavaliacao);
 			avaliacao.setTipoAvaliacao(tipo);
@@ -94,6 +102,4 @@ public class AvaliacaoController {
 		
 		return "ok";
 	}
-	
-	
 }

@@ -79,22 +79,21 @@ public class ProfessorDAO {
 	}
 	
 	public List<Object[]> findByAlunoTurmaProfessor(String matriculaProfessor, int turma){
-		String query = "  select  ";
-		query += " j.nome, i.matricula, j.data_nascimento, j.email ";
-		query += " from alocacao a ";
-		query += " inner join auladisciplina b on a.idaulas = b.idaulas  ";
-		query += " inner join disciplina c on b.iddisciplina = c.iddisciplina   ";
-		query += " inner join modulodisciplina d on d.iddisciplina  = c.iddisciplina ";
-		query += " inner join modulo e on e.idmodulo = d.idmodulo ";
-		query += " inner join curso f on f.idcurso = e.idcurso ";
-		query += " inner join turma g on g.idcurso = f.idcurso ";
-		query += " inner join professor h on a.matricula_professor = h.matricula_professor ";
-		query += " inner join aluno i on i.idturma = g.idturma ";
-		query += " inner join pessoa j on i.idpessoa = i.idpessoa ";
-		query += " where a.matricula_professor =:matriculaProfessor ";
-		query += " and g.idturma =:turma ";
-		query += " group by i.matricula";
-		Query q = getSession().createSQLQuery(query);
+		String varname1 = ""
+		+ "select j.nome, a.matricula, j.data_nascimento,j.email  from aluno a "
+		+ "inner join pessoa j on j.idpessoa = a.idpessoa "
+		+ "inner join turma b on a.idturma = b.idturma "
+		+ "inner join curso c on c.idcurso = b.idcurso "
+		+ "inner join modulo d on d.idcurso = c.idcurso "
+		+ "inner join modulodisciplina e on e.idmodulo  = d.idmodulo "
+		+ "inner join disciplina f on e.iddisciplina  = f.iddisciplina "
+		+ "inner join auladisciplina g on g.iddisciplina = f.iddisciplina "
+		+ "inner join aulas h on h.idaulas = g.idaulas "
+		+ "inner join alocacao i on i.idaulas = h.idaulas "
+		+ "where matricula_professor =:matriculaProfessor "
+		+ "and b.idturma =:turma group by a.matricula";
+
+		Query q = getSession().createSQLQuery(varname1);
 		q.setParameter("matriculaProfessor",matriculaProfessor);
 		q.setParameter("turma",turma);
 		return q.list();

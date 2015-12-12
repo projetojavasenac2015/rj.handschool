@@ -155,7 +155,7 @@
                         </div>
                     </div>
                     <div class="col-sm-2 tagcloud margin-10">
-                        <a href="#" class="tag-link-1" title="2 topics" hidefocus="true" style=""><span>Solicitações</span></a>
+                        <a href="${pageContext.request.contextPath}/logout" class="tag-link-1" title="2 topics" hidefocus="true" style=""><span>Logout</span></a>
                     </div>
                 </div>
             </div>

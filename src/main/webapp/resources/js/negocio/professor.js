@@ -1,12 +1,18 @@
 jQuery(document).ready(function(){
 	var $turma = jQuery("#turma"); 
 	var $carousel_alunos = jQuery("#carousel_alunos");
-	var matricula_prof = "MAT03122015211611";
+	var $matriculaProfessor = jQuery("#matriculaProfessor")
+	var $qtdTurmas = jQuery("#qtdTurmas")
 	
-	retorna_combo_turmas($turma,"TurmaProfessor/" + matricula_prof);
+	
+	if($turma.find("option").length == 1){
+		retorna_combo_turmas($turma,"TurmaProfessor/" + $matriculaProfessor.val());
+	}
+	
+	$qtdTurmas.text($turma.find("option").length)
 	
 	$turma.change(function(){
-		dados_aluno(matricula_prof,this.value);
+		dados_aluno($matriculaProfessor.val(),this.value);
 		$carousel_alunos.html(dados_alunos_professor_turma);
 	})
 });
@@ -15,6 +21,7 @@ var dados_alunos_professor_turma = ""
 
 function dados_aluno(professor, turma){
 	var html = "";
+	var vetor =  new Array();
 	
 	jQuery.ajax({
 		  method: "GET",
@@ -31,7 +38,12 @@ function dados_aluno(professor, turma){
 			  for(var i=0; i < quantidade; i++){
 			    
 				tem_item = i ==0 ? "active" : "";
-				  
+				
+				vetor = retorna_media_aluno(turma,data[i].matricula);
+				
+				var qtd_avaliacao =  vetor[1] == undefined ? 0 :  vetor[1]
+				var media =  vetor[0] == undefined ? 0 :  vetor[0]
+				
 				html+= '<div class="'+tem_item+' item">'
 				html+= '<div class="widget-container widget_profile col-10" >';
 				html+= '<div class="inner">';
@@ -44,9 +56,9 @@ function dados_aluno(professor, turma){
 				html+= '</div>';
 				html+= '</div>';
 				html+= '<ul class="counters clearfix">';
-				html+= '<li class="first"><a href="#"><p>QTD1</p><span>Atividades Realizadas</span></a></li>';
-				html+= '<li><a href="#"><p>QTD2</p><span>Media</span></a></li>';
-				html+= '<li class="last"><a href="#"><p>QTD3</p><span>Faltas</span></a></li>';
+				html+= '<li class="first"><a href="#"><p>'+ qtd_avaliacao  +'</p><span>Quantidade Avalicoes</span></a></li>';
+				html+= '<li><a href="#"><p>'+ media +'</p><span>Media</span></a></li>';
+				html+= '<li class="last"><a href="#"><p>Futuro</p><span>% de Faltas</span></a></li>';
 				html+= '</ul>';
 				html+= '</div>';
 				html+= '</div>';
@@ -56,4 +68,25 @@ function dados_aluno(professor, turma){
 			  dados_alunos_professor_turma = html;
 		  }
 	})
+}
+
+function retorna_media_aluno(turma,matricula){
+	var valor = new Array();
+	
+	jQuery.ajax({
+		  method: "GET",
+		  url: "AlunosMediaAvaliacao/" + turma + "/" + matricula,
+		  dataType: 'json', 
+		  contentType: 'application/json',
+		  mimeType: 'application/json',
+		  async:false,
+		  success:function(data){
+			  if(data.length > 0){
+				  valor[0] = data[0].valor; 
+				  valor[1] = data[0].qtdAvaliacoes;
+			  }
+		  }
+	})
+	
+	return valor;
 }

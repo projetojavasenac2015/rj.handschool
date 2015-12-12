@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import rj.handschool.dao.AlunoDAO;
@@ -29,8 +30,10 @@ import rj.handschool.model.Aluno;
 import rj.handschool.model.Aulas;
 import rj.handschool.model.Disciplina;
 import rj.handschool.model.ListaPresenca;
+import rj.handschool.model.Professor;
 import rj.handschool.model.Turma;
 
+@SessionAttributes("profLogado")
 @Controller
 public class ListaPresencaController {
 
@@ -52,10 +55,11 @@ public class ListaPresencaController {
 	static final String  modelo_pagina = "registro_frequencia";
 	
 	@RequestMapping("RegistroFrequencia")
-	public ModelAndView novaAula(@ModelAttribute("lista_presenca") ListaPresenca lista){
+	public ModelAndView novaAula(@ModelAttribute("lista_presenca") ListaPresenca lista, @ModelAttribute("profLogado") Professor professor){
 		ModelAndView modelView = new ModelAndView(modelo_pagina);
 		modelView.addObject("lista",new ListaPresenca());
 		rotuloPagina(modelView,"Lancamento");
+		modelView.addObject("matriculaProfessor",professor.getMatriculaProfessor());
 		return modelView;
 	}
 	

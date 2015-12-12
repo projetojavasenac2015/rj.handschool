@@ -3,8 +3,9 @@ jQuery(document).ready(function(){
 	var $disciplina = jQuery("#iddisciplinas");
 	var $turma = jQuery("#turma"); 
 	var $verificar_turma_presenca = jQuery("#verificar_turma");
+	var $matriculaProfessor = jQuery("#matriculaProfessor")
 	
-	retorna_combo_turmas($turma,"TurmaProfessor/MAT03122015211611");
+	retorna_combo_turmas($turma,"TurmaProfessor/" + $matriculaProfessor.val());
 	
 	$turma.change(function(){
 		retorna_combo_disciplinas_turma($disciplina,"DisciplinasTurma/" + this.value)
@@ -12,7 +13,7 @@ jQuery(document).ready(function(){
 	
 	$verificar_turma_presenca.click(function(){
 		var data_aula = formata_data_banco($dataAula.val()).replace("'","").replace("'","")
-		retornaAlunoTurma($turma.val(), $disciplina.val(),data_aula, 'MAT06122015192455');
+		retornaAlunoTurma($turma.val(), $disciplina.val(),data_aula, $matriculaProfessor.val());
 	})
 	
 	retorna_combo_presenca();
@@ -48,11 +49,16 @@ function retornaAlunoTurma(turma, disciplina, data_aula, matricula){
 					  html +=  "<td>" + data[i].aluno.matricula + "</td>";
 					  html +=  "<td>" + data[i].turma.descricao + "</td>";
 					  html +=  "<td>" + data[i].disciplina.nome + "</td>";
-					  html +=  "<td>" + data[i].aulas.dataAula + "</td>";
+					  //html +=  "<td>" + data[i].aulas.dataAula + "</td>";
 					  html +=  "<td>" + data[i].aulas.horaInicio + "/" + data[i].aulas.horaFim + "</td>";
 					  html += "<input type='hidden' name='matricula_aula' value="+ data[i].aluno.matricula + "/" + data[i].aulas.idaulas +" />"
 				  html +=  "</tr>";
 			  }
+			  
+			  if(quantidade == 0){
+				  html +=  "<tr class='tr_presenca_tabela'><td colspan='7' style='text-align:center'>Nenhum dado encontrado</td></tr>";
+			  }
+			  
 			  obTabela.append(html)
 		  }
 	})

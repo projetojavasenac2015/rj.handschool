@@ -154,10 +154,23 @@ public class AulaDAO {
 		query += " inner join alocacao h ON h.idaulas = a.idaulas ";
 		query += " inner join aluno i on i.idturma = g.idturma ";
 		query += " inner join avaliacao j on j.idaulas = a.idaulas ";
-		query += " where h.idaulas =:idaula and j.id_tipo_avaliacao =:id_tipo_avaliacao order by 2 asc  ";
+		query += " where h.idaulas =:idaula and j.id_tipo_avaliacao =:id_tipo_avaliacao group by i.matricula order by 2 asc  ";
 		Query q = getSession().createSQLQuery(query);
 		q.setParameter("idaula",idaula);
 		q.setParameter("id_tipo_avaliacao",id_tipo_avaliacao);
+		return q.list();
+	}
+	
+	public List<Object[]> findByAulasDoProfessor(String matricula_professor){
+		String varname1 = ""
+				+ "select data_aula, hora_inicio, hora_fim, (select descricao from ambiente where idambiente= b.idambiente) as ambiente "
+				+ ",ativo "
+				+ "from aulas b "
+				+ "inner join alocacao c on b.idaulas = c.idaulas "
+				+ "where matricula_professor =:matricula_professor "
+				+ "and data_aula = current_Date";
+		Query q = getSession().createSQLQuery(varname1);
+		q.setParameter("matricula_professor",matricula_professor);
 		return q.list();
 	}
 }

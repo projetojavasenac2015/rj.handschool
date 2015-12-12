@@ -8,12 +8,14 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <spring:url value="/resources/js/negocio/turmas.js" var="Turmas" />
 <spring:url value="/resources/js/negocio/professor.js" var="Professor" />
+<spring:url value="/resources/js/negocio/avaliacao.js" var="Avaliacao" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script src="${Turmas}"></script> 
 <script src="${Professor}"></script> 
+<script src="${Avaliacao}"></script> 
 <title></title>
 <script>
 jQuery(document).ready(function ($) {
@@ -65,7 +67,7 @@ jQuery(document).ready(function ($) {
                     <ul class="tabs clearfix active_bookmark1">
                         <li class="active">
                             <a href="#events" data-toggle="tab">
-                                <sup class="note">3</sup>Atividades
+                                <sup class="note">${qtdaulasProfessor}</sup>Aulas
                             </a>
                         </li>
                         <li>
@@ -82,36 +84,37 @@ jQuery(document).ready(function ($) {
                                     <input type="text" name="date_departure" class="inputField" id="date_departure">
                                 </div>
                             </div>
-                            <div class="panel panel-primary boxed-velvet col-sm-5 col-sm-offset-1" style="min-height:262.328px;max-height:262.328px;">
+                            <div class="panel panel-primary boxed-velvet col-sm-5 col-sm-offset-1" style="min-height:262.328px;max-height:262.328px;overflow: auto">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">
-                                    <i class="fa fa-rss"></i>Atividades do dia: </h3>
+                                    <i class="fa fa-rss">Aulas do dia</i></h3>
                                 </div>
                                 <div class="panel-body feed">
-                                    <div class="feed-item-body ">
-                                        teste
-                                        teste
-                                        teste
-                                        teste
-                                        tested
-                                        asdasdas
-                                        teste
-                                        teste
-                                        teste
-                                        teste
-                                        tested
-                                        asdasdas
-                                        teste
-                                        teste
-                                        teste
-                                        teste
-                                        tested
-                                        asdasdas
+                                    <div class="feed-item-body" style="overflow: auto">
+                                        <c:forEach var="aulas" items="${aulasProfessor}">
+										   Aula:
+										   <fmt:formatDate value="${aulas.dataAula}" pattern="dd/MM/yyyy" var="data"/> 
+										   <c:out value='${data}'/>
+										   <br>
+										   <br>
+										   Horário(s):
+										   <br>
+										   <br> 
+										   <c:out value="${aulas.horaInicio}"/>/<c:out value="${aulas.horaFim}"/>
+										   <br>
+										   <br>
+										   Ambiente:
+										   <br>
+										   <br>
+										   
+										   <c:out value="${aulas.listaambiente.descricao}"/>
+										   <div class="divider"></div>
+										   <br>
+										</c:forEach>
                                     </div>
-                                    <div class="divider"></div>
                                     
                                 </div>
-                                <a href="#" class="btn btn-rigth btn-acute" style="z-index:0"><span>Adicionar Atividade</span></a>
+                                <!-- <a href="#" class="btn btn-rigth btn-acute" style="z-index:0"><span>Adicionar Atividade</span></a> -->
                             </div>
                         </div>
                         <div class="tab-pane clearfix fade" id="turmas">
@@ -139,7 +142,7 @@ jQuery(document).ready(function ($) {
                             </div>
                         </div>
                         <div class="tab-pane clearfix fade" id="avaliacoes">
-                          
+                          	<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/tabela_quadro_avaliacao.jsp"></tiles:insertTemplate>
                         </div>
                         <div class="tab-pane clearfix fade" id="notificacoes">
                          dasd
@@ -149,5 +152,6 @@ jQuery(document).ready(function ($) {
             </div>
         </div>
     </div>
+    <input type="hidden" value="${matriculaProfessor}" id="matriculaProfessor"/>
 </body>
 </html>

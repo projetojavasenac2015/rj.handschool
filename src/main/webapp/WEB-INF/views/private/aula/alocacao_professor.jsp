@@ -49,16 +49,6 @@
 				                </div>
 	                   		</div>
 	                   	</div>
-						<div class="clear"></div>
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="rowSubmit">
-					   			 	<span class="btn btn-small">
-					                   <input type="submit" id="confirmar" value="Confirmar" />
-					           		</span>
-					             </div>
-							</div>
-						</div>
 					</form:form>
 				</div>
 			</div>

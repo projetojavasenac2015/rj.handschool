@@ -1,7 +1,6 @@
 jQuery(document).ready(function(){
 	var $dataAula = jQuery("#dataAula");
 	var $disciplina = jQuery("#iddisciplina");
-	var $disciplina = jQuery("#iddisciplina");
 	
 	jQuery("#verificar_aulas").click(function(){
 		if($dataAula.val() != "" && $disciplina.val() != "0"){

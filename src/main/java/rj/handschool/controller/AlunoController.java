@@ -69,7 +69,7 @@ public class AlunoController {
 			
 			modelView = new ModelAndView(modelo_pagina);
 			modelView.addObject("menssagem",msg);
-			novoAluno(aluno);
+			return novoAluno(aluno);
 		}
 		else{
 			modelView = new ModelAndView(modelo_pagina,bind.getModel());

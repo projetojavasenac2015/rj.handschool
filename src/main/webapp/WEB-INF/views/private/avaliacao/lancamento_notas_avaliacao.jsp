@@ -80,14 +80,14 @@
 	                           	</div>
 	                           	<div class="col-md-6">
 									<div class="row">
-										<div class="widget-container widget_calendar boxed-velvet col-md-10" style="min-width: 550px; min-height:300px;max-height:300px">
+										<div class="widget-container widget_calendar boxed-velvet col-md-10" style="min-width: 550px; min-height:300px;max-height:300px;overflow: auto">
 											<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/tabela_aluno_nao_avaliado.jsp"></tiles:insertTemplate>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="clear"></div>
+						<!-- <div class="clear"></div>
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="rowSubmit">
@@ -97,6 +97,8 @@
 					             </div>
 							</div>
 						</div>
+						 -->
+						<input type="hidden" value="${matriculaProfessor}" id="matriculaProfessor"/>
 					</form:form>
 				</div>
 			</div>
