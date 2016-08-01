@@ -168,14 +168,14 @@ jQuery(document).ready(function ($) {
                          	<div class="row">
                          		<div class="content col-sm-12">
 									<div class="comment-list clearfix" id="comments">
-										<ol id="lista_notificacao">
-											<li class="comment" id="lista_modelo">
+										<ol id="lista_notificacao" style="max-height: 350px;overflow: auto">
+											<li class="comment" id="lista_modelo" style="max-width: 500px">
 												<div class="comment-body">
 													<div class="inner">
 														<div class="comment-arrow"></div>
 														<div class="comment-avatar">
-															<div class="avatar">
-																<img src="" alt="" />
+															<div class="avatar" style="height: 56px; text-align: center; vertical-align: middle;">
+																<span class="glyphicon glyphicon-user"></span>
 															</div>
 														</div>
 														<div class="comment-text">
@@ -194,6 +194,8 @@ jQuery(document).ready(function ($) {
 											</li>
 										</ol>
 									</div>
+									<p></p>
+									<div class="pull-right"><a href="#" class="btn" id="atualizar_notificacao"><span>Atualizar</span></a></div>
 								</div>
                          	</div>
                         </div>

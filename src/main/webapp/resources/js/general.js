@@ -191,7 +191,7 @@ if($players_on_page > 0){
 // Placeholders
 setTimeout(function () {
     if($("[placeholder]").size() > 0) {
-		$.Placeholder.init({ color : "#ededed" });
+		//$.Placeholder.init({ color : "#ededed" });
 	}
 }, 0);
 

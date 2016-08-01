@@ -14,8 +14,9 @@ jQuery(document).ready(function(){
 			notificacao.val('');
 		}
 	})
-	
-	//retorna_notificacao();
+	jQuery("#atualizar_notificacao").click(function(){
+		retorna_notificacao();
+	})
 });
 
 function notificarTurma(obj){
@@ -53,32 +54,36 @@ function validarNotificacao(obj){
 	return true;
 }
 
-function retorna_lista_modelo(obj_geral){
-	var obj_lista_modelo = $("#lista_notificacao");
+function retorna_lista_modelo(obj_geral, ol){
+	var obj_lista_modelo = ol;
 	var obj_lista_modelo_li = $("#lista_modelo")
 	
 	var lista_clonada = obj_lista_modelo_li.clone()
 	
 	$(lista_clonada).find("#nome_modelo_lista").each(function(){
-		this.value = obj.nome_pessoa;
+		$(this).text(obj_geral.nome_pessoa);
 	})
 	
 	$(lista_clonada).find("#data_modelo_lista").each(function(){
-		this.value = obj.data_notificacao;
+		$(this).text(formataDatas(obj_geral.data_notificacao));
 	})
 	
 	$(lista_clonada).find("#turma_modelo_lista").each(function(){
-		this.value = obj.turma_notificacao;
+		$(this).text(obj_geral.turma_notificacao);
 	})
 	
 	$(lista_clonada).find("#msg_modelo_lista").each(function(){
-		this.value = obj.notificacao;
+		$(this).text(obj_geral.notificacao);
 	})
 	
-	obj_lista_modelo.append(lista_clonada);
+	obj_lista_modelo.append(lista_clonada.show());
 }
 
 function retorna_notificacao(){
+	var ol = $("#lista_notificacao");
+	//fazendo refresh
+	ol.find("li:not(:first)").remove();
+	
 	jQuery.ajax({
 		  method: "GET",
 		  url: "GetNotificacao",
@@ -96,10 +101,19 @@ function retorna_notificacao(){
 					  notificacao: dados[i].notificacao
 				  }
 				  
-				  retorna_lista_modelo(obj);
+				  retorna_lista_modelo(obj,ol);
 			  }
 		  },error: function(e){
 			  alert(e)
 		  }
 	})
+}
+
+function formataDatas(datas){
+	if(datas != ''){
+		var datas2 = datas.split('-');
+		var datas3= datas2[2] + "/" + datas2[1] + "/" + datas2[0];
+	}
+	
+	return datas3;
 }
