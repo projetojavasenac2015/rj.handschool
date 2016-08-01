@@ -48,19 +48,22 @@
 	                           	</div>
 	                        </div>
 							<div class="row">
-								<div class="col-md-4">
+								<div class="col-md-8">
 				                    <div class="widget-container widget_profile boxed-velvet">
 				                        <div class="inner">
 				                            <div class="widget_profile_top clearfix">
 				                            	<div class="follow">
 													<table id="tabela_horario">
+													
 													</table>
 												</div>
 				                            </div>
 				                        </div>
 				                    </div>
 				                </div>
-	                   			<div class="col-md-2 col-md-offset-1">
+	                   		</div>
+					  		<div class="row">
+					  			<div class="col-md-2 col-md-offset-1">
 									<div class="field_text">
 							           	<label for="horarios" class="label_title">Horário:</label>
 							            <form:input path="horaInicio" type="text" name="horaInicio" id="horaInicio" value='' class="inputtext input_middle required" readonly="true"/>
@@ -73,9 +76,9 @@
 							        	<form:errors path="horaFim"></form:errors>
 							        </div>
 							    </div>
-							    <div class="col-md-2">
+							    <div class="col-md-1 col-lg-1">
 							    	<div class="field_text">
-						    			<input type="text" name="" id="total_horas" class="inputtext input_middle required" readonly>
+						    			<input type="text" name="" id="total_horas" class="inputtext input_middle required" placeholder="Total Hs" readonly>
 						    		</div>
 							    </div>
 					  		</div>

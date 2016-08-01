@@ -63,6 +63,12 @@ public class TurmaDAO {
 		return (Turma) getSession().get(Turma.class, turma);
 	}
 
+	public Turma findById(int id) {
+		Query q = getSession().getNamedQuery("Turma.findById");
+		q.setParameter("id",id);
+		return (Turma)q.uniqueResult();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Turma> findAll() {
 		return getSession().createCriteria(Turma.class).list();

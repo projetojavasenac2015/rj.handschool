@@ -153,7 +153,7 @@ public class ProfessorController {
 		model.addAttribute("matriculaProfessor", prof.getMatriculaProfessor());
 		model.addAttribute("aulasProfessor",retornaAulaDia(prof));
 		model.addAttribute("qtdaulasProfessor",qtd_aulas_dia);
-		
+		model.addAttribute("idProfessor",prof.getIdpessoa());
 		return "professor";
 	}
 

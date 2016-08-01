@@ -127,6 +127,12 @@
 		                                        <li><a href="${pageContext.request.contextPath}/NovoModulo">Novo Modulo</a></li>
 		                                    </ul>
                                         </li>
+                                        <li><a href="#">Perfil</a>
+                                        	<ul>
+                                        		<li><a href="${pageContext.request.contextPath}/NovoPerfil">Adicionar</a></li>
+                                        		<li><a href="${pageContext.request.contextPath}/ConsultarPerfil">Consultar</a></li>
+                                        	</ul>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li><a href="#"><span class="glyphicon glyphicon-book">&nbsp;Aulas</span></a>

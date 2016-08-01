@@ -9,17 +9,21 @@
 <spring:url value="/resources/js/negocio/turmas.js" var="Turmas" />
 <spring:url value="/resources/js/negocio/professor.js" var="Professor" />
 <spring:url value="/resources/js/negocio/avaliacao.js" var="Avaliacao" />
+<spring:url value="/resources/js/negocio/notificacao.js" var="Notificacao" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script src="${Turmas}"></script> 
 <script src="${Professor}"></script> 
-<script src="${Avaliacao}"></script> 
+<script src="${Avaliacao}"></script>
+<script src="${Notificacao}"></script> 
 <title></title>
 <script>
 jQuery(document).ready(function ($) {
 
+	$("#lista_modelo").hide();
+	
 	var daysRange = 5;
 
     function assignCalendar(id) {
@@ -32,6 +36,7 @@ jQuery(document).ready(function ($) {
                     altField: id,
                     firstDay: 1,
                     showOtherMonths: true
+                    
                 }).prev().hide();
     }
 
@@ -54,11 +59,24 @@ jQuery(document).ready(function ($) {
                         </div>
                     </div>
                     <ul class="counters clearfix">
-                        <li class="first"><a href="#"><p>0</p><span>Quantidades de Turmas</span></a></li>
+                        <li class="first"><a href="#"><p id="qtdTurmas">0</p><span>Quantidades de Turmas</span></a></li>
                         <li><a href="#"><p>0</p><span>Indice de Aprovação do Professor</span></a></li>
                         <li class="last"><a href="#"><p>0</p><span>Indice de Aprovação de Turma</span></a></li>
                     </ul>
                 </div>
+                <p></p>
+				<div class="inner">
+					<div class="field_text field_textarea">
+						<label for="styled_message" class="label_title">Notificação:</label>
+						<select name="turma" id="turma2" class="select_styled">
+                            <option value="0">Selecione a Turma</option>
+                        </select>
+						<p></p>
+						<textarea cols="30" rows="4" style="color:white;font-size:13px;width:100%" name="styled_message" id="text_notificacao" class="textarea textarea_middle"></textarea>
+						<p></p>
+						<div class="pull-left"><a href="#" class="btn" id="enviar_notificacao"><span>Notificar</span></a></div>
+					</div>
+				</div>
             </div>
         </div>
         <div class="col-sm-8">
@@ -81,13 +99,14 @@ jQuery(document).ready(function ($) {
                         <div class="tab-pane clearfix fade in active" id="events">
                             <div class="widget-container widget_calendar boxed-velvet col-sm-6 col-sm-offset-0">
                                 <div class="inner">
-                                    <input type="text" name="date_departure" class="inputField" id="date_departure">
+                                    <input type="text" name="date_departure" class="data" id="date_departure">
                                 </div>
                             </div>
                             <div class="panel panel-primary boxed-velvet col-sm-5 col-sm-offset-1" style="min-height:262.328px;max-height:262.328px;overflow: auto">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">
-                                    <i class="fa fa-rss">Aulas do dia</i></h3>
+                                    <h3 class="panel-title" style="text-align:center">
+                                    	<i class="fa fa-rss" style="color:white;" >Aulas do dia</i>
+                                    </h3>
                                 </div>
                                 <div class="panel-body feed">
                                     <div class="feed-item-body" style="overflow: auto">
@@ -145,7 +164,38 @@ jQuery(document).ready(function ($) {
                           	<tiles:insertTemplate template="/WEB-INF/views/private/utilitarios/tabela_quadro_avaliacao.jsp"></tiles:insertTemplate>
                         </div>
                         <div class="tab-pane clearfix fade" id="notificacoes">
-                         dasd
+                         	<div class="foo">Ultimas Mensagens</div>
+                         	<div class="row">
+                         		<div class="content col-sm-12">
+									<div class="comment-list clearfix" id="comments">
+										<ol id="lista_notificacao">
+											<li class="comment" id="lista_modelo">
+												<div class="comment-body">
+													<div class="inner">
+														<div class="comment-arrow"></div>
+														<div class="comment-avatar">
+															<div class="avatar">
+																<img src="" alt="" />
+															</div>
+														</div>
+														<div class="comment-text">
+															<div class="comment-author clearfix">
+																<a href="#" class="link-author"><span id="nome_modelo_lista"></span></a>
+																<span class="comment-date"><span id="data_modelo_lista"></span></span> | 
+																<a href="#addcomments" class="link-reply anchor"><span id="turma_modelo_lista"></span></a>
+															</div>
+															<div class="comment-entry">
+																<span id="msg_modelo_lista"></span>
+															</div>
+														</div>
+														<div class="clear"></div>
+													</div>
+												</div>
+											</li>
+										</ol>
+									</div>
+								</div>
+                         	</div>
                         </div>
                     </div>
                 </div>
@@ -153,5 +203,6 @@ jQuery(document).ready(function ($) {
         </div>
     </div>
     <input type="hidden" value="${matriculaProfessor}" id="matriculaProfessor"/>
+    <input type="hidden" value="${idProfessor}" id="idprofessor"/>
 </body>
 </html>

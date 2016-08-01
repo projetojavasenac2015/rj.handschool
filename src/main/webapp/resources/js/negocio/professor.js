@@ -1,13 +1,17 @@
 jQuery(document).ready(function(){
-	var $turma = jQuery("#turma"); 
+	var $turma = jQuery("#turma");
+	var $turma2 = jQuery("#turma2");
 	var $carousel_alunos = jQuery("#carousel_alunos");
 	var $matriculaProfessor = jQuery("#matriculaProfessor")
 	var $qtdTurmas = jQuery("#qtdTurmas")
 	
-	
 	if($turma.find("option").length == 1){
 		retorna_combo_turmas($turma,"TurmaProfessor/" + $matriculaProfessor.val());
 	}
+	
+	//if($turma2.find("option").length == 1){
+		retorna_combo_turmas($turma2,"TurmaProfessor/" + $matriculaProfessor.val());
+	//}
 	
 	$qtdTurmas.text($turma.find("option").length)
 	

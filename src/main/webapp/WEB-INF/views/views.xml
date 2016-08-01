@@ -91,4 +91,14 @@
 	    <put-attribute name="body" value="/WEB-INF/views/private/avaliacao/lancamento_notas_avaliacao.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="add_perfil"  extends="base.definition">
+	    <put-attribute name="title" value="Adicionar Perfil(s)"></put-attribute>
+	    <put-attribute name="body" value="/WEB-INF/views/private/perfil/adicionar_perfil.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="consultar_perfil"  extends="base.definition">
+	    <put-attribute name="title" value="Consultar Perfil(s)"></put-attribute>
+	    <put-attribute name="body" value="/WEB-INF/views/private/perfil/consultar_perfil.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>
